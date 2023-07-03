@@ -1,38 +1,51 @@
-import { ThemeOptions } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 
-export const theme = createTheme({
+const theme = createTheme({
   palette: {
-    mode: 'light',
+    type: 'light',
     primary: {
-      main: '#00AD7C',
+      main: '#2EAC6D',
+      contrastText: '#F2F2F3',
     },
     secondary: {
-      main: '#ad0031',
+      main: '#3C2F3D',
+      contrastText: '#F2F2F3',
     },
     background: {
-      default: '#ECEFF4',
-      paper: '#E8E8E8',
-    },
-    error: {
-      main: '#ad0031',
+      default: '#F0F0F0',
+      paper: '#e3e3e3',
     },
     success: {
-      main: '#00AD7C',
+      main: '#2EAC6D',
+      contrastText: '#F2F2F3',
     },
-    divider: '#475762',
+    error: {
+      main: '#D61F28',
+      contrastText: '#F2F2F3',
+    },
     warning: {
-      main: '#FBD490',
+      main: '#EAAB3E',
+      contrastText: '#F2F2F3',
     },
+    divider: '#e3e3e3',
     info: {
-      main: '#0088ad',
+      main: '#008FFF',
+      contrastText: '#F2F2F3',
     },
   },
   overrides: {
     MuiAppBar: {
       colorInherit: {
-        backgroundColor: '#689f38',
-        color: '#fff',
+        backgroundColor: '#2EAC6D',
+        color: '#F2F2F3',
       },
     },
   },
+  props: {
+    MuiAppBar: {
+      color: 'inherit',
+    },
+  },
 });
+
+export default theme;

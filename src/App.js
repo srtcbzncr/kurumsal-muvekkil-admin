@@ -7,16 +7,21 @@ import theme from './theme/Theme';
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@emotion/react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Login from './components/login/Login';
 
 function App() {
   return (
-    <React.Fragment>
-      <CssBaseline>
-        <ThemeProvider theme={theme}>
-          
-        </ThemeProvider>
-      </CssBaseline>
-    </React.Fragment>
+    <CssBaseline>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+    </CssBaseline>
   );
 }
 
