@@ -2,5 +2,6 @@
     "username" : "Kullanıcı Adı",
     "password" : "Parola",
     "login" : "GİRİŞ",
-    "forgetPassword" : "ŞİFREMİ UNUTTUM"
+    "forgotPassword" : "ŞİFREMİ UNUTTUM",
+    "adminLogin" : "Yönetici Girişi"
 }

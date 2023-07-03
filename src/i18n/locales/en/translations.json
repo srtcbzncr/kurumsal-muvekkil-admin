@@ -2,5 +2,6 @@
     "username" : "Username",
     "password" : "Password",
     "login" : "Login",
-    "forgotPassword" : "Forgot Password"
+    "forgotPassword" : "Forgot Password",
+    "adminLogin" : "Admin Login"
 }
