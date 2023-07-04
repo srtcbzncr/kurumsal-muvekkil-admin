@@ -14,6 +14,7 @@ export default function useLogin(username, password){
         setIsLoading(true);
         await axios({
             method: "POST",
+            mode: "cors",
             baseURL: process.env.REACT_APP_API_URL,
             url: process.env.REACT_APP_API_LOGIN_URL,
             data: {
