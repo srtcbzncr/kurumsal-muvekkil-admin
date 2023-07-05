@@ -49,8 +49,8 @@ export default function Login() {
         <>
             <Grid container height='100%' justifyContent='center' alignItems='center'>
                 <Grid container item xs={12} md={6} height='100%' justifyContent='center' alignItems='center' sx={{backgroundColor: 'background.default'}}>
-                    <LanguageSwitcher></LanguageSwitcher>
-                    <Grid container item height='100%' direction='column' justifyContent='center' alignItems='center'>
+                    <LanguageSwitcher height='10%'></LanguageSwitcher>
+                    <Grid container item height='90%' direction='column' justifyContent='center' alignItems='center'>
                         <Grid container item height='40%' justifyContent='center' alignItems='center'>
                             <h1 className='title'>{t('adminLogin')}</h1>
                         </Grid>
