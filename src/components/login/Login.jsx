@@ -1,25 +1,20 @@
 import { Grid, TextField} from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
 import './style.css';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
-import useLogin from '../../apis/auth/useLogin';
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import { login } from '../../apis/Auth';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [setRequest, isLoading, response, error] = useLogin(username, password);
+    const [username, setUsername] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
-    const [alertOpen, setAlertOpen] = React.useState(false);
 
     function updateUsername(event) {
         setUsername(event.target.value);
@@ -29,21 +24,26 @@ export default function Login() {
         setPassword(event.target.value);
     }
 
-    function login(event){
-        setRequest(true);
+    async function loginOnClick(){
+        setIsLoading(true);
+        login(username, password).then((response) => {
+            if(response.status > 400){
+                toast.error(response.error.message, {
+                    position: toast.POSITION.TOP_CENTER,
+                    theme : "colored",
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    hideProgressBar: true
+                })
+            }
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        }).finally(() => {
+            setIsLoading(false);
+        });
     }
-
-    function andleClick(){
-        setAlertOpen(true);
-      };
-    
-    function alertHandleClose(event, reason){
-        if (reason === 'clickaway') {
-          return;
-        }
-    
-        setAlertOpen(false);
-    };
 
     return (
         <>
@@ -61,7 +61,7 @@ export default function Login() {
                             </Stack>
                             <Stack className='buttons' width='50%' direction="row" spacing={2} justifyContent="flex-end">
                                 <Button variant="text">{t('forgotPassword')}</Button>
-                                <Button variant="contained" onClick={login}>{t('login')}</Button>
+                                <Button variant="contained" onClick={loginOnClick}>{t('login')}</Button>
                             </Stack>
                         </Grid>
                     </Grid>
@@ -70,11 +70,7 @@ export default function Login() {
                     <img src="/logo.png" width='35%'></img>
                 </Grid>
             </Grid>
-            <Snackbar open={alertOpen} autoHideDuration={6000} onClose={alertHandleClose}>
-            <Alert onClose={alertHandleClose} severity="success" sx={{ width: '100%' }}>
-                This is a success message!
-            </Alert>
-            </Snackbar>
+            <ToastContainer />
         </>
     )
 }
