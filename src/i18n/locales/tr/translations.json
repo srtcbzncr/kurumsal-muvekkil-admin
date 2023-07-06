@@ -3,5 +3,12 @@
     "password" : "Parola",
     "login" : "GİRİŞ",
     "forgotPassword" : "ŞİFREMİ UNUTTUM",
-    "adminLogin" : "Yönetici Girişi"
+    "adminLogin" : "Yönetici Girişi",
+    "home" : "Anasayfa",
+    "userManagement" : "Kullanıcı Yönetimi",
+    "lawyerManagement" : "Avukat Yönetimi",
+    "clientManagement" : "Müvekkil Yönetimi",
+    "courtManagement" : "Mahkeme Yönetimi",
+    "fileManagement" : "Dosya Yönetimi",
+    "subscriptionManagement" : "Abonelik Yönetimi"
 }

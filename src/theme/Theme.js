@@ -13,7 +13,8 @@ const theme = createTheme({
     },
     background: {
       default: '#F0F0F0',
-      paper: '#e3e3e3',
+      paper: '#2EAC6D',
+      //paper: '#e3e3e3',
     },
     success: {
       main: '#2EAC6D',
@@ -27,7 +28,7 @@ const theme = createTheme({
       main: '#EAAB3E',
       contrastText: '#F2F2F3',
     },
-    divider: '#e3e3e3',
+    divider: '#ffffff',
     info: {
       main: '#008FFF',
       contrastText: '#F2F2F3',

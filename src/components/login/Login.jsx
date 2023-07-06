@@ -5,15 +5,17 @@ import './style.css';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
-import { login } from '../../apis/Auth';
+import { login } from '../../services/Auth';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useCookies } from 'react-cookie';
 
 export default function Login() {
 
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [cookie, setCookie, removeCookie] = useCookies(["user"]);
     const { t } = useTranslation();
 
     function updateUsername(event) {
@@ -24,10 +26,14 @@ export default function Login() {
         setPassword(event.target.value);
     }
 
-    async function loginOnClick(){
+    async function handleLoginOnClick(){
         setIsLoading(true);
         login(username, password).then((response) => {
-            if(response.status > 400){
+            if(response.status === 200){
+                setCookie("username", username, { path: '/' });
+                setCookie("password", password, { path: '/' });
+            }
+            else if(response.status > 400){
                 toast.error(response.error.message, {
                     position: toast.POSITION.TOP_CENTER,
                     theme : "colored",
@@ -61,7 +67,7 @@ export default function Login() {
                             </Stack>
                             <Stack className='buttons' width='50%' direction="row" spacing={2} justifyContent="flex-end">
                                 <Button variant="text">{t('forgotPassword')}</Button>
-                                <Button variant="contained" onClick={loginOnClick}>{t('login')}</Button>
+                                <Button variant="contained" onClick={handleLoginOnClick}>{t('login')}</Button>
                             </Stack>
                         </Grid>
                     </Grid>

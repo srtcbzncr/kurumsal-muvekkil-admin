@@ -3,5 +3,12 @@
     "password" : "Password",
     "login" : "Login",
     "forgotPassword" : "Forgot Password",
-    "adminLogin" : "Admin Login"
-}
+    "adminLogin" : "Admin Login",
+    "home" : "Home",
+    "userManagement" : "User Management",
+    "lawyerManagement" : "Lawyer Management",
+    "clientManagement" : "Client Management",
+    "courtManagement" : "Court Management",
+    "fileManagement" : "Case Management",
+    "subscriptionManagement" : "Subscription Management"
+} 
