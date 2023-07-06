@@ -32,6 +32,7 @@ export default function Login() {
             if(response.status === 200){
                 setCookie("username", username, { path: '/' });
                 setCookie("password", password, { path: '/' });
+                setCookie("role", response.data.role, { path: '/' });
             }
             else if(response.status > 400){
                 toast.error(response.error.message, {

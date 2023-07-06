@@ -8,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './components/login/Login';
-import Layout from './components/layout/Layout';
 import Dashboard from './components/dashboard/Dashboard';
 import { CookiesProvider } from 'react-cookie';
 
@@ -20,7 +19,7 @@ function App() {
         <CookiesProvider>
           <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Dashboard />} ></Route>
+              <Route path='/' element={<Dashboard />} ></Route>
               <Route path="/login" element={<Login />}></Route>
             </Routes>
           </BrowserRouter>
