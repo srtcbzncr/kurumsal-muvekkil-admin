@@ -2,13 +2,14 @@ import { Grid, TextField} from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import './style.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import { login } from '../../services/AuthService';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router';
 
 export default function Login() {
 
@@ -16,6 +17,7 @@ export default function Login() {
     const [password, setPassword] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [cookie, setCookie, removeCookie] = useCookies(["user"]);
+    const navigate = useNavigate();
     const { t } = useTranslation();
 
     function updateUsername(event) {
@@ -26,6 +28,12 @@ export default function Login() {
         setPassword(event.target.value);
     }
 
+    useEffect(() => {
+        if(cookie.username !== undefined && cookie.password !== undefined ){
+            navigate("/");
+        }
+    })
+
     async function handleLoginOnClick(){
         setIsLoading(true);
         login(username, password).then((response) => {
@@ -33,6 +41,7 @@ export default function Login() {
                 setCookie("username", username, { path: '/' });
                 setCookie("password", password, { path: '/' });
                 setCookie("role", response.data.role, { path: '/' });
+                navigate("/");
             }
             else if(response.status > 400){
                 toast.error(response.error.message, {
@@ -44,7 +53,6 @@ export default function Login() {
                     hideProgressBar: true
                 })
             }
-            console.log(response);
         }).catch((error) => {
             console.log(error);
         }).finally(() => {
