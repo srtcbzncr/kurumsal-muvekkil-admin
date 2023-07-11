@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export async function login(username, password) {
-    const response = axios({
+export function login(username, password) {
+    return axios({
         method: "POST",
         mode: "cors",
         baseURL: process.env.REACT_APP_API_URL,
@@ -10,11 +10,5 @@ export async function login(username, password) {
             username: username,
             password: password
         }
-    }).then((response) => {
-        return response.data;
-    }).catch((error) => {
-        return error.response.data;
     });
-      
-    return response;
 }

@@ -1,21 +1,25 @@
 import './style.css';
-import { Grid, Drawer, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, ListSubheader, Collapse, Badge } from '@mui/material';
+import { Grid, Drawer, List, ListItemButton, ListItemIcon, ListItemText, styled, Stack, IconButton, Divider } from '@mui/material';
 import BadgeSharpIcon from '@mui/icons-material/BadgeSharp';
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import GavelSharpIcon from '@mui/icons-material/GavelSharp';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import CasesSharpIcon from '@mui/icons-material/CasesSharp';
 import PaidSharpIcon from '@mui/icons-material/PaidSharp';
 import EmojiEmotionsSharpIcon from '@mui/icons-material/EmojiEmotionsSharp';
 import HomeSharpIcon from '@mui/icons-material/HomeSharp';
+import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
+import SupervisedUserCircleSharpIcon from '@mui/icons-material/SupervisedUserCircleSharp';
+import CircleNotificationsSharpIcon from '@mui/icons-material/CircleNotificationsSharp';
 import { useState } from 'react';
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
+import { useCookies } from "react-cookie";
+import { Remove } from '@mui/icons-material';
 
 export default function Menu() {
     const [selected, setSelected] = useState(1);
     const { t } = useTranslation();
+    const [cookie, setCookie, removeCookie] = useCookies();
 
     const DrawerHeader = styled('div')(({ theme }) => ({
         display: 'flex',
@@ -46,15 +50,29 @@ export default function Menu() {
             open={true}
             >
                 <Grid container direction="column" height="100%" justifyContent="space-between" alignItems="center">
-                    <Grid container item direction="column">
+                    <Grid container item direction="column" sx={{ backgroundColor: "primary.dark"}}>
                         <Grid container item justifyContent="center" alignItems="center" marginBottom="10px" marginTop="10px">
                             <img src="/logo.png" width='55%'></img>
                         </Grid>
-                        <Divider/>
+                        <Grid container>
+                            <Stack direction="row" width="100%" justifyContent="space-evenly"  alignItems="center" marginBottom="10px" spacing={2}>
+                                <IconButton sx={{ color: "primary.contrastText" }} size="large">
+                                    <AccountCircleSharpIcon fontSize="large" />
+                                </IconButton>
+                                <div>
+                                <IconButton sx={{ color: "primary.contrastText" }} size="large">
+                                    <CircleNotificationsSharpIcon fontSize="large" />
+                                </IconButton>
+                                </div>
+                                <IconButton sx={{ color: "primary.contrastText" }} size="large">
+                                    <RemoveCircleSharpIcon fontSize="large" />
+                                </IconButton>
+                            </Stack>
+                        </Grid>
                         <Grid container item>
                             <List
                             className='menuList'
-                            sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
+                            sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper'}}
                             component="nav"
                             aria-labelledby="nested-list-subheader"
                             >
@@ -86,7 +104,7 @@ export default function Menu() {
                                     }
                                 }}>
                                     <ListItemIcon>
-                                    <AccountCircleSharpIcon sx={{ color: "primary.contrastText" }} />
+                                    <SupervisedUserCircleSharpIcon sx={{ color: "primary.contrastText" }} />
                                     </ListItemIcon>
                                     <ListItemText primary={ t('userManagement') } />
                                 </ListItemButton>

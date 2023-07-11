@@ -5,7 +5,7 @@ import './style.css';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
-import { login } from '../../services/Auth';
+import { login } from '../../services/AuthService';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useCookies } from 'react-cookie';
