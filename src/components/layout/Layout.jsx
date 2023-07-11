@@ -8,7 +8,7 @@ export default function Layout ({ children }) {
             <Grid container item md={2} height='100%' sx={{backgroundColor: 'primary.main'}}>
                 <Menu></Menu>
             </Grid>
-            <Grid container item md={10} alignItems="flex-start">
+            <Grid container item md={10} alignItems="flex-start" spacing={2}>
                 {children}
             </Grid>
         </Grid>
