@@ -22,15 +22,6 @@ export default function Menu() {
     const [cookie, setCookie, removeCookie] = useCookies();
     const navigate = useNavigate();
 
-    const DrawerHeader = styled('div')(({ theme }) => ({
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
-    }));
-
     function handleOnSelect(event, index){
         setSelected(index);
         switch(index){
@@ -87,10 +78,10 @@ export default function Menu() {
                 </Grid>
             </Grid>
             <Grid container item direction="column">
-                <List className='menuList' sx={{ width: '100%', bgcolor: 'background.paper'}} component="nav" aria-labelledby="nested-list-subheader">
+                <List className='menuList' sx={{ width: '100%', bgcolor: 'parimary.main' }} component="nav" aria-labelledby="nested-list-subheader">
                     <ListItemButton onClick={(event) => handleOnSelect(event, 1)} selected={selected === 1} sx={{
                         "&.Mui-selected": {
-                        backgroundColor: "primary.dark"
+                        backgroundColor: "primary.light"
                         },
                         "&.Mui-focusVisible": {
                         backgroundColor: "#2e8b57"
@@ -106,7 +97,7 @@ export default function Menu() {
                     </ListItemButton>
                     <ListItemButton onClick={(event) => handleOnSelect(event, 2)} selected={selected === 2} sx={{
                         "&.Mui-selected": {
-                        backgroundColor: "primary.dark"
+                        backgroundColor: "primary.light"
                         },
                         "&.Mui-focusVisible": {
                         backgroundColor: "#279d62"
@@ -122,7 +113,7 @@ export default function Menu() {
                     </ListItemButton>
                     <ListItemButton onClick={(event) => handleOnSelect(event, 3)} selected={selected === 3} sx={{
                         "&.Mui-selected": {
-                        backgroundColor: "primary.dark"
+                        backgroundColor: "primary.light"
                         },
                         "&.Mui-focusVisible": {
                         backgroundColor: "#279d62"
@@ -138,7 +129,7 @@ export default function Menu() {
                     </ListItemButton>
                     <ListItemButton onClick={(event) => handleOnSelect(event, 4)} selected={selected === 4} sx={{
                         "&.Mui-selected": {
-                        backgroundColor: "primary.dark"
+                        backgroundColor: "primary.light"
                         },
                         "&.Mui-focusVisible": {
                         backgroundColor: "#279d62"
@@ -154,7 +145,7 @@ export default function Menu() {
                     </ListItemButton>
                     <ListItemButton onClick={(event) => handleOnSelect(event, 5)} selected={selected === 5} sx={{
                         "&.Mui-selected": {
-                        backgroundColor: "primary.dark"
+                        backgroundColor: "primary.light"
                         },
                         "&.Mui-focusVisible": {
                         backgroundColor: "#279d62"
@@ -170,7 +161,7 @@ export default function Menu() {
                     </ListItemButton>
                     <ListItemButton onClick={(event) => handleOnSelect(event, 6)} selected={selected === 6} sx={{
                         "&.Mui-selected": {
-                        backgroundColor: "primary.dark"
+                        backgroundColor: "primary.light"
                         },
                         "&.Mui-focusVisible": {
                         backgroundColor: "#279d62"
@@ -186,7 +177,7 @@ export default function Menu() {
                     </ListItemButton>
                     <ListItemButton onClick={(event) => handleOnSelect(event, 7)} selected={selected === 7} sx={{
                         "&.Mui-selected": {
-                        backgroundColor: "primary.dark"
+                        backgroundColor: "primary.light"
                         },
                         "&.Mui-focusVisible": {
                         backgroundColor: "#279d62"
