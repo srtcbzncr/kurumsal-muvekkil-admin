@@ -28,7 +28,7 @@ function App() {
         </CookiesProvider>
       </ThemeProvider>    
     </CssBaseline>
-  );
+  )
 }
 
 export default App;

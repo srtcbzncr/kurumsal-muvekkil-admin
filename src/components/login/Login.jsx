@@ -51,7 +51,7 @@ export default function Login() {
                     pauseOnHover: false,
                     draggable: false,
                     hideProgressBar: true
-                })
+                });
             }
         }).catch((error) => {
             console.log(error);

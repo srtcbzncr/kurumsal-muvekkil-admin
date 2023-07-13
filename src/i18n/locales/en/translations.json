@@ -10,5 +10,8 @@
     "clientManagement" : "Client Management",
     "courtManagement" : "Court Management",
     "fileManagement" : "Case Management",
-    "subscriptionManagement" : "Subscription Management"
+    "subscriptionManagement" : "Subscription Management",
+    "courts" : "Courts",
+    "add" : "Add",
+    "new" : "New"
 } 

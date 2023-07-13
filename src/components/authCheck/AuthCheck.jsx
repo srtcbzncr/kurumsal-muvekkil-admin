@@ -13,7 +13,7 @@ export default function AuthCheck({children}) {
     else{
         return(
             <>
-                {children};
+                {children}
             </>
         )
     }

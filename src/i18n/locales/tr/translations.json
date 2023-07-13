@@ -10,5 +10,8 @@
     "clientManagement" : "Müvekkil Yönetimi",
     "courtManagement" : "Mahkeme Yönetimi",
     "fileManagement" : "Dosya Yönetimi",
-    "subscriptionManagement" : "Abonelik Yönetimi"
+    "subscriptionManagement" : "Abonelik Yönetimi",
+    "courts" : "Mahkemeler",
+    "add" : "Ekle",
+    "new" : "Yeni"
 }

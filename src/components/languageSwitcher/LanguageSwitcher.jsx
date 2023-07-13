@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ButtonGroup, Button} from '@mui/material';
 
 export default function LanguageSwitcher() {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     function setEnglish(){
         i18n.changeLanguage("en");
