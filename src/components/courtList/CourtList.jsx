@@ -1,9 +1,9 @@
 import "./style.css";
-import { Grid, Button, Card, CardContent, Box, Typography } from '@mui/material';
+import { Grid, Button, Card, CardContent, Box, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 import AuthCheck from "../authCheck/AuthCheck";
 import Layout from "../layout/Layout";
 import { useEffect, useState } from "react";
-import { getAllCourts } from "../../services/CourtService";
+import { getAllCourts, createCourt } from "../../services/CourtService";
 import AddSharpIcon from '@mui/icons-material/AddSharp';
 import { DataGrid } from '@mui/x-data-grid';
 import { useTranslation } from "react-i18next";
@@ -18,13 +18,16 @@ export default function CourtList() {
     const { t, i18n } = useTranslation();
     const [cookie, setCookie, removeCookie] = useCookies();
     const [data, setData] = useState([]);
+    const [formOpen, setFormOpen] = useState(false);
+    const [createCourtRequestName, setCreateCourtRequestName] = useState(null);
+    const [createCourtRequestParentId, setCreateCourtRequestParentId] = useState(null);
     const navigate = useNavigate();
-    console.log(data.length);
 
-    useEffect(() => {
+    function getData() {
         getAllCourts(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             if(response.status === 200){
-                setData(response.data.data);
+                console.log(response.data.data)
+                setData(response.data.data);                
             }
             else if(response.status === 401){
                 navigate("/login");
@@ -43,9 +46,13 @@ export default function CourtList() {
                 });
             }
         }).catch((error) => {
-            console.log(error);
+            console.log(error.response.data);
         });
-    });
+    }
+
+    useEffect(() => {
+        getData();
+    }, []);
 
     const columns = [
         { 
@@ -75,20 +82,65 @@ export default function CourtList() {
             editable: false,
             flex: 0.25,
         },
-      ];
+    ];
+
+    function handleOpenForm(){
+        setFormOpen(true);
+    }
+
+    function handleCloseForm(){
+        setFormOpen(false);
+    }
       
-      const rows = [
-        { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-        { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-        { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-        { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-        { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-        { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-        { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-        { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-        { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-      ];
-      
+    function handleSave(){
+        const createCourtRequest = { name : createCourtRequestName, parentId : createCourtRequestParentId };
+        createCourt(createCourtRequest, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+            if(response.status === 200){
+                toast.success(t("court.create.successful"), {
+                    position: toast.POSITION.TOP_CENTER,
+                    theme : "colored",
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    hideProgressBar: true
+                });
+            }
+            else if(response.status === 401){
+                navigate("/login");
+            }
+            else if(response.status === 403){
+                navigate("/forbidden");
+            }
+            else if(response.status === 400){
+
+            }
+            else{
+                toast.error(response.error.message, {
+                    position: toast.POSITION.TOP_CENTER,
+                    theme : "colored",
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    hideProgressBar: true
+                });
+            }
+        }).catch((error) => {
+            console.log(error);
+        }).finally(() => {
+            setCreateCourtRequestName(null);
+            setCreateCourtRequestParentId(null);
+            handleCloseForm();
+            getData();
+        });
+    }
+
+    function handleChangeCreateCourtRequestName(event){
+        setCreateCourtRequestName(event.target.value);
+    }
+
+    function handleChangeCreateCourtRequestParentId(event){
+        setCreateCourtRequestParentId(event.target.value);
+    }
 
     return (
         <AuthCheck>
@@ -154,7 +206,7 @@ export default function CourtList() {
                 <Grid container item justifyContent="center" alignItems="flex-start" marginTop="60px">
                     <Grid container item justifyContent="space-between" alignItems="flex-start">
                         <Typography variant="h4">{t("courts")}</Typography>
-                        <Button className="addButton" variant="contained" size="large" startIcon={<AddSharpIcon />}>
+                        <Button className="addButton" variant="contained" size="large" startIcon={<AddSharpIcon />} onClick={handleOpenForm}>
                             <Typography variant="string">{t("new")}</Typography>
                         </Button>
                     </Grid>
@@ -182,6 +234,41 @@ export default function CourtList() {
                         }
                     </Grid>
                 </Grid>
+                <Dialog open={formOpen} onClose={handleCloseForm}>
+                    <DialogTitle>{t("court.add")}</DialogTitle>
+                    <DialogContent>
+                        <Grid container sx={{ width : "300px", marginTop : "10px"}} justifyContent="center" alignItems="center">
+                            <FormControl sx={{ marginTop : "10px" }}>
+                                <InputLabel id="parent-court">{t("court.parent")}</InputLabel>
+                                <Select
+                                    labelId="parent-court-label"
+                                    id="parent-court"
+                                    value={createCourtRequestParentId}
+                                    label={t("court.parent")}
+                                    onChange={handleChangeCreateCourtRequestParentId}
+                                    >
+                                    {
+                                        data.map((court) => (
+                                            <MenuItem value={court.id}>{court.name}</MenuItem>
+                                        ))
+                                    }
+                                </Select>
+                                <TextField id="name" name="name" label={t("name")} value={createCourtRequestName} onChange={handleChangeCreateCourtRequestName} variant="outlined" sx={{ width : "300px", marginTop : "10px" }}/>
+                            </FormControl>
+                        </Grid>
+                    </DialogContent>
+                    <DialogActions >
+                        <Grid container item justifyContent="flex-end">
+                            <Grid item marginRight="10px">
+                                <Button variant="contained" onClick={handleSave}>{t("save")}</Button>
+                            </Grid>
+                            <Grid item>
+                                <Button variant="outlined" color="error" onClick={handleCloseForm}>{t("close")}</Button>
+                            </Grid>
+                        </Grid>
+                    </DialogActions>
+                </Dialog>
+                <ToastContainer />
             </Layout>
         </AuthCheck>
     )

@@ -67,7 +67,7 @@ export default function Login() {
                     <LanguageSwitcher height='10%'></LanguageSwitcher>
                     <Grid container item height='90%' direction='column' justifyContent='center' alignItems='center'>
                         <Grid container item height='40%' justifyContent='center' alignItems='center'>
-                            <h1 className='title'>{t('adminLogin')}</h1>
+                            <h1 className='title'>{t('admin.login')}</h1>
                         </Grid>
                         <Grid container item height='60%' direction='column' justifyContent='flex-start' alignItems='center'>
                             <Stack width='50%' justifyContent='center'>
@@ -75,7 +75,7 @@ export default function Login() {
                                 <TextField fullWidth id="password" name='password' margin='normal' type='password' label={t('password')} variant="standard" onChange={updatePassword}/>
                             </Stack>
                             <Stack className='buttons' width='50%' direction="row" spacing={2} justifyContent="flex-end">
-                                <Button variant="text">{t('forgotPassword')}</Button>
+                                <Button variant="text">{t('password.forget')}</Button>
                                 <Button variant="contained" onClick={handleLoginOnClick}>{t('login')}</Button>
                             </Stack>
                         </Grid>

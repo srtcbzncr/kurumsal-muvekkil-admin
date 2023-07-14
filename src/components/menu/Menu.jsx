@@ -110,7 +110,7 @@ export default function Menu() {
                             <ListItemIcon>
                             <SupervisedUserCircleSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('userManagement') } />
+                            <ListItemText primary={ t('user.management') } />
                         </ListItemButton>
                         <ListItemButton onClick={(event) => handleOnSelect(event, 3)} selected={selected === 3} sx={{
                             "&.Mui-selected": {
@@ -126,7 +126,7 @@ export default function Menu() {
                             <ListItemIcon>
                             <BadgeSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('lawyerManagement') } />
+                            <ListItemText primary={ t('lawyer.management') } />
                         </ListItemButton>
                         <ListItemButton onClick={(event) => handleOnSelect(event, 4)} selected={selected === 4} sx={{
                             "&.Mui-selected": {
@@ -142,7 +142,7 @@ export default function Menu() {
                             <ListItemIcon>
                             <EmojiEmotionsSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('clientManagement') } />
+                            <ListItemText primary={ t('client.management') } />
                         </ListItemButton>
                         <ListItemButton onClick={(event) => handleOnSelect(event, 5)} selected={selected === 5} sx={{
                             "&.Mui-selected": {
@@ -158,7 +158,7 @@ export default function Menu() {
                             <ListItemIcon>
                             <GavelSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('courtManagement') } />
+                            <ListItemText primary={ t('court.management') } />
                         </ListItemButton>
                         <ListItemButton onClick={(event) => handleOnSelect(event, 6)} selected={selected === 6} sx={{
                             "&.Mui-selected": {
@@ -174,7 +174,7 @@ export default function Menu() {
                             <ListItemIcon>
                             <CasesSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('fileManagement') } />
+                            <ListItemText primary={ t('file.management') } />
                         </ListItemButton>
                         <ListItemButton onClick={(event) => handleOnSelect(event, 7)} selected={selected === 7} sx={{
                             "&.Mui-selected": {
@@ -190,7 +190,7 @@ export default function Menu() {
                             <ListItemIcon>
                             <PaidSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('subscriptionManagement') } />
+                            <ListItemText primary={ t('subscription.management') } />
                         </ListItemButton>
                     </List>
                 </Grid>
