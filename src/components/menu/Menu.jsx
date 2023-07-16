@@ -1,6 +1,7 @@
-import './style.css';
-import { Grid, Drawer, List, ListItemButton, ListItemIcon, ListItemText, styled, Stack, IconButton, Badge, Chip} from '@mui/material';
-import BadgeSharpIcon from '@mui/icons-material/BadgeSharp';
+import { Stack, Box, Chip, Avatar, IconButton, Badge, List, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
+import React from 'react';
+import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
+import { useCookies } from 'react-cookie';
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import GavelSharpIcon from '@mui/icons-material/GavelSharp';
 import CasesSharpIcon from '@mui/icons-material/CasesSharp';
@@ -10,77 +11,75 @@ import HomeSharpIcon from '@mui/icons-material/HomeSharp';
 import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
 import SupervisedUserCircleSharpIcon from '@mui/icons-material/SupervisedUserCircleSharp';
 import CircleNotificationsSharpIcon from '@mui/icons-material/CircleNotificationsSharp';
-import { useState } from 'react';
-import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
+import BadgeSharpIcon from '@mui/icons-material/BadgeSharp';
 import { useTranslation } from 'react-i18next';
-import { useCookies } from "react-cookie";
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
-export default function Menu() {
+
+const Menu = () => {
+
+    const [cookie, setCookie, removeCookie] = useCookies();
     const [selected, setSelected] = useState(1);
     const { t, i18n } = useTranslation();
-    const [cookie, setCookie, removeCookie] = useCookies();
     const navigate = useNavigate();
 
-    function handleOnSelect(event, index){
+    function handleOnSelect(index){
         setSelected(index);
         switch(index){
             case 1:
                 navigate("/");
                 return;
             case 2:
-                navigate("/users");
+                navigate("/");
                 return;
             case 3:
-                navigate("/lawyers");
+                navigate("/");
                 return;
             case 4:
-                navigate("/clients");
+                navigate("/");
                 return;
             case 5:
                 navigate("/courts");
                 return;
             case 6:
-                navigate("/files");
+                navigate("/");
                 return;
             case 7:
-                navigate("/subscriptions");
+                navigate("/");
                 return;
             default:
-                navigate("/notFound");
-
+                navigate("/");
+                return;
         }
     }
 
     return (
-        <Grid container item direction="column" justifyContent="space-between" alignItems="center">
-            <Grid container item>
-                <Grid container item direction="column" alignItems="center" sx={{ backgroundColor: "primary.dark"}}>
-                    <Grid item width="55%" marginTop="10px">
-                        <img src="/logo.png" width="100%"></img>
-                    </Grid>
-                    <Grid item marginTop="10px">
-                        <Chip label={cookie.username} variant="filled" sx={{backgroundColor: "primary.contrastText"}}/>
-                    </Grid>
-                    <Grid item marginTop="30px" marginBottom="10px">
-                        <Stack direction="row" width="100%" justifyContent="space-evenly"  alignItems="center" marginBottom="10px" spacing={2}>
-                            <IconButton sx={{ color: "primary.contrastText" }} size="large">
-                                <AccountCircleSharpIcon fontSize="large" />
+        <Stack direction="column" justifyContent="space-between" alignItems="center" height="100%">
+            <Stack direction="column"alignItems="center">
+                <Stack direction="column" justifyContent="flex-start" alignItems="center" sx={{ backgroundColor: "primary.dark", paddingBottom: "20px"}}>
+                    <Box className="logo" sx={{ display: "flex", width: "100%", justifyContent: "center", marginTop: "20px" }}>
+                        <img src='logo.png' width="60%"></img>
+                    </Box>
+                    <Chip avatar={<Avatar>{ cookie.username.charAt(0) }</Avatar>} label={ cookie.username } size="medium" sx={{ backgroundColor: "background.paper", marginTop: "20px" }}/>
+                    <Stack direction="row" sx={{ marginTop: "20px", width: "100%", justifyContent: "space-evenly" }}>
+                            <IconButton sx={{ color: "primary.contrastText" }}>
+                                <AccountCircleSharpIcon sx={{ fontSize: { xs: "26px", sm: "33px", md: "35px", lg: "38px", xl: "40px" }}}/>
                             </IconButton>
-                            <IconButton sx={{ color: "primary.contrastText" }} size="large">
-                            <Badge badgeContent={4} color="primary">
-                                <CircleNotificationsSharpIcon fontSize="large" />
-                            </Badge>
+                            <IconButton sx={{ color: "primary.contrastText" }}>
+                                <Badge badgeContent={4} color="primary">
+                                    <CircleNotificationsSharpIcon sx={{ fontSize: { xs: "26px", sm: "33px", md: "35px", lg: "38px", xl: "40px" }}}/>
+                                </Badge>
                             </IconButton>
-                            <IconButton sx={{ color: "primary.contrastText" }} size="large">
-                                <RemoveCircleSharpIcon fontSize="large" />
+                            <IconButton sx={{ color: "primary.contrastText" }}>
+                                <RemoveCircleSharpIcon sx={{ fontSize: { xs: "26px", sm: "33px", md: "35px", lg: "38px", xl: "40px" }}}/>
                             </IconButton>
-                        </Stack>
-                    </Grid>
-                </Grid>
-                <Grid container item direction="column">
-                    <List className='menuList' sx={{ width: '100%', bgcolor: 'parimary.main' }} component="nav" aria-labelledby="nested-list-subheader">
-                        <ListItemButton onClick={(event) => handleOnSelect(event, 1)} selected={selected === 1} sx={{
+                    </Stack>
+                </Stack>
+                <Stack direction="column" justifyContent="center" sx={{ width: "100%" }}>
+                    <List className='menuList' sx={{ width: '100%', color: "primary.contrastText" }} component="nav" aria-labelledby="nested-list-subheader">
+                        <ListItemButton selected={selected === 1} onClick={() => handleOnSelect(1)} sx={{
+                            width: "100%",
                             "&.Mui-selected": {
                             backgroundColor: "primary.light"
                             },
@@ -96,7 +95,8 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary={ t('home') } />
                         </ListItemButton>
-                        <ListItemButton onClick={(event) => handleOnSelect(event, 2)} selected={selected === 2} sx={{
+                        <ListItemButton selected={selected === 2} onClick={() => handleOnSelect(2)} sx={{
+                            width: "100%",
                             "&.Mui-selected": {
                             backgroundColor: "primary.light"
                             },
@@ -112,7 +112,8 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary={ t('user.management') } />
                         </ListItemButton>
-                        <ListItemButton onClick={(event) => handleOnSelect(event, 3)} selected={selected === 3} sx={{
+                        <ListItemButton selected={selected === 3} onClick={() => handleOnSelect(3)} sx={{
+                            width: "100%",
                             "&.Mui-selected": {
                             backgroundColor: "primary.light"
                             },
@@ -128,7 +129,8 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary={ t('lawyer.management') } />
                         </ListItemButton>
-                        <ListItemButton onClick={(event) => handleOnSelect(event, 4)} selected={selected === 4} sx={{
+                        <ListItemButton selected={selected === 4} onClick={() => handleOnSelect(4)} sx={{
+                            width: "100%",
                             "&.Mui-selected": {
                             backgroundColor: "primary.light"
                             },
@@ -144,7 +146,8 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary={ t('client.management') } />
                         </ListItemButton>
-                        <ListItemButton onClick={(event) => handleOnSelect(event, 5)} selected={selected === 5} sx={{
+                        <ListItemButton selected={selected === 5} onClick={() => handleOnSelect(5)} sx={{
+                            width: "100%",
                             "&.Mui-selected": {
                             backgroundColor: "primary.light"
                             },
@@ -160,7 +163,8 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary={ t('court.management') } />
                         </ListItemButton>
-                        <ListItemButton onClick={(event) => handleOnSelect(event, 6)} selected={selected === 6} sx={{
+                        <ListItemButton selected={selected === 6} onClick={() => handleOnSelect(6)} sx={{
+                            width: "100%",
                             "&.Mui-selected": {
                             backgroundColor: "primary.light"
                             },
@@ -176,7 +180,8 @@ export default function Menu() {
                             </ListItemIcon>
                             <ListItemText primary={ t('file.management') } />
                         </ListItemButton>
-                        <ListItemButton onClick={(event) => handleOnSelect(event, 7)} selected={selected === 7} sx={{
+                        <ListItemButton selected={selected === 7} onClick={() => handleOnSelect(7)} sx={{
+                            width: "100%",
                             "&.Mui-selected": {
                             backgroundColor: "primary.light"
                             },
@@ -193,11 +198,13 @@ export default function Menu() {
                             <ListItemText primary={ t('subscription.management') } />
                         </ListItemButton>
                     </List>
-                </Grid>
-            </Grid>
-            <Grid container item justifyContent="center" paddingBottom="20px">
+                </Stack>
+            </Stack>
+            <Box marginBottom="20px">
                 <LanguageSwitcher></LanguageSwitcher>
-            </Grid>
-        </Grid>
+            </Box>
+        </Stack>
     )
 }
+
+export default Menu

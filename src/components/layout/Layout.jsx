@@ -1,16 +1,17 @@
 import './style.css';
-import { Grid } from '@mui/material';
+import React from 'react';
+import { Grid, Stack, Box} from '@mui/material';
 import Menu from '../menu/Menu';
 
 export default function Layout ({ children }) {
     return (
-        <Grid container height='100%'>
-            <Grid container item md={2} height='100%' sx={{backgroundColor: 'primary.main', minWidth: "300px"}}>
+        <Stack direction="row" height='100%'>
+            <Box height='100%' sx={{backgroundColor: 'primary.main', width: { xs: "35vw", sm: "25vw", md: "20vw", lg: "15vw", xl: "15vw" }}}>
                 <Menu></Menu>
-            </Grid>
-            <Grid container item direction="column" md={10} paddingLeft="50px" paddingRight="50px">
-                {children}
-            </Grid>
-        </Grid>
+            </Box>
+            <Box paddingLeft="50px" paddingRight="50px" sx={{ width: { xs: "65vw", sm: "75vw", md: "80vw", lg: "85vw", xl: "85vw" }}}>
+                { children }
+            </Box>
+        </Stack>
     )
 }

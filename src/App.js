@@ -22,7 +22,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} ></Route>
               <Route path="/login" element={<Login />}></Route>
-              <Route path="/courts" element={<CourtList />}></Route>
+              <Route path='/courts' element={<CourtList />}></Route>
             </Routes>
           </BrowserRouter>
         </CookiesProvider>

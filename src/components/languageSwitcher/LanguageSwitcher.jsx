@@ -15,9 +15,9 @@ export default function LanguageSwitcher() {
     }
 
     return (
-        <ButtonGroup variant="text" aria-label="text button group" className='buttons'>
-            <Button><img alt="Türkçe" width="27px" height="18px" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/TR.svg" onClick={setTurkish}/></Button>
-            <Button><img alt="English" width="27px" height="18px" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/GB.svg" onClick={setEnglish}/></Button>
+        <ButtonGroup variant="text" className='buttons'>
+            <Button sx={{ backgroundColor: "primary.dark"}}><img alt="Türkçe" width="30vw" height="18vw" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/TR.svg" onClick={setTurkish}/></Button>
+            <Button sx={{ backgroundColor: "primary.dark"}}><img alt="English" width="30vw" height="18vw" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/GB.svg" onClick={setEnglish}/></Button>
         </ButtonGroup>
     )
 }
