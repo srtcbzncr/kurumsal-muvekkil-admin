@@ -5,39 +5,45 @@ const theme = createTheme({
     type: 'light',
     primary: {
       main: '#2EAC6D',
-      contrastText: '#F2F2F3',
+      contrastText: '#FFFFFF',
     },
     secondary: {
-      main: '#3C2F3D',
-      contrastText: '#F2F2F3',
+      main: '#FFFFFF',
+      contrastText: '#2EAC6D',
     },
     background: {
-      default: '#F0F0F0',
-      paper: '#e3e3e3',
+      default: '#F0FCF4',
+      paper: '#FFFFFF',
     },
     success: {
       main: '#2EAC6D',
-      contrastText: '#F2F2F3',
+      contrastText: '#FFFFFF',
     },
     error: {
       main: '#D61F28',
-      contrastText: '#F2F2F3',
+      contrastText: '#FFFFFF',
     },
     warning: {
       main: '#EAAB3E',
-      contrastText: '#F2F2F3',
+      contrastText: '#FFFFFF',
     },
     divider: '#ffffff',
     info: {
       main: '#008FFF',
-      contrastText: '#F2F2F3',
+      contrastText: '#FFFFFF',
+    },
+    text: {
+      main : "#1D2315",
+    },
+    border: {
+      secondary : "#FAF7FF",
     },
   },
   overrides: {
     MuiAppBar: {
       colorInherit: {
         backgroundColor: '#2EAC6D',
-        color: '#F2F2F3',
+        color: '#FFFFFF',
       },
     },
   },
