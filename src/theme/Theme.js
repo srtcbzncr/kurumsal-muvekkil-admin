@@ -12,7 +12,7 @@ const theme = createTheme({
       contrastText: '#2EAC6D',
     },
     background: {
-      default: '#F0FCF4',
+      default: '#f0f0f0',
       paper: '#FFFFFF',
     },
     success: {

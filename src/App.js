@@ -11,6 +11,7 @@ import Login from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CourtList from './components/courtList/CourtList';
 import { CookiesProvider } from 'react-cookie';
+import CreateCourt from './components/createCourt/CreateCourt';
 
 
 function App() {
@@ -20,9 +21,9 @@ function App() {
         <CookiesProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Dashboard />} ></Route>
-              <Route path="/login" element={<Login />}></Route>
-              <Route path='/courts' element={<CourtList />}></Route>
+              <Route path="" element={<Dashboard />} ></Route>
+              <Route path="login" element={<Login />}></Route>
+              <Route path='courts' element={<CourtList />}></Route>
             </Routes>
           </BrowserRouter>
         </CookiesProvider>

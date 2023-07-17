@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100vh !important;
-  background-color: #F0FCF4 !important;
+  background-color: #f0f0f0 !important;
 }
 
 #root {
