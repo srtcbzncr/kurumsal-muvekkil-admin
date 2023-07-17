@@ -55,9 +55,9 @@ const Menu = () => {
     }
 
     return (
-        <Stack direction="column" justifyContent="space-between" alignItems="center" height="100%">
+        <Stack direction="column" justifyContent="space-between" alignItems="center" height="100%" sx={{ width: "100%", backgroundColor: "primary.main" }}>
             <Stack direction="column"alignItems="center">
-                <Stack direction="column" justifyContent="flex-start" alignItems="center" sx={{ backgroundColor: "primary.dark", paddingBottom: "20px"}}>
+                <Stack direction="column" justifyContent="flex-start" alignItems="center" sx={{ width: "100%", backgroundColor: "primary.dark", paddingBottom: "20px"}}>
                     <Box className="logo" sx={{ display: "flex", width: "100%", justifyContent: "center", marginTop: "20px" }}>
                         <img src='logo.png' width="60%"></img>
                     </Box>
@@ -77,7 +77,7 @@ const Menu = () => {
                     </Stack>
                 </Stack>
                 <Stack direction="column" justifyContent="center" sx={{ width: "100%" }}>
-                    <List className='menuList' sx={{ width: '100%', color: "primary.contrastText" }} component="nav" aria-labelledby="nested-list-subheader">
+                    <List className='menuList' sx={{ width: '100%', backgroundColor: "primary.main", color: "primary.contrastText" }} component="nav" aria-labelledby="nested-list-subheader">
                         <ListItemButton selected={selected === 1} onClick={() => handleOnSelect(1)} sx={{
                             width: "100%",
                             "&.Mui-selected": {
@@ -200,7 +200,7 @@ const Menu = () => {
                     </List>
                 </Stack>
             </Stack>
-            <Box marginBottom="20px">
+            <Box marginBottom="20px" display="flex" justifyContent="center" sx={{ width: "100%", backgroundColor: "primary.main" }}>
                 <LanguageSwitcher></LanguageSwitcher>
             </Box>
         </Stack>
