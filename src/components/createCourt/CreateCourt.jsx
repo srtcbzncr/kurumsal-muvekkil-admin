@@ -10,14 +10,12 @@ import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import createCourtPNG from '../../illustrations/createCourt.png';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
-import { useForm, SubmitHandler } from "react-hook-form";
 
 const CreateCourt = () => {
 
     const [cookie, setCookie, removeCookie] = useCookies();
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const [activeCourts, setActiveCourts] = useState([]);
     const [selectedParentCourtId, setSelectedParentCourtId] = useState("");
@@ -58,13 +56,13 @@ const CreateCourt = () => {
                 setCreated(true);
             }
             else if (response.data.status === 400) {
-                setError(true);
+                console.log("error");
             }
             else if (response.data.status === 401) {
-                setError(true);
+                console.log("error");
             }
             else if (response.data.status === 403) {
-                setError(true);
+                console.log("error");
             }
         }).catch((error) => {
             console.log(error);
@@ -123,7 +121,7 @@ const CreateCourt = () => {
                                 </Select>
                                 <TextField required id="court-name" label={t("name")} variant="outlined" sx={{ marginTop: "20px"}} value={newCourtName} onChange={handleNewCourtNameChange} /> 
                                 <Stack direction="row" sx={{ width: 1, justifyContent: "flex-end", marginTop: "30px" }}>
-                                    <Button variant="contained" size="large" sx={{ width: 0.4}} onClick={handleSubmit(handleSaveClick)}>{t("save")}</Button>
+                                    <Button variant="contained" size="large" sx={{ width: 0.4}} onClick={handleSaveClick}>{t("save")}</Button>
                                 </Stack>
                             </FormControl>
                         </Stack>
