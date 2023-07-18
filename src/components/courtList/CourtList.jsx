@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
-import { Box, Stack, Button, Typography, Avatar, InputBase, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Box, Stack, Button, Typography, Avatar, InputBase, IconButton, Breadcrumbs, Link } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
 import Status from '../status/Status';
 import AddSharpIcon from '@mui/icons-material/AddSharp';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
-import CloseSharpIcon from '@mui/icons-material/CloseSharp';
 import { useTranslation } from 'react-i18next';
 import Actions from '../actions/Actions';
 import { useEffect } from 'react';
@@ -14,7 +13,6 @@ import { useCookies } from 'react-cookie';
 import { getAllCourts, getActiveCourts, getPassiveCourts, getDeletedCourts, getCourtStats } from '../../services/CourtService';
 import getAuthHeader from '../../helpers/getAuthHeader';
 import { useNavigate } from 'react-router';
-import CreateCourt from '../createCourt/CreateCourt';
 
 const CourtList = () => {
 
@@ -24,7 +22,6 @@ const CourtList = () => {
   const [activeCount, setActiveCount] = useState(0);
   const [passiveCount, setPassiveCount] = useState(0);
   const [deletedCount, setDeletedCount] = useState(0);
-  const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [tab, setTab] = useState("All");
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -85,7 +82,6 @@ const CourtList = () => {
 
   function fetchStats() {
     getCourtStats(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
-      console.log(response);
       if (response.data.status === 200) {
         setAllCount(response.data.data.allCount);
         setActiveCount(response.data.data.activeCount);
@@ -107,7 +103,7 @@ const CourtList = () => {
     }).catch((error) => {
       console.log(error);
     });
-  }
+  };
 
   function fetchCourts(type) {
     if (type === "All") {
@@ -198,7 +194,7 @@ const CourtList = () => {
         console.log(error);
       });
     }
-  }
+  };
 
   useEffect(() => {
     fetchStats();
@@ -207,38 +203,42 @@ const CourtList = () => {
 
   function handleSelectTab(value) {
     setTab(value);
-  }
+  };
 
-  function openCreateDialog(){
-    setCreateDialogOpen(true);
-  }
-
-  function closeCreateDialog(){
-    setCreateDialogOpen(false);
-  }
+  function handleNewClick(){
+    navigate("/courts/create");
+  };
 
   return (
     <AuthCheck>
       <Layout>
         <Stack direction="column" sx={{ width: 1, alignItems: "center" }}>
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "50px" }}>
+          <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "100px" }}>
             <Typography variant="h4">
               {t("court.management")}
             </Typography>
-            <Button variant="contained" onClick={openCreateDialog}>
+            <Button variant="contained" onClick={handleNewClick}>
               <AddSharpIcon />
             </Button>
           </Stack>
-          <Stack direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "50px" }}>
+          <Box id="navigation" display="flex" spacing={2} sx={{ width: 0.8, marginTop: "25px"}}>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link underline="hover" color="inherit" href="/">
+                Anasayfa
+              </Link>
+              <Typography color="text.primary">Mahkeme Yönetimi</Typography>
+            </Breadcrumbs>
+          </Box>
+          <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px"}}>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "10px", border: 1, borderColor: "border.secondary" }}>
-              <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "flex-start" }}>
+              <Stack id="main" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "flex-start" }}>
                 <Button onClick={() => handleSelectTab("All")} sx={{ color: tab === "All" ? "text.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "All" && 2, borderColor: tab === "All" && "text.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("all")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "text.main" }}>{allCount}</Avatar></Button>
                 <Button onClick={() => handleSelectTab("Active")} sx={{ color: tab === "Active" ? "success.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Active" && 2, borderColor: tab === "Active" && "success.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("active")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "success.main" }}>{activeCount}</Avatar></Button>
                 <Button onClick={() => handleSelectTab("Passive")} sx={{ color: tab === "Passive" ? "warning.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Passive" && 2, borderColor: tab === "Passive" && "warning.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("passive")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "warning.main" }}>{passiveCount}</Avatar></Button>
                 <Button onClick={() => handleSelectTab("Deleted")} sx={{ color: tab === "Deleted" ? "error.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Deleted" && 2, borderColor: tab === "Deleted" && "error.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("deleted")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "error.main" }}>{deletedCount}</Avatar></Button>
               </Stack>
             </Stack>
-            <Stack direction="row" sx={{ width: 1, border: 1, borderColor: "border.secondary" }}>
+            <Stack id="search" direction="row" sx={{ width: 1, border: 1, borderColor: "border.secondary" }}>
               <InputBase
                 sx={{ ml: 1, paddingLeft: "10px", flex: 1 }}
                 placeholder="Search"
@@ -248,7 +248,7 @@ const CourtList = () => {
                 <SearchSharpIcon />
               </IconButton>
             </Stack>
-            <Box display="flex" sx={{
+            <Box id="data-grid" display="flex" sx={{
               width: 1, border: 1, borderColor: "border.secondary", justifyContent: "center", padding: "10px",
               "& .super-app-theme--header": {
                 backgroundColor: "background.default",
@@ -347,23 +347,6 @@ const CourtList = () => {
           </Stack>
         </Stack>
       </Layout>
-
-      <Dialog open={createDialogOpen} onClose={closeCreateDialog} fullWidth={true} maxWidth="sm">
-        <DialogTitle>
-          <Stack direction="row" sx={{ width: 1, justifyContent:"space-between", alignItems: "center"}}>
-              {t("court.create")}
-              <DialogActions>
-                <IconButton onClick={closeCreateDialog} color="text" size="small">
-                  <CloseSharpIcon/>
-                </IconButton>
-              </DialogActions>
-          </Stack>
-        </DialogTitle>
-        <DialogContent>
-          <CreateCourt></CreateCourt>
-        </DialogContent>
-      </Dialog>
-
     </AuthCheck>
   )
 }

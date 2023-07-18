@@ -85,7 +85,7 @@ export function getDeletedCourts(authorization, locale){
     });
 }
 
-export function createCourt(courtRequest, authorization, locale){
+export function createCourt(data, authorization, locale){
     return axios({
         method: "POST",
         mode: "cors",
@@ -97,8 +97,10 @@ export function createCourt(courtRequest, authorization, locale){
             "Accept": "application/json"
         },
         data : {
-            name : courtRequest.name,
-            parentId : courtRequest.parentId
+            name : data.name,
+            parent : {
+                id : data.parentId,
+            } 
         },
         validateStatus : function(status){
             return true; // default

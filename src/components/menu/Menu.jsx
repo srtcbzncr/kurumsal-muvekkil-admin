@@ -59,7 +59,7 @@ const Menu = () => {
             <Stack direction="column"alignItems="center">
                 <Stack direction="column" justifyContent="flex-start" alignItems="center" sx={{ width: "100%", backgroundColor: "primary.dark", paddingBottom: "20px"}}>
                     <Box className="logo" sx={{ display: "flex", width: "100%", justifyContent: "center", marginTop: "20px" }}>
-                        <img src='logo.png' width="60%"></img>
+                        <img src='/logo.png' width="60%"></img>
                     </Box>
                     <Chip avatar={<Avatar>{ cookie.username.charAt(0) }</Avatar>} label={ cookie.username } size="medium" sx={{ backgroundColor: "background.paper", marginTop: "20px" }}/>
                     <Stack direction="row" sx={{ marginTop: "20px", width: "100%", justifyContent: "space-evenly" }}>
