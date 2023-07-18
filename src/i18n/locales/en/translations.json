@@ -9,6 +9,7 @@
     "lawyer.management" : "Lawyer Management",
     "client.management" : "Client Management",
     "court.management" : "Court Management",
+    "court.infos" : "Court Infos",
     "file.management" : "Case Management",
     "subscription.management" : "Subscription Management",
     "courts" : "Courts",
@@ -30,6 +31,7 @@
     "setActive" : "Set Active",
     "edit" : "Edit",
     "delete" : "Delete",
+    "back" : "Back",
 
     "columnMenuLabel": "Men",
     "columnMenuShowColumns": "Show Columns",

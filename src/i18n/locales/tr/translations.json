@@ -9,6 +9,7 @@
     "lawyer.management" : "Avukat Yönetimi",
     "client.management" : "Müvekkil Yönetimi",
     "court.management" : "Mahkeme Yönetimi",
+    "court.infos" : "Mahkeme Bilgileri",
     "file.management" : "Dosya Yönetimi",
     "subscription.management" : "Abonelik Yönetimi",
     "courts" : "Mahkemeler",
@@ -30,6 +31,7 @@
     "setActive" : "Aktifleştir",
     "edit" : "Düzenle",
     "delete" : "Sil",
+    "back" : "Geri",
 
     "columnMenuLabel": "Menü",
     "columnMenuShowColumns": "Kolonu Göster",

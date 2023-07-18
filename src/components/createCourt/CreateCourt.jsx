@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
-import { FormControl, Stack, Typography, MenuItem, TextField, Button, Select, InputLabel, Box, Breadcrumbs, Link } from '@mui/material';
+import { FormControl, Stack, Typography, MenuItem, TextField, Button, Select, InputLabel, Box, Breadcrumbs, Link, IconButton, Tooltip } from '@mui/material';
 import { getActiveCourts, createCourt } from '../../services/CourtService';
 import getAuthHeader from '../../helpers/getAuthHeader';
 import { useTranslation } from 'react-i18next';
 import { Outlet, useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
-import donePNG from '../../illustrations/done.png';
+import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import createCourtPNG from '../../illustrations/createCourt.png';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
 
-const CreateCourt = ({ refresh }) => {
+const CreateCourt = () => {
 
     const [cookie, setCookie, removeCookie] = useCookies();
     const { t, i18n } = useTranslation();
@@ -26,11 +26,7 @@ const CreateCourt = ({ refresh }) => {
     function fetchActiveCourts() {
         getActiveCourts(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             if (response.data.status === 200) {
-                console.log(response);
                 setActiveCourts(response.data.data);
-            }
-            else if (response.data.status === 400) {
-                console.log("Validation error");
             }
             else if (response.data.status === 401) {
                 navigate("/login");
@@ -55,11 +51,10 @@ const CreateCourt = ({ refresh }) => {
         setNewCourtName(event.target.value);
     };
 
-    function handleOnClick() {
+    function handleSaveClick() {
         createCourt({ name: newCourtName, parentId: selectedParentCourtId }, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             if (response.data.status === 201) {
                 setCreated(true);
-                refresh();
             }
             else if (response.data.status === 400) {
                 setError(true);
@@ -75,6 +70,10 @@ const CreateCourt = ({ refresh }) => {
         })
     };
 
+    function handleBackClick() {
+        navigate("/courts");
+    }
+
     return (
         <AuthCheck>
             <Layout>
@@ -83,16 +82,21 @@ const CreateCourt = ({ refresh }) => {
                         <Typography variant="h4">
                             {t("court.create")}
                         </Typography>
+                        <Tooltip title={t("back")}>
+                            <Button variant="outlined" color="text" onClick={handleBackClick}>
+                                <ArrowBackSharpIcon color="text"/>
+                            </Button>
+                        </Tooltip>
                     </Stack>
                     <Box id="navigation" display="flex" spacing={2} sx={{ width: 0.8, marginTop: "25px" }}>
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link underline="hover" color="inherit" href="/">
-                                Anasayfa
+                            {t("home")}
                             </Link>
                             <Link underline="hover" color="inherit" href="/">
-                                Mahkeme Yönetimi
+                                {t("court.management")}
                             </Link>
-                            <Typography color="text.primary">Yeni Mahkeme</Typography>
+                            <Typography color="text.primary">{t("court.create")}</Typography>
                         </Breadcrumbs>
                     </Box>
                     <Stack id="main" direction="row" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px" }}>
@@ -101,7 +105,7 @@ const CreateCourt = ({ refresh }) => {
                         </Box>
                         <Stack direction="column" sx={{ width: 0.5, justifyContent: "center", paddingRight: "50px" }}>
                             <Typography variant="h5">
-                                Mahkeme Bilgileri
+                                {t("court.infos")}
                             </Typography>
                             <FormControl sx={{ marginTop: "40px"}}>
                                 <InputLabel id="parent-court-select-label">{t("court.parent")}</InputLabel>
@@ -116,9 +120,9 @@ const CreateCourt = ({ refresh }) => {
                                         activeCourts.map((court) => <MenuItem key={court.id} value={court.id}>{court.name}</MenuItem>)
                                     }
                                 </Select>
-                                <TextField required id="court-name" label={t("name")} variant="outlined" sx={{ marginTop: "20px"}} />
+                                <TextField required id="court-name" label={t("name")} variant="outlined" sx={{ marginTop: "20px"}} value={newCourtName} onChange={handleNewCourtNameChange} />
                                 <Stack direction="row" sx={{ width: 1, justifyContent: "flex-end", marginTop: "30px" }}>
-                                    <Button variant="contained" size="large" sx={{ width: 0.45}}>{t("save")}</Button>
+                                    <Button variant="contained" size="large" sx={{ width: 0.4}}>{t("save")}</Button>
                                 </Stack>
                             </FormControl>
                         </Stack>
