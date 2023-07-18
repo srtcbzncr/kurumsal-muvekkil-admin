@@ -10,18 +10,19 @@ import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import createCourtPNG from '../../illustrations/createCourt.png';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
+import { useForm, SubmitHandler } from "react-hook-form";
 
 const CreateCourt = () => {
 
     const [cookie, setCookie, removeCookie] = useCookies();
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const [activeCourts, setActiveCourts] = useState([]);
     const [selectedParentCourtId, setSelectedParentCourtId] = useState("");
     const [newCourtName, setNewCourtName] = useState(null);
     const [created, setCreated] = useState(false);
-    const [error, setError] = useState(false);
 
     function fetchActiveCourts() {
         getActiveCourts(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
@@ -91,9 +92,9 @@ const CreateCourt = () => {
                     <Box id="navigation" display="flex" spacing={2} sx={{ width: 0.8, marginTop: "25px" }}>
                         <Breadcrumbs aria-label="breadcrumb">
                             <Link underline="hover" color="inherit" href="/">
-                            {t("home")}
+                                {t("home")}
                             </Link>
-                            <Link underline="hover" color="inherit" href="/">
+                            <Link underline="hover" color="inherit" href="/courts">
                                 {t("court.management")}
                             </Link>
                             <Typography color="text.primary">{t("court.create")}</Typography>
@@ -120,9 +121,9 @@ const CreateCourt = () => {
                                         activeCourts.map((court) => <MenuItem key={court.id} value={court.id}>{court.name}</MenuItem>)
                                     }
                                 </Select>
-                                <TextField required id="court-name" label={t("name")} variant="outlined" sx={{ marginTop: "20px"}} value={newCourtName} onChange={handleNewCourtNameChange} />
+                                <TextField required id="court-name" label={t("name")} variant="outlined" sx={{ marginTop: "20px"}} value={newCourtName} onChange={handleNewCourtNameChange} /> 
                                 <Stack direction="row" sx={{ width: 1, justifyContent: "flex-end", marginTop: "30px" }}>
-                                    <Button variant="contained" size="large" sx={{ width: 0.4}}>{t("save")}</Button>
+                                    <Button variant="contained" size="large" sx={{ width: 0.4}} onClick={handleSubmit(handleSaveClick)}>{t("save")}</Button>
                                 </Stack>
                             </FormControl>
                         </Stack>

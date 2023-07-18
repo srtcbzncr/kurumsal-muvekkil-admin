@@ -5,6 +5,7 @@ import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
 import Status from '../status/Status';
 import AddSharpIcon from '@mui/icons-material/AddSharp';
+import FiberManualRecordSharpIcon from '@mui/icons-material/FiberManualRecordSharp';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import { useTranslation } from 'react-i18next';
 import Actions from '../actions/Actions';
@@ -224,9 +225,9 @@ const CourtList = () => {
           <Box id="navigation" display="flex" spacing={2} sx={{ width: 0.8, marginTop: "25px"}}>
             <Breadcrumbs aria-label="breadcrumb">
               <Link underline="hover" color="inherit" href="/">
-                Anasayfa
+                {t("home")}
               </Link>
-              <Typography color="text.primary">Mahkeme Yönetimi</Typography>
+              <Typography color="text.primary">{t("court.management")}</Typography>
             </Breadcrumbs>
           </Box>
           <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px"}}>
