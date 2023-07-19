@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { Box, Stack, Button, Typography, Avatar, InputBase, IconButton, Breadcrumbs, Link } from '@mui/material';
+import { Box, Stack, Button, Typography, Avatar, InputBase, IconButton, Breadcrumbs, Link, LinearProgress } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
 import Status from '../status/Status';
 import AddSharpIcon from '@mui/icons-material/AddSharp';
-import FiberManualRecordSharpIcon from '@mui/icons-material/FiberManualRecordSharp';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import { useTranslation } from 'react-i18next';
 import Actions from '../actions/Actions';
@@ -14,6 +13,7 @@ import { useCookies } from 'react-cookie';
 import { getAllCourts, getActiveCourts, getPassiveCourts, getDeletedCourts, getCourtStats } from '../../services/CourtService';
 import getAuthHeader from '../../helpers/getAuthHeader';
 import { useNavigate } from 'react-router';
+import NoRowsOverlay from "../noRowsOverlay/NoRowsOverlay";
 
 const CourtList = () => {
 
@@ -23,6 +23,7 @@ const CourtList = () => {
   const [activeCount, setActiveCount] = useState(0);
   const [passiveCount, setPassiveCount] = useState(0);
   const [deletedCount, setDeletedCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const [tab, setTab] = useState("All");
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -107,9 +108,9 @@ const CourtList = () => {
   };
 
   function fetchCourts(type) {
+    setIsLoading(true);
     if (type === "All") {
       getAllCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
-        console.log(response);
         if (response.data.status === 200) {
           setCourts(response.data.data);
         }
@@ -127,6 +128,8 @@ const CourtList = () => {
         }
       }).catch((error) => {
         console.log(error);
+      }).finally(() => {
+        setIsLoading(false);
       });
     }
     else if (type === "Active") {
@@ -149,6 +152,8 @@ const CourtList = () => {
         }
       }).catch((error) => {
         console.log(error);
+      }).finally(() => {
+        setIsLoading(false);
       });
     }
     else if (type === "Passive") {
@@ -171,6 +176,8 @@ const CourtList = () => {
         }
       }).catch((error) => {
         console.log(error);
+      }).finally(() => {
+        setIsLoading(false);
       });
     }
     else if (type === "Deleted") {
@@ -193,6 +200,8 @@ const CourtList = () => {
         }
       }).catch((error) => {
         console.log(error);
+      }).finally(() => {
+        setIsLoading(false);
       });
     }
   };
@@ -249,8 +258,7 @@ const CourtList = () => {
                 <SearchSharpIcon />
               </IconButton>
             </Stack>
-            <Box id="data-grid" display="flex" sx={{
-              width: 1, border: 1, borderColor: "border.secondary", justifyContent: "center", padding: "10px",
+            <Box id="data-grid" display="flex" sx={{ width: 1, height: "550px", border: 1, borderColor: "border.secondary", justifyContent: "center", padding: "10px",
               "& .super-app-theme--header": {
                 backgroundColor: "background.default",
                 color: "text.main",
@@ -268,14 +276,19 @@ const CourtList = () => {
               <DataGrid
                 rows={courts}
                 columns={columns}
+                slots={{
+                  loadingOverlay: LinearProgress,
+                  noRowsOverlay: NoRowsOverlay,
+                  noResultsOverlay: NoRowsOverlay,
+                }}
+                loading={isLoading}
                 initialState={{
                   pagination: {
                     paginationModel: {
-                      pageSize: 10,
+                      pageSize: 8,
                     },
                   },
                 }}
-                pageSizeOptions={[8]}
                 disableRowSelectionOnClick
                 localeText={{
                   noRowsLabel: t("noRowsLabel"),

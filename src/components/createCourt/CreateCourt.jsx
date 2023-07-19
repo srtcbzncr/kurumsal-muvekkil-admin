@@ -20,7 +20,7 @@ const CreateCourt = () => {
     const navigate = useNavigate();
 
     const [activeCourts, setActiveCourts] = useState([]);
-    const [selectedParentCourtId, setSelectedParentCourtId] = useState("");
+    const [selectedParentCourtId, setSelectedParentCourtId] = useState(null);
     const [newCourtName, setNewCourtName] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -84,7 +84,7 @@ const CreateCourt = () => {
         })
     };
 
-    function handleBackClick() {
+    function handleBackOnClick() {
         navigate("/courts");
     }
 
@@ -107,7 +107,7 @@ const CreateCourt = () => {
                             {t("court.create")}
                         </Typography>
                         <Tooltip title={t("back")}>
-                            <Button variant="outlined" color="text" onClick={handleBackClick}>
+                            <Button variant="outlined" color="text" onClick={handleBackOnClick}>
                                 <ArrowBackSharpIcon color="text" />
                             </Button>
                         </Tooltip>

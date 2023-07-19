@@ -35,6 +35,7 @@
     "back" : "Back",
 
     "error.undefined" : "An error occured, please try again later",
+    "no.data" : "No data",
 
     "columnMenuLabel": "Men",
     "columnMenuShowColumns": "Show Columns",

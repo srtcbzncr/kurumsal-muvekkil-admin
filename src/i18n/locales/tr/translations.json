@@ -35,6 +35,7 @@
     "back" : "Geri",
 
     "error.undefined" : "Bir hata oluştu, lütfen daha sonra tekrar deneyin",
+    "no.data" : "Hiç kayıt bulunamadı",
 
     "columnMenuLabel": "Menü",
     "columnMenuShowColumns": "Kolonu Göster",
