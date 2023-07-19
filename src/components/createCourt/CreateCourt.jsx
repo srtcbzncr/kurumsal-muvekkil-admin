@@ -63,6 +63,8 @@ const CreateCourt = () => {
         createCourt({ name: newCourtName, parentId: selectedParentCourtId }, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             if (response.data.status === 201) {
                 setIsDone(true);
+                setSelectedParentCourtId(null);
+                setNewCourtName(null);
             }
             else if (response.data.status === 400) {
                 setIsError(true);
