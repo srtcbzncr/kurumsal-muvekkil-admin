@@ -9,6 +9,9 @@ export function login(username, password) {
         data: {
             username: username,
             password: password
+        },
+        validateStatus : function(status){
+            return true; // default
         }
     });
 }

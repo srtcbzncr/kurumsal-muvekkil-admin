@@ -33,6 +33,8 @@
     "delete" : "Sil",
     "back" : "Geri",
 
+    "error.undefined" : "Bir hata oluştu, lütfen daha sonra tekrar deneyin",
+
     "columnMenuLabel": "Menü",
     "columnMenuShowColumns": "Kolonu Göster",
     "columnMenuManageColumns": "Kolonları Yönet",

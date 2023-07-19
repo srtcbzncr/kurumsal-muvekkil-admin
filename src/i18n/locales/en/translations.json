@@ -33,6 +33,8 @@
     "delete" : "Delete",
     "back" : "Back",
 
+    "error.undefined" : "An error occured, please try again later",
+
     "columnMenuLabel": "Men",
     "columnMenuShowColumns": "Show Columns",
     "columnMenuManageColumns": "Manage Columns",
