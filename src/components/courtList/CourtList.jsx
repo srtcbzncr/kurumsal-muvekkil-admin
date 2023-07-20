@@ -1,32 +1,39 @@
-import React, { useState } from 'react'
+import './style.css';
+
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router';
+
 import { Box, Stack, Button, Typography, Avatar, InputBase, IconButton, Breadcrumbs, Link, LinearProgress } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
 import Status from '../status/Status';
+import NoRowsOverlay from "../noRowsOverlay/NoRowsOverlay";
+import Actions from '../actions/Actions';
+
+import { getAllCourts, getActiveCourts, getPassiveCourts, getDeletedCourts, getCourtStats, setActive, setPassive } from '../../services/CourtService';
+import getAuthHeader from '../../helpers/getAuthHeader';
+
 import AddSharpIcon from '@mui/icons-material/AddSharp';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
-import { useTranslation } from 'react-i18next';
-import Actions from '../actions/Actions';
-import { useEffect } from 'react';
-import { useCookies } from 'react-cookie';
-import { getAllCourts, getActiveCourts, getPassiveCourts, getDeletedCourts, getCourtStats } from '../../services/CourtService';
-import getAuthHeader from '../../helpers/getAuthHeader';
-import { useNavigate } from 'react-router';
-import NoRowsOverlay from "../noRowsOverlay/NoRowsOverlay";
 
 const CourtList = () => {
 
   const [cookie, setCookie, removeCookie] = useCookies();
-  const [courts, setCourts] = useState([]);
+  const { t, i18n } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const [tab, setTab] = useState("All");
   const [allCount, setAllCount] = useState(0);
   const [activeCount, setActiveCount] = useState(0);
   const [passiveCount, setPassiveCount] = useState(0);
   const [deletedCount, setDeletedCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [tab, setTab] = useState("All");
-  const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const [courts, setCourts] = useState([]);
+
 
   const columns = [
     {
@@ -76,7 +83,7 @@ const CourtList = () => {
       flex: 0.21,
       renderCell: (params) => {
         return (
-          <Actions active={params.row.active} deleted={params.row.deleted}></Actions>
+          <Actions id={params.row.id} active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={deleteRequest}></Actions>
         );
       },
     },
@@ -107,9 +114,9 @@ const CourtList = () => {
     });
   };
 
-  function fetchCourts(type) {
+  function fetchCourts() {
     setIsLoading(true);
-    if (type === "All") {
+    if (tab === "All") {
       getAllCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
         if (response.data.status === 200) {
           setCourts(response.data.data);
@@ -132,7 +139,7 @@ const CourtList = () => {
         setIsLoading(false);
       });
     }
-    else if (type === "Active") {
+    else if (tab === "Active") {
       getActiveCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
         console.log(response);
         if (response.data.status === 200) {
@@ -156,7 +163,7 @@ const CourtList = () => {
         setIsLoading(false);
       });
     }
-    else if (type === "Passive") {
+    else if (tab === "Passive") {
       getPassiveCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
         console.log(response);
         if (response.data.status === 200) {
@@ -180,7 +187,7 @@ const CourtList = () => {
         setIsLoading(false);
       });
     }
-    else if (type === "Deleted") {
+    else if (tab === "Deleted") {
       getDeletedCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
         console.log(response);
         if (response.data.status === 200) {
@@ -206,23 +213,57 @@ const CourtList = () => {
     }
   };
 
+  function setActiveRequest(id){
+    console.log("Set Active");
+    console.log(id);
+    /*setIsLoading(true);
+    setActive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+      fetchStats();
+      fetchCourts();
+    }).catch((error) => {
+      console.log(error);
+    }).finally(() => {
+      setIsLoading(false);
+    });*/
+  }
+
+  function setPassiveRequest(id){
+    console.log("Set Passive");
+    console.log(id);
+    /*setIsLoading(true);
+    setActive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+      fetchStats();
+      fetchCourts();
+    }).catch((error) => {
+      console.log(error);
+    }).finally(() => {
+      setIsLoading(false);
+    });*/
+  }
+
+  function deleteRequest(id){
+    console.log("Delete");
+    console.log(id);
+  }
+
+  function handleSelectTab(value) {
+    setTab(value);
+  }
+
+  function handleNewClick(){
+    navigate("/courts/create");
+  }
+
   useEffect(() => {
     fetchStats();
     fetchCourts(tab);
   }, [tab]);
 
-  function handleSelectTab(value) {
-    setTab(value);
-  };
-
-  function handleNewClick(){
-    navigate("/courts/create");
-  };
-
   return (
     <AuthCheck>
       <Layout>
         <Stack direction="column" sx={{ width: 1, alignItems: "center" }}>
+          {/* Title */}
           <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "100px" }}>
             <Typography variant="h4">
               {t("court.management")}
@@ -231,6 +272,8 @@ const CourtList = () => {
               <AddSharpIcon />
             </Button>
           </Stack>
+          {/* Title */}
+          {/* Navigation */}
           <Box id="navigation" display="flex" spacing={2} sx={{ width: 0.8, marginTop: "25px"}}>
             <Breadcrumbs aria-label="breadcrumb">
               <Link underline="hover" color="inherit" href="/">
@@ -239,6 +282,8 @@ const CourtList = () => {
               <Typography color="text.primary">{t("court.management")}</Typography>
             </Breadcrumbs>
           </Box>
+          {/* Navigation */}
+          {/* Main */}
           <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px"}}>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "10px", border: 1, borderColor: "border.secondary" }}>
               <Stack id="main" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "flex-start" }}>
@@ -248,6 +293,7 @@ const CourtList = () => {
                 <Button onClick={() => handleSelectTab("Deleted")} sx={{ color: tab === "Deleted" ? "error.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Deleted" && 2, borderColor: tab === "Deleted" && "error.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("deleted")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "error.main" }}>{deletedCount}</Avatar></Button>
               </Stack>
             </Stack>
+            {/* Search */}
             <Stack id="search" direction="row" sx={{ width: 1, border: 1, borderColor: "border.secondary" }}>
               <InputBase
                 sx={{ ml: 1, paddingLeft: "10px", flex: 1 }}
@@ -258,6 +304,8 @@ const CourtList = () => {
                 <SearchSharpIcon />
               </IconButton>
             </Stack>
+            {/* Search */}
+            {/* Data */}
             <Box id="data-grid" display="flex" sx={{ width: 1, height: "550px", border: 1, borderColor: "border.secondary", justifyContent: "center", padding: "10px",
               "& .super-app-theme--header": {
                 backgroundColor: "background.default",
@@ -358,7 +406,9 @@ const CourtList = () => {
                 }}
               />
             </Box>
+            {/* Data */}
           </Stack>
+          {/* Main */}
         </Stack>
       </Layout>
     </AuthCheck>

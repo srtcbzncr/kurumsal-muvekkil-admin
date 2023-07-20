@@ -6,7 +6,7 @@ import GppGoodSharpIcon from '@mui/icons-material/GppGoodSharp';
 import GppBadSharpIcon from '@mui/icons-material/GppBadSharp';
 import { useTranslation } from 'react-i18next';
 
-const Actions = ({active, deleted}) => {
+const Actions = ({id, active, deleted, setActiveFunc, setPassiveFunc, deleteFunc}) => {
 
     const {t, i18n} = useTranslation();
 
@@ -24,7 +24,7 @@ const Actions = ({active, deleted}) => {
             deleted === false && active === true
             &&
               <Tooltip title={t("setPassive")}>
-                <IconButton size="small" color="warning">
+                <IconButton size="small" color="warning" onClick={() => setPassiveFunc(id)}>
                   <GppBadSharpIcon></GppBadSharpIcon>
                 </IconButton>
               </Tooltip>
@@ -33,7 +33,7 @@ const Actions = ({active, deleted}) => {
             deleted === false && active === false
             &&
               <Tooltip title={t("setActive")}>
-                <IconButton size="small" color="success">
+                <IconButton size="small" color="success" onClick={() => setActiveFunc(id)}>
                   <GppGoodSharpIcon></GppGoodSharpIcon>
                 </IconButton>
               </Tooltip>
@@ -42,7 +42,7 @@ const Actions = ({active, deleted}) => {
             deleted === false 
             && 
             <Tooltip title={t("delete")}>
-              <IconButton size="small" color="error">
+              <IconButton size="small" color="error" onClick={() => deleteFunc(id)}>
                 <RemoveCircleSharpIcon />
               </IconButton>
             </Tooltip>

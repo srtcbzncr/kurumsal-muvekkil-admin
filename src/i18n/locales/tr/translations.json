@@ -37,6 +37,8 @@
     "error.undefined" : "Bir hata oluştu, lütfen daha sonra tekrar deneyin",
     "no.data" : "Hiç kayıt bulunamadı",
 
+    "null.validation.error" : "Bu alan boş olamaz",
+
     "columnMenuLabel": "Menü",
     "columnMenuShowColumns": "Kolonu Göster",
     "columnMenuManageColumns": "Kolonları Yönet",

@@ -119,3 +119,31 @@ export function createCourt(court, authorization, locale){
         }
     });
 }
+
+export function setActive(id, authorization, locale){
+    return axios({
+        method: "PUT",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url: id + process.env.REACT_APP_API_SET_ACTIVE_URL,
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        }
+    });
+}
+
+export function setPassive(id, authorization, locale){
+    return axios({
+        method: "PUT",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url: id + process.env.REACT_APP_API_SET_PASSIVE_URL,
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        }
+    });
+}

@@ -37,6 +37,8 @@
     "error.undefined" : "An error occured, please try again later",
     "no.data" : "No data",
 
+    "null.validation.error" : "This field can not be null",
+
     "columnMenuLabel": "Men",
     "columnMenuShowColumns": "Show Columns",
     "columnMenuManageColumns": "Manage Columns",
