@@ -41,24 +41,20 @@ export default function Login() {
 
     function loginRequest(){
         login(username, password).then((response) => {
-            if(response.status === 200){
-                setCookie("username", username, { path: '/' });
-                setCookie("password", password, { path: '/' });
-                setCookie("role", response.data.data.role, { path: '/' });
-                navigate("/");
-            }
-            else if(response.status === 400 ){
-                setUsernameValidationError(response.data.error.fieldErrors.find(fieldError => fieldError.field === "username").message);
-                setUsernameValidationError(response.data.error.fieldErrors.find(fieldError => fieldError.field === "password").message);
-                setErrorMessage(response.data.error.message);
+            setCookie("username", username, { path: '/' });
+            setCookie("password", password, { path: '/' });
+            setCookie("role", response.data.data.role, { path: '/' });
+            navigate("/");
+        }).catch((error) => {
+            if(error.response.status === 400 ){
+                setUsernameValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "username").message);
+                setUsernameValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "password").message);
+                setErrorMessage(error.response.data.error.message);
             }
             else {
                 setIsError(true);
-                setErrorMessage(response.data.error.message);
+                setErrorMessage(error.response.data.error.message);
             }
-        }).catch((error) => {
-            setIsError(true);
-            setErrorMessage(t("error.undefined"));
         }).finally(() => {
             setIsLoading(false);
         });

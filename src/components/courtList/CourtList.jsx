@@ -1,4 +1,5 @@
 import './style.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +8,8 @@ import { useNavigate } from 'react-router';
 
 import { Box, Stack, Button, Typography, Avatar, InputBase, IconButton, Breadcrumbs, Link, LinearProgress } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+
+import { ToastContainer, toast } from 'react-toastify';
 
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
@@ -91,26 +94,20 @@ const CourtList = () => {
 
   function fetchStats() {
     getCourtStats(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
-      if (response.data.status === 200) {
-        setAllCount(response.data.data.allCount);
-        setActiveCount(response.data.data.activeCount);
-        setPassiveCount(response.data.data.passiveCount);
-        setDeletedCount(response.data.data.deletedCount);
-      }
-      else if (response.data.status === 400) {
-        console.log(response.data.error);
-      }
-      else if (response.data.status === 401) {
+      setAllCount(response.data.data.allCount);
+      setActiveCount(response.data.data.activeCount);
+      setPassiveCount(response.data.data.passiveCount);
+      setDeletedCount(response.data.data.deletedCount);
+    }).catch((error) => {
+      if (error.response.data.status === 401) {
         navigate("/login");
       }
-      else if (response.data.status === 403) {
+      else if (error.response.data.status === 403) {
         navigate("/login");
       }
       else {
         console.log("Bilinmeyen hata");
       }
-    }).catch((error) => {
-      console.log(error);
     });
   };
 
@@ -118,95 +115,68 @@ const CourtList = () => {
     setIsLoading(true);
     if (tab === "All") {
       getAllCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
-        if (response.data.status === 200) {
-          setCourts(response.data.data);
-        }
-        else if (response.data.status === 400) {
-          console.log(response.data.error);
-        }
-        else if (response.data.status === 401) {
+        setCourts(response.data.data);
+      }).catch((error) => {
+        if (error.response.data.status === 401) {
           navigate("/login");
         }
-        else if (response.data.status === 403) {
+        else if (error.response.data.status === 403) {
           navigate("/login");
         }
         else {
           console.log("Bilinmeyen hata");
         }
-      }).catch((error) => {
-        console.log(error);
       }).finally(() => {
         setIsLoading(false);
       });
     }
     else if (tab === "Active") {
       getActiveCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
-        console.log(response);
-        if (response.data.status === 200) {
-          setCourts(response.data.data);
-        }
-        else if (response.data.status === 400) {
-          console.log(response.data.error);
-        }
-        else if (response.data.status === 401) {
+        setCourts(response.data.data);
+      }).catch((error) => {
+        if (error.response.data.status === 401) {
           navigate("/login");
         }
-        else if (response.data.status === 403) {
+        else if (error.response.data.status === 403) {
           navigate("/login");
         }
         else {
           console.log("Bilinmeyen hata");
         }
-      }).catch((error) => {
-        console.log(error);
       }).finally(() => {
         setIsLoading(false);
       });
     }
     else if (tab === "Passive") {
       getPassiveCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
-        console.log(response);
-        if (response.data.status === 200) {
-          setCourts(response.data.data);
-        }
-        else if (response.data.status === 400) {
-          console.log(response.data.error);
-        }
-        else if (response.data.status === 401) {
+        setCourts(response.data.data);
+      }).catch((error) => {
+        if (error.response.data.status === 401) {
           navigate("/login");
         }
-        else if (response.data.status === 403) {
+        else if (error.response.data.status === 403) {
           navigate("/login");
         }
         else {
           console.log("Bilinmeyen hata");
         }
-      }).catch((error) => {
-        console.log(error);
       }).finally(() => {
         setIsLoading(false);
       });
     }
     else if (tab === "Deleted") {
       getDeletedCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
-        console.log(response);
-        if (response.data.status === 200) {
-          setCourts(response.data.data);
-        }
-        else if (response.data.status === 400) {
-          console.log(response.data.error);
-        }
-        else if (response.data.status === 401) {
+        setCourts(response.data.data);
+      }).catch((error) => {
+        if (error.response.data.status === 401) {
           navigate("/login");
         }
-        else if (response.data.status === 403) {
+        else if (error.response.data.status === 403) {
           navigate("/login");
         }
         else {
           console.log("Bilinmeyen hata");
         }
-      }).catch((error) => {
-        console.log(error);
       }).finally(() => {
         setIsLoading(false);
       });
@@ -214,31 +184,65 @@ const CourtList = () => {
   };
 
   function setActiveRequest(id){
-    console.log("Set Active");
-    console.log(id);
-    /*setIsLoading(true);
+    setIsLoading(true);
     setActive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+      toast.success(t("court.set.active.success"), {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
       fetchStats();
       fetchCourts();
     }).catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     }).finally(() => {
       setIsLoading(false);
-    });*/
+    });
   }
 
   function setPassiveRequest(id){
-    console.log("Set Passive");
-    console.log(id);
-    /*setIsLoading(true);
-    setActive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+    setIsLoading(true);
+    setPassive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+      toast.success(t("court.set.passive.success"), {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
       fetchStats();
       fetchCourts();
     }).catch((error) => {
-      console.log(error);
+      toast.error(error.response.data.error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     }).finally(() => {
       setIsLoading(false);
-    });*/
+    });
   }
 
   function deleteRequest(id){
@@ -411,6 +415,7 @@ const CourtList = () => {
           {/* Main */}
         </Stack>
       </Layout>
+      <ToastContainer/>
     </AuthCheck>
   )
 }

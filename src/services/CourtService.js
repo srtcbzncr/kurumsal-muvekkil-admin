@@ -10,9 +10,6 @@ export function getCourtStats(authorization, locale){
             "Authorization": authorization,
             "Accept-Language": locale,
             "Accept": "application/json"
-        },
-        validateStatus : function(status){
-            return true; // default
         }
     });
 }
@@ -27,9 +24,6 @@ export function getAllCourts(authorization, locale){
             "Authorization": authorization,
             "Accept-Language": locale,
             "Accept": "application/json"
-        },
-        validateStatus : function(status){
-            return true; // default
         }
     });
 }
@@ -44,9 +38,6 @@ export function getActiveCourts(authorization, locale){
             "Authorization": authorization,
             "Accept-Language": locale,
             "Accept": "application/json"
-        },
-        validateStatus : function(status){
-            return true; // default
         }
     });
 }
@@ -61,9 +52,6 @@ export function getPassiveCourts(authorization, locale){
             "Authorization": authorization,
             "Accept-Language": locale,
             "Accept": "application/json"
-        },
-        validateStatus : function(status){
-            return true; // default
         }
     });
 }
@@ -78,9 +66,6 @@ export function getDeletedCourts(authorization, locale){
             "Authorization": authorization,
             "Accept-Language": locale,
             "Accept": "application/json"
-        },
-        validateStatus : function(status){
-            return true; // default
         }
     });
 }
@@ -113,10 +98,7 @@ export function createCourt(court, authorization, locale){
             "Accept-Language": locale,
             "Accept": "application/json"
         },
-        data : courtData,
-        validateStatus : function(status){
-            return true; // default
-        }
+        data : courtData
     });
 }
 
@@ -125,7 +107,7 @@ export function setActive(id, authorization, locale){
         method: "PUT",
         mode: "cors",
         baseURL: process.env.REACT_APP_API_URL,
-        url: id + process.env.REACT_APP_API_SET_ACTIVE_URL,
+        url: process.env.REACT_APP_API_SET_ACTIVE_COURT_URL + "/" + id,
         headers: {
             "Authorization": authorization,
             "Accept-Language": locale,
@@ -139,7 +121,7 @@ export function setPassive(id, authorization, locale){
         method: "PUT",
         mode: "cors",
         baseURL: process.env.REACT_APP_API_URL,
-        url: id + process.env.REACT_APP_API_SET_PASSIVE_URL,
+        url: process.env.REACT_APP_API_SET_PASSIVE_COURT_URL + "/" + id,
         headers: {
             "Authorization": authorization,
             "Accept-Language": locale,

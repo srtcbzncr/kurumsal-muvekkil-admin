@@ -37,6 +37,9 @@
     "error.undefined" : "Bir hata oluştu, lütfen daha sonra tekrar deneyin",
     "no.data" : "Hiç kayıt bulunamadı",
 
+    "court.set.active.success" : "Mahkeme aktifleştirildi",
+    "court.set.passive.success" : "Mahkeme pasifleştirildi",
+
     "null.validation.error" : "Bu alan boş olamaz",
 
     "columnMenuLabel": "Menü",

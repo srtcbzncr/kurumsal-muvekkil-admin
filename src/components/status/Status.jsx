@@ -10,7 +10,7 @@ const Status = ({active, deleted}) => {
         <Box display="flex" justifyContent="center">
             {
             deleted 
-            ? <Chip label="Deleted" variant="outlined" color="error" />
+            ? <Chip label={t("deleted")} variant="outlined" color="error" />
             :   (
                     active === true 
                     ? <Chip label={t("active")} variant="outlined" color="success" />

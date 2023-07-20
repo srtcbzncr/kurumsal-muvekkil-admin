@@ -37,43 +37,39 @@ const CreateCourt = () => {
 
     function fetchActiveCourts() {
         getActiveCourts(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
-            if (response.data.status === 200) {
-                setActiveCourts(response.data.data);
-            }
-            else if (response.data.status === 401) {
-                navigate("/login");
-            }
-            else if (response.data.status === 403) {
-                navigate("/login");
-            }
+            setActiveCourts(response.data.data);
         }).catch((error) => {
             setIsError(true);
             setErrorMessage(t("error.undefined"));
+            if (error.response.data.status === 401) {
+                navigate("/login");
+            }
+            else if (error.response.data.status === 403) {
+                navigate("/login");
+            }
         })
     };
 
     function createCourtRequest() {
         createCourt({ name: newCourtName, parentId: selectedParentCourtId }, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
-            if (response.data.status === 201) {
-                setIsDone(true);
-                setSelectedParentCourtId(null);
-                setNewCourtName(null);
-            }
-            else if (response.data.status === 400) {
-                setNameValidationError(response.data.error.fieldErrors.find(fieldError => fieldError.field === "name").message);
-                setErrorMessage(response.data.error.message);
-            }
-            else if (response.data.status === 401) {
-                setIsError(true);
-                setErrorMessage(response.data.error.message);
-            }
-            else if (response.data.status === 403) {
-                setIsError(true);
-                setErrorMessage(response.data.error.message);
-            }
+            setIsDone(true);
+            setSelectedParentCourtId(null);
+            setNewCourtName(null);
         }).catch((error) => {
             setIsError(true);
             setErrorMessage(t("error.undefined"));
+            if (error.response.data.status === 400) {
+                setNameValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "name").message);
+                setErrorMessage(error.response.data.error.message);
+            }
+            else if (error.response.data.status === 401) {
+                setIsError(true);
+                setErrorMessage(error.response.data.error.message);
+            }
+            else if (error.response.data.status === 403) {
+                setIsError(true);
+                setErrorMessage(error.response.data.error.message);
+            }
         }).finally(() => {
             setIsLoading(false);
         });

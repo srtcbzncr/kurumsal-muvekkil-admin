@@ -36,6 +36,9 @@
 
     "error.undefined" : "An error occured, please try again later",
     "no.data" : "No data",
+    
+    "court.set.active.success" : "The court has been set active",
+    "court.set.passive.success" : "The court has been set passive",
 
     "null.validation.error" : "This field can not be null",
 
