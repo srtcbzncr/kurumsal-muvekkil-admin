@@ -12,22 +12,25 @@ import Dashboard from './components/dashboard/Dashboard';
 import CourtList from './components/courtList/CourtList';
 import { CookiesProvider } from 'react-cookie';
 import CreateCourt from './components/createCourt/CreateCourt';
+import { ConfirmProvider } from "material-ui-confirm";
 
 
 function App() {
   return (
     <CssBaseline>
       <ThemeProvider theme={theme}>
-        <CookiesProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="" element={<Dashboard />} ></Route>
-              <Route path="login" element={<Login />}></Route>
-              <Route path="courts" element={<CourtList/>}></Route>
-              <Route path="courts/create" element={<CreateCourt/>}></Route>
-            </Routes>
-          </BrowserRouter>
-        </CookiesProvider>
+        <ConfirmProvider>
+          <CookiesProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="" element={<Dashboard />} ></Route>
+                <Route path="login" element={<Login />}></Route>
+                <Route path="courts" element={<CourtList/>}></Route>
+                <Route path="courts/create" element={<CreateCourt/>}></Route>
+              </Routes>
+            </BrowserRouter>
+          </CookiesProvider>
+        </ConfirmProvider>
       </ThemeProvider>    
     </CssBaseline>
   )

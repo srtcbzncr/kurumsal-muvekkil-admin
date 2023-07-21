@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 
 import { Box, Stack, Button, Typography, Avatar, InputBase, IconButton, Breadcrumbs, Link, LinearProgress } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { useConfirm } from "material-ui-confirm";
 
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -17,7 +18,7 @@ import Status from '../status/Status';
 import NoRowsOverlay from "../noRowsOverlay/NoRowsOverlay";
 import Actions from '../actions/Actions';
 
-import { getAllCourts, getActiveCourts, getPassiveCourts, getDeletedCourts, getCourtStats, setActive, setPassive } from '../../services/CourtService';
+import { getAllCourts, getActiveCourts, getPassiveCourts, getDeletedCourts, getCourtStats, setActive, setPassive, deleteCourt } from '../../services/CourtService';
 import getAuthHeader from '../../helpers/getAuthHeader';
 
 import AddSharpIcon from '@mui/icons-material/AddSharp';
@@ -29,6 +30,7 @@ const CourtList = () => {
   const { t, i18n } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const confirm = useConfirm();
 
   const [tab, setTab] = useState("All");
   const [allCount, setAllCount] = useState(0);
@@ -36,7 +38,6 @@ const CourtList = () => {
   const [passiveCount, setPassiveCount] = useState(0);
   const [deletedCount, setDeletedCount] = useState(0);
   const [courts, setCourts] = useState([]);
-
 
   const columns = [
     {
@@ -86,7 +87,7 @@ const CourtList = () => {
       flex: 0.21,
       renderCell: (params) => {
         return (
-          <Actions id={params.row.id} active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={deleteRequest}></Actions>
+          <Actions id={params.row.id} active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
         );
       },
     },
@@ -246,8 +247,34 @@ const CourtList = () => {
   }
 
   function deleteRequest(id){
-    console.log("Delete");
-    console.log(id);
+    setIsLoading(true);
+    deleteCourt(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+      toast.success(t("court.delete.success"), {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+      fetchStats();
+      fetchCourts();
+    }).catch((error) => {
+      toast.error(error.response.data.error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+    }).finally(() => {
+      setIsLoading(false);
+    });
   }
 
   function handleSelectTab(value) {
@@ -256,6 +283,16 @@ const CourtList = () => {
 
   function handleNewClick(){
     navigate("/courts/create");
+  }
+
+  function handleDeleteOnClick(id){
+    confirm({ title: t("warning"), description: t("court.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") })
+      .then(() => {
+        deleteRequest(id);
+      })
+      .catch(() => {
+        console.log("Cancel");
+      });
   }
 
   useEffect(() => {

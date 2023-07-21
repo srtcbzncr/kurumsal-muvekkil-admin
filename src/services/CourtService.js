@@ -129,3 +129,17 @@ export function setPassive(id, authorization, locale){
         }
     });
 }
+
+export function deleteCourt(id, authorization, locale){
+    return axios({
+        method: "DELETE",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url:  process.env.REACT_APP_API_DELETE_COURT_URL + "/" + id,
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        }
+    });
+}

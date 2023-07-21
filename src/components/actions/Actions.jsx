@@ -1,7 +1,7 @@
 import React from 'react'
 import { Stack, Tooltip, IconButton } from '@mui/material';
 import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
-import PlaylistAddCircleSharpIcon from '@mui/icons-material/PlaylistAddCircleSharp';
+import PendingSharpIcon from '@mui/icons-material/PendingSharp';
 import GppGoodSharpIcon from '@mui/icons-material/GppGoodSharp';
 import GppBadSharpIcon from '@mui/icons-material/GppBadSharp';
 import { useTranslation } from 'react-i18next';
@@ -14,9 +14,9 @@ const Actions = ({id, active, deleted, setActiveFunc, setPassiveFunc, deleteFunc
         <Stack direction="row" justifyContent="center">
           {
             deleted === false && 
-            <Tooltip title={t("edit")}>
+            <Tooltip title={t("details")}>
               <IconButton size="small" color="text">
-                <PlaylistAddCircleSharpIcon></PlaylistAddCircleSharpIcon>
+                <PendingSharpIcon></PendingSharpIcon>
               </IconButton>
             </Tooltip>
           }

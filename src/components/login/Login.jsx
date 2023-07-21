@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
-import { Typography, TextField, Alert, CircularProgress, FormControl } from '@mui/material';
+import { Typography, TextField, Alert, FormControl } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -104,10 +104,6 @@ export default function Login() {
                     <Typography variant="h3" sx={{ marginTop: "200px"}}>
                         {t("admin.login")}
                     </Typography>
-                    {
-                        isLoading === true &&
-                        <CircularProgress sx={{ marginTop: "50px" }} />
-                    }
                     {
                         isError === true &&
                         <Alert variant="filled" severity="error" sx={{ marginTop: "50px", width: "50%" }}>
