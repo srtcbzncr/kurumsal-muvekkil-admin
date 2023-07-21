@@ -28,10 +28,11 @@ const CourtList = () => {
 
   const [cookie, setCookie, removeCookie] = useCookies();
   const { t, i18n } = useTranslation();
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const confirm = useConfirm();
 
+  
+  const [isLoading, setIsLoading] = useState(false);
   const [tab, setTab] = useState("All");
   const [allCount, setAllCount] = useState(0);
   const [activeCount, setActiveCount] = useState(0);
@@ -87,7 +88,7 @@ const CourtList = () => {
       flex: 0.21,
       renderCell: (params) => {
         return (
-          <Actions id={params.row.id} active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
+          <Actions id={params.row.id} isDetails={false} size="medium" active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
         );
       },
     },
@@ -286,13 +287,12 @@ const CourtList = () => {
   }
 
   function handleDeleteOnClick(id){
-    confirm({ title: t("warning"), description: t("court.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") })
-      .then(() => {
-        deleteRequest(id);
-      })
-      .catch(() => {
-        console.log("Cancel");
-      });
+    confirm({ title: t("warning"), description: t("court.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") }).then(() => {
+      deleteRequest(id);
+    })
+    .catch(() => {
+      console.log("Cancel");
+    });
   }
 
   useEffect(() => {

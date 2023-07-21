@@ -13,6 +13,7 @@ import CourtList from './components/courtList/CourtList';
 import { CookiesProvider } from 'react-cookie';
 import CreateCourt from './components/createCourt/CreateCourt';
 import { ConfirmProvider } from "material-ui-confirm";
+import CourtDetails from './components/courtDetails/CourtDetails';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
                 <Route path="login" element={<Login />}></Route>
                 <Route path="courts" element={<CourtList/>}></Route>
                 <Route path="courts/create" element={<CreateCourt/>}></Route>
+                <Route path="courts/:id" element={<CourtDetails/>}></Route>
               </Routes>
             </BrowserRouter>
           </CookiesProvider>

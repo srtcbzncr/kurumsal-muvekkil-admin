@@ -19,6 +19,7 @@
     "name" : "Name",
     "save" : "Save",
     "close" : "Close",
+    "court.name" : "Court Name",
     "court.parent" : "Parent Court",
     "court.create.successful" : "Court successfully created!",
     "court.delete.success" : "Court successfully deleted",

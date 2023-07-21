@@ -20,6 +20,7 @@
     "name" : "Ad",
     "save" : "Kaydet",
     "close" : "Kapat",
+    "court.name" : "Mahkeme Adı",
     "court.parent" : "Üst Mahkeme",
     "court.create.successful" : "Mahkeme başarıyla oluşturuldu!",
     "court.delete.success" : "Mahkeme silindi.",

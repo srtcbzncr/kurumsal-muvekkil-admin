@@ -7,14 +7,14 @@ const Status = ({active, deleted}) => {
     const {t, i18n} = useTranslation();
     
     return (
-        <Box display="flex" justifyContent="center">
+        <Box display="flex" justifyContent="center" alignItems="center">
             {
             deleted 
-            ? <Chip label={t("deleted")} variant="outlined" color="error" />
+            ? <Chip label={t("deleted")} variant="filled" color="error" />
             :   (
                     active === true 
-                    ? <Chip label={t("active")} variant="outlined" color="success" />
-                    : <Chip label={t("passive")} variant="outlined" color="warning" />
+                    ? <Chip label={t("active")} variant="filled" color="success" />
+                    : <Chip label={t("passive")} variant="filled" color="warning" />
                 )
             }
     </Box>
