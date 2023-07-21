@@ -70,6 +70,20 @@ export function getDeletedCourts(authorization, locale){
     });
 }
 
+export function getCourtById(id, authorization, locale){
+    return axios({
+        method: "GET",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url: process.env.REACT_APP_API_GET_COURT_BY_ID_URL + "/" + id,
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        }
+    });
+}
+
 export function createCourt(court, authorization, locale){
     
     let courtData;
