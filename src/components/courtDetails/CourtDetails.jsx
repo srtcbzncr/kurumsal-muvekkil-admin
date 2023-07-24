@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router';
 import { Link, useParams } from 'react-router-dom';
 
-import { Box, Breadcrumbs, Button, CircularProgress, LinearProgress, Stack, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Button, CircularProgress, LinearProgress, Stack, Tooltip, Typography } from '@mui/material';
 import { useConfirm } from "material-ui-confirm";
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -19,6 +19,11 @@ import { deleteCourt, getCourtById, setActive, setPassive } from '../../services
 import getAuthHeader from '../../helpers/getAuthHeader';
 import Status from '../status/Status';
 
+
+import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
+import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
+import DataTable from '../dataTable/DataTable';
+
 const CourtDetails = () => {
 
     const [cookie, setCookie, removeCookie] = useCookies();
@@ -30,6 +35,44 @@ const CourtDetails = () => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [court, setCourt] = useState({});
+
+    const columns = [
+        {
+          field: 'id',
+          headerName: 'ID',
+          headerClassName: 'super-app-theme--header',
+          flex: 0.25,
+        },
+        {
+          field: 'name',
+          headerName: t("name"),
+          headerClassName: 'super-app-theme--header',
+          flex: 0.24,
+        },
+        {
+          field: "status",
+          headerName: t("status"),
+          headerClassName: 'super-app-theme--header',
+          flex: 0.24,
+          renderCell: (params) => {
+            return (
+              <Status active={params.row.active} deleted={params.row.deleted}></Status>
+            )
+          }
+        },
+        {
+          field: 'actions',
+          headerName: t("actions"),
+          type: "actions",
+          headerClassName: 'super-app-theme--header',
+          flex: 0.27,
+          renderCell: (params) => {
+            return (
+              <Actions id={params.row.id} url="/courts" isDetails={false} size="medium" active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
+            );
+          },
+        },
+      ];
 
     function fetchCourtDetails(id) {
         getCourtById(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
@@ -47,6 +90,7 @@ const CourtDetails = () => {
             });
         }).finally(() => {
             setIsLoading(false);
+            console.log(court);
         });
     }
 
@@ -63,7 +107,7 @@ const CourtDetails = () => {
                 progress: undefined,
                 theme: "colored",
             });
-            fetchCourtDetails(id);
+            fetchCourtDetails(court.id);
         }).catch((error) => {
             toast.error(error.response.data.error.message, {
                 position: "top-center",
@@ -93,7 +137,7 @@ const CourtDetails = () => {
                 progress: undefined,
                 theme: "colored",
             });
-            fetchCourtDetails(id);
+            fetchCourtDetails(court.id);
         }).catch((error) => {
             toast.error(error.response.data.error.message, {
                 position: "top-center",
@@ -123,7 +167,7 @@ const CourtDetails = () => {
                 progress: undefined,
                 theme: "colored",
             });
-            navigate("/courts");
+            fetchCourtDetails(court.id);
         }).catch((error) => {
             toast.error(error.response.data.error.message, {
                 position: "top-center",
@@ -148,9 +192,13 @@ const CourtDetails = () => {
         });
     }
 
+    function handleBackOnClick() {
+        navigate("/courts");
+    }
+
     useEffect(() => {
         fetchCourtDetails(id);
-    }, []);
+    }, [id]);
 
     return (
         <AuthCheck>
@@ -161,6 +209,11 @@ const CourtDetails = () => {
                         <Typography variant="h4">
                             {t("court.management")}
                         </Typography>
+                        <Tooltip title={t("back")}>
+                            <Button variant="outlined" color="text" onClick={handleBackOnClick}>
+                                <ArrowBackSharpIcon color="text" />
+                            </Button>
+                        </Tooltip>
                     </Stack>
                     {/* Title */}
                     {/* Navigation */}
@@ -169,10 +222,10 @@ const CourtDetails = () => {
                             <Link underline="hover" color="inherit" href="/">
                                 {t("home")}
                             </Link>
-                            <Link underline="hover" color="inherit" href="/">
+                            <Link underline="hover" color="inherit" href="/courts">
                                 {t("court.management")}
                             </Link>
-                            <Typography color="text.primary">{t("court.management")}</Typography>
+                            <Typography color="text.primary">{court.name}</Typography>
                         </Breadcrumbs>
                     </Box>
                     {/* Navigation */}
@@ -187,24 +240,24 @@ const CourtDetails = () => {
                             /* Main */
                             <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px" }}>
                                 <Stack direction={{ xs: "column", sm: "row" }} sx={{ width: 1, padding: "30px", border: 1, borderColor: "border.secondary", justifyContent: "space-between" }}>
-                                    <Stack direction="column" spacing={1} sx={{alignItems: "center"}}>
+                                    <Stack direction="column" spacing={1} sx={{ alignItems: "center" }}>
                                         <Typography variant="h5">{t("court.name")}</Typography>
                                         <Typography variant="subtitle1">{court.name}</Typography>
                                     </Stack>
-                                    <Stack direction="column" spacing={1} sx={{ alignItems: "center" }}>
+                                    <Stack direction="column" spacing={1} sx={{ alignItems: "center" }} marginTop={{ xs: "20px", sm: "0px"}}>
                                         <Typography variant="h5">{t("court.parent")}</Typography>
                                         {
                                             court.parent === null || court.parent === undefined
-                                                    ? <Typography variant="h5">Null</Typography>
-                                                    : <Typography variant="subtitle">{court.parent.name}</Typography>
+                                                    ? <Typography variant="subtitle1"><HighlightOffSharpIcon color="error" fontSize="medium"/></Typography>
+                                                    : <Typography variant="subtitle1">{court.parent.name}</Typography>
                                         }
                                     </Stack>
-                                    <Status active={court.active} deleted={court.deleted}></Status>
+                                    <Status active={court.active} deleted={court.deleted} ></Status>
                                     <Actions id={court.id} isDetails={true} size="large" active={court.active} deleted={court.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
                                 </Stack>
+                                <DataTable isLoading={isLoading} columns={columns} data={court.subs}/>
                             </Stack>
                         /* Main */
-
                     }
                     {/* Loading */}
                 </Stack>

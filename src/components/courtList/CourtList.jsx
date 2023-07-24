@@ -7,7 +7,6 @@ import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router';
 
 import { Box, Stack, Button, Typography, Avatar, InputBase, IconButton, Breadcrumbs, Link, LinearProgress } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
 import { useConfirm } from "material-ui-confirm";
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -15,7 +14,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
 import Status from '../status/Status';
-import NoRowsOverlay from "../noRowsOverlay/NoRowsOverlay";
 import Actions from '../actions/Actions';
 
 import { getAllCourts, getActiveCourts, getPassiveCourts, getDeletedCourts, getCourtStats, setActive, setPassive, deleteCourt } from '../../services/CourtService';
@@ -23,6 +21,7 @@ import getAuthHeader from '../../helpers/getAuthHeader';
 
 import AddSharpIcon from '@mui/icons-material/AddSharp';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
+import DataTable from '../dataTable/DataTable';
 
 const CourtList = () => {
 
@@ -88,7 +87,7 @@ const CourtList = () => {
       flex: 0.21,
       renderCell: (params) => {
         return (
-          <Actions id={params.row.id} isDetails={false} size="medium" active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
+          <Actions id={params.row.id} url="/courts" isDetails={false} size="medium" active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
         );
       },
     },
@@ -347,106 +346,7 @@ const CourtList = () => {
             </Stack>
             {/* Search */}
             {/* Data */}
-            <Box id="data-grid" display="flex" sx={{ width: 1, height: "550px", border: 1, borderColor: "border.secondary", justifyContent: "center", padding: "10px",
-              "& .super-app-theme--header": {
-                backgroundColor: "background.default",
-                color: "text.main",
-              },
-              "& .MuiDataGrid-sortIcon": {
-                opacity: 1,
-                color: "text.main",
-              },
-              "& .MuiDataGrid-menuIconButton": {
-                opacity: 1,
-                color: "text.main"
-              },
-            }}
-            >
-              <DataGrid
-                rows={courts}
-                columns={columns}
-                slots={{
-                  loadingOverlay: LinearProgress,
-                  noRowsOverlay: NoRowsOverlay,
-                  noResultsOverlay: NoRowsOverlay,
-                }}
-                loading={isLoading}
-                initialState={{
-                  pagination: {
-                    paginationModel: {
-                      pageSize: 8,
-                    },
-                  },
-                }}
-                disableRowSelectionOnClick
-                localeText={{
-                  noRowsLabel: t("noRowsLabel"),
-                  noResultsOverlayLabel: t("noRowsLabel"),
-                  columnMenuLabel: t("columnMenuLabel"),
-                  columnMenuShowColumns: t("columnMenuShowColumns"),
-                  columnMenuManageColumns: t("columnMenuManageColumns"),
-                  columnMenuFilter: t("columnMenuFilter"),
-                  columnMenuHideColumn: t("columnMenuHideColumn"),
-                  columnMenuUnsort: t("columnMenuUnsort"),
-                  columnMenuSortAsc: t("columnMenuSortAsc"),
-                  columnMenuSortDesc: t("columnMenuSortDesc"),
-                  toolbarColumns: t("toolbarColumns"),
-                  toolbarColumnsLabel: t("toolbarColumnsLabel"),
-                  columnsPanelTextFieldLabel: t("columnsPanelTextFieldLabel"),
-                  columnsPanelTextFieldPlaceholder: t("columnsPanelTextFieldPlaceholder"),
-                  columnsPanelDragIconLabel: t("columnsPanelDragIconLabel"),
-                  columnsPanelShowAllButton: t("columnsPanelShowAllButton"),
-                  columnsPanelHideAllButton: t("columnsPanelHideAllButton"),
-                  filterPanelAddFilter: t("filterPanelAddFilter"),
-                  filterPanelRemoveAll: t("filterPanelRemoveAll"),
-                  filterPanelDeleteIconLabel: t("filterPanelDeleteIconLabel"),
-                  filterPanelLogicOperator: t("filterPanelLogicOperator"),
-                  filterPanelOperator: t("filterPanelOperator"),
-                  filterPanelOperatorAnd: t("filterPanelOperatorAnd"),
-                  filterPanelOperatorOr: t("filterPanelOperatorOr"),
-                  filterPanelColumns: t("filterPanelColumns"),
-                  filterPanelInputLabel: t("filterPanelInputLabel"),
-                  filterPanelInputPlaceholder: t("filterPanelInputPlaceholder"),
-                  toolbarExport: t("toolbarExport"),
-                  toolbarExportLabel: t("toolbarExportLabel"),
-                  toolbarExportCSV: t("toolbarExportCSV"),
-                  toolbarExportPrint: t("toolbarExportPrint"),
-                  toolbarExportExcel: t("toolbarExportExcel"),
-                  filterOperatorContains: t("filterOperatorContains"),
-                  filterOperatorEquals: t("filterOperatorEquals"),
-                  filterOperatorStartsWith: t("filterOperatorStartsWith"),
-                  filterOperatorEndsWith: t("filterOperatorEndsWith"),
-                  filterOperatorIs: t("filterOperatorIs"),
-                  filterOperatorNot: t("filterOperatorNot"),
-                  filterOperatorAfter: t("filterOperatorAfter"),
-                  filterOperatorOnOrAfter: t("filterOperatorOnOrAfter"),
-                  filterOperatorBefore: t("filterOperatorBefore"),
-                  filterOperatorOnOrBefore: t("filterOperatorOnOrBefore"),
-                  filterOperatorIsEmpty: t("filterOperatorIsEmpty"),
-                  filterOperatorIsNotEmpty: t("filterOperatorIsNotEmpty"),
-                  filterOperatorIsAnyOf: t("filterOperatorIsAnyOf"),
-                  headerFilterOperatorContains: t("headerFilterOperatorContains"),
-                  headerFilterOperatorEquals: t("headerFilterOperatorEquals"),
-                  headerFilterOperatorStartsWith: t("headerFilterOperatorStartsWith"),
-                  headerFilterOperatorEndsWith: t("headerFilterOperatorEndsWith"),
-                  headerFilterOperatorIs: t("headerFilterOperatorIs"),
-                  headerFilterOperatorNot: t("headerFilterOperatorNot"),
-                  headerFilterOperatorAfter: t("headerFilterOperatorAfter"),
-                  headerFilterOperatorOnOrAfter: t("headerFilterOperatorOnOrAfter"),
-                  headerFilterOperatorBefore: t("headerFilterOperatorBefore"),
-                  headerFilterOperatorOnOrBefore: t("headerFilterOperatorOnOrBefore"),
-                  headerFilterOperatorIsEmpty: t("headerFilterOperatorIsEmpty"),
-                  headerFilterOperatorIsNotEmpty: t("headerFilterOperatorIsNotEmpty"),
-                  headerFilterOperatorIsAnyOf: t("headerFilterOperatorIsAnyOf"),
-                  'headerFilterOperator=': t("'headerFilterOperator='"),
-                  'headerFilterOperator!=': t("'headerFilterOperator!='"),
-                  'headerFilterOperator>': t("'headerFilterOperator>'"),
-                  'headerFilterOperator>=': t("'headerFilterOperator>='"),
-                  'headerFilterOperator<': t("'headerFilterOperator<'"),
-                  'headerFilterOperator<=': t("'headerFilterOperator<='")
-                }}
-              />
-            </Box>
+            <DataTable isLoading={isLoading} columns={columns} data={courts}/>
             {/* Data */}
           </Stack>
           {/* Main */}

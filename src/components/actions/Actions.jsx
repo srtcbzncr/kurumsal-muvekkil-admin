@@ -7,7 +7,7 @@ import GppBadSharpIcon from '@mui/icons-material/GppBadSharp';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-const Actions = ({id, isDetails, size, active, deleted, setActiveFunc, setPassiveFunc, deleteFunc}) => {
+const Actions = ({id, url, isDetails, size, active, deleted, setActiveFunc, setPassiveFunc, deleteFunc}) => {
 
     const {t, i18n} = useTranslation();
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Actions = ({id, isDetails, size, active, deleted, setActiveFunc, setPassiv
           {
             deleted === false && isDetails === false &&
             <Tooltip title={t("details")}>
-              <IconButton size="small" color="text" onClick={() => navigate(id)}>
+              <IconButton size="small" color="text" onClick={() => navigate(url + "/" + id)}>
                 <PendingSharpIcon fontSize={size}></PendingSharpIcon>
               </IconButton>
             </Tooltip> 
