@@ -353,7 +353,7 @@ const CourtDetails = () => {
                                         <Typography variant="h5">{t("court.name")}</Typography>
                                         <Typography variant="subtitle1">{court.name}</Typography>
                                     </Stack>
-                                    <Divider width="3px" color="text" orientation="vertical" flexItem />
+                                    <Divider width="3px" color="#FAF7FF" orientation="vertical" flexItem />
                                     <Stack direction="column" spacing={1} sx={{ width: {xs: 1, sm: 0.3}, alignItems: "center" }} marginTop={{ xs: "20px", sm: "0px" }}>
                                         <Typography variant="h5">{t("court.parent")}</Typography>
                                         {
@@ -362,11 +362,11 @@ const CourtDetails = () => {
                                                 : <Typography variant="subtitle1">{court.parent.name}</Typography>
                                         }
                                     </Stack>
-                                    <Divider width="3px" color="text" orientation="vertical" flexItem />
+                                    <Divider width="3px" color="#FAF7FF" orientation="vertical" flexItem />
                                     <Box display="flex" sx={{ width: {xs: 1, sm: 0.2}, alignItems: "center", justifyContent: "center"}}>
                                         <Status active={court.active} deleted={court.deleted} ></Status>
                                     </Box>
-                                    <Divider width="3px" color="text" orientation="vertical" flexItem />
+                                    <Divider width="3px" color="#FAF7FF" orientation="vertical" flexItem />
                                     <Box display="flex" sx={{ width: {xs: 1, sm: 0.2}, alignItems: "center", justifyContent: "center"}}>
                                         <Actions id={court.id} isDetails={true} size="large" active={court.active} deleted={court.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
                                     </Box>
