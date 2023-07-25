@@ -70,6 +70,10 @@ const CreateCourt = () => {
                 setIsError(true);
                 setErrorMessage(error.response.data.error.message);
             }
+            else{
+                setIsError(true);
+                setErrorMessage(error.response.data.error.message);
+            }
         }).finally(() => {
             setIsLoading(false);
         });

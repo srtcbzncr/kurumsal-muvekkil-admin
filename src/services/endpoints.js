@@ -13,7 +13,8 @@ const endpoints = {
     UPDATE_COURT_URL : "/court",
     SET_ACTIVE_COURT_URL : "/court/{id}/setActive",
     SET_PASSIVE_COURT_URL : "/court/{id}/setPassive",
-    DELETE_COURT_URL : "/court/{id}"
+    DELETE_COURT_URL : "/court/{id}",
+    GET_SUB_COURTS_STATS_URL : "/court/{id}/stats"
 }
 
 export default endpoints;

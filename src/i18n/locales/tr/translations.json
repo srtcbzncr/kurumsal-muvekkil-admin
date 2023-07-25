@@ -20,6 +20,8 @@
     "name" : "Ad",
     "save" : "Kaydet",
     "close" : "Kapat",
+    "court.list" : "Mahkeme Listesi",
+    "court.subs" : "Alt Mahkemeler",
     "court.name" : "Mahkeme Adı",
     "court.parent" : "Üst Mahkeme",
     "court.create.successful" : "Mahkeme başarıyla oluşturuldu!",

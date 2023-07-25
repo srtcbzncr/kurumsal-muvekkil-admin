@@ -7,13 +7,13 @@ import { DataGrid } from '@mui/x-data-grid';
 import NoRowsOverlay from "../noRowsOverlay/NoRowsOverlay";
 import { useTranslation } from 'react-i18next';
 
-const DataTable = ({ isLoading, columns, data }) => {
+const DataTable = ({ height, isLoading, columns, data }) => {
 
     const {t, i18n} = useTranslation();
 
     return (
         <Box id="data-grid" display="flex" sx={{
-            width: 1, height: "550px", border: 1, borderColor: "border.secondary", justifyContent: "center", padding: "10px",
+            width: 1, minHeight: {height}, border: 1, borderColor: "border.secondary", justifyContent: "center", padding: "10px",
             "& .super-app-theme--header": {
                 backgroundColor: "background.default",
                 color: "text.main",

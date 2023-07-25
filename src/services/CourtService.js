@@ -15,6 +15,20 @@ export function getCourtStats(authorization, locale){
     });
 }
 
+export function getSubCourtStats(id, authorization, locale){
+    return axios({
+        method: "GET",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url: endpoints.GET_SUB_COURTS_STATS_URL.replace("{id}", id),
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        }
+    });
+}
+
 export function getAllCourts(authorization, locale){
     return axios({
         method: "GET",
@@ -43,54 +57,26 @@ export function getAllSubCourts(id, authorization, locale){
     });
 }
 
-export function getActiveSubCourts(id, authorization, locale){
-    return axios({
-        method: "GET",
-        mode: "cors",
-        baseURL: process.env.REACT_APP_API_URL,
-        url: endpoints.GET_ACTIVE_SUB_COURTS_URL.replace("{id}", id),
-        headers: {
-            "Authorization": authorization,
-            "Accept-Language": locale,
-            "Accept": "application/json"
-        }
-    });
-}
-
-export function getPassiveSubCourts(id, authorization, locale){
-    return axios({
-        method: "GET",
-        mode: "cors",
-        baseURL: process.env.REACT_APP_API_URL,
-        url: endpoints.GET_PASSIVE_SUB_COURTS_URL.replace("{id}", id),
-        headers: {
-            "Authorization": authorization,
-            "Accept-Language": locale,
-            "Accept": "application/json"
-        }
-    });
-}
-
-export function getDeletedSubCourts(id, authorization, locale){
-    return axios({
-        method: "GET",
-        mode: "cors",
-        baseURL: process.env.REACT_APP_API_URL,
-        url: endpoints.GET_DELETED_SUB_COURTS_URL.replace("{id}", id),
-        headers: {
-            "Authorization": authorization,
-            "Accept-Language": locale,
-            "Accept": "application/json"
-        }
-    });
-}
-
 export function getActiveCourts(authorization, locale){
     return axios({
         method: "GET",
         mode: "cors",
         baseURL: process.env.REACT_APP_API_URL,
         url: endpoints.GET_ACTIVE_COURTS_URL,
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        }
+    });
+}
+
+export function getActiveSubCourts(id, authorization, locale){
+    return axios({
+        method: "GET",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url: endpoints.GET_ACTIVE_SUB_COURTS_URL.replace("{id}", id),
         headers: {
             "Authorization": authorization,
             "Accept-Language": locale,
@@ -113,12 +99,40 @@ export function getPassiveCourts(authorization, locale){
     });
 }
 
+export function getPassiveSubCourts(id, authorization, locale){
+    return axios({
+        method: "GET",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url: endpoints.GET_PASSIVE_SUB_COURTS_URL.replace("{id}", id),
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        }
+    });
+}
+
 export function getDeletedCourts(authorization, locale){
     return axios({
         method: "GET",
         mode: "cors",
         baseURL: process.env.REACT_APP_API_URL,
         url: endpoints.GET_DELETED_COURTS_URL,
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        }
+    });
+}
+
+export function getDeletedSubCourts(id, authorization, locale){
+    return axios({
+        method: "GET",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url: endpoints.GET_DELETED_SUB_COURTS_URL.replace("{id}", id),
         headers: {
             "Authorization": authorization,
             "Accept-Language": locale,
