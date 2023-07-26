@@ -40,13 +40,7 @@ const CreateCourt = () => {
             setActiveCourts(response.data.data);
         }).catch((error) => {
             setIsError(true);
-            setErrorMessage(t("error.undefined"));
-            if (error.response.data.status === 401) {
-                navigate("/login");
-            }
-            else if (error.response.data.status === 403) {
-                navigate("/login");
-            }
+            setErrorMessage(error.response.data.error.message);
         })
     };
 
@@ -57,23 +51,11 @@ const CreateCourt = () => {
             setNewCourtName(null);
         }).catch((error) => {
             setIsError(true);
-            setErrorMessage(t("error.undefined"));
+            setErrorMessage(error.response.data.error.message);
             if (error.response.data.status === 400) {
                 setNameValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "name").message);
-                setErrorMessage(error.response.data.error.message);
             }
-            else if (error.response.data.status === 401) {
-                setIsError(true);
-                setErrorMessage(error.response.data.error.message);
-            }
-            else if (error.response.data.status === 403) {
-                setIsError(true);
-                setErrorMessage(error.response.data.error.message);
-            }
-            else{
-                setIsError(true);
-                setErrorMessage(error.response.data.error.message);
-            }
+
         }).finally(() => {
             setIsLoading(false);
         });
@@ -105,6 +87,7 @@ const CreateCourt = () => {
     async function handleSaveClick() {
         setIsError(false);
         setErrorMessage("");
+        setNameValidationError(null)
         setIsLoading(true);
 
         const validationResult = await validateCreateCourtForm()

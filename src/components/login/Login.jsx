@@ -41,10 +41,16 @@ export default function Login() {
 
     function loginRequest(){
         login(username, password).then((response) => {
-            setCookie("username", username, { path: '/' });
-            setCookie("password", password, { path: '/' });
-            setCookie("role", response.data.data.role, { path: '/' });
-            navigate("/");
+            if(response.data.data.role === "ROLE_ADMIN"){
+                setCookie("username", username, { path: '/' });
+                setCookie("password", password, { path: '/' });
+                setCookie("role", response.data.data.role, { path: '/' });
+                navigate("/");
+            }
+            else{
+                setIsError(true);
+                setErrorMessage(t("login.failed"));
+            }
         }).catch((error) => {
             if(error.response.status === 400 ){
                 setUsernameValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "username").message);

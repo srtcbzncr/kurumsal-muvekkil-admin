@@ -47,43 +47,27 @@ const EditCourt = () => {
         setSelectedParentCourtId(response.data.data.parent.id);
       }
     }).catch((error) => {
-      if (error.response.data.status === 404) {
-        setIsError(true);
-        setErrorMessage(error.response.data.error.message);
-      }
-      else if (error.response.data.status === 401) {
-        setIsError(true);
-        setErrorMessage(error.response.data.error.message);
-      }
-      else if (error.response.data.status === 403) {
-        setIsError(true);
-        setErrorMessage(error.response.data.error.message);
-      }
-      else {
-        setIsError(true);
-        setErrorMessage(error.response.data.error.message);
-      }
+      setIsError(true);
+      setErrorMessage(error.response.data.error.message);
     }).finally(() => {
       setIsLoading(false);
     })
   }
 
   function fetchActiveCourts() {
+    setIsLoading(true);
     getActiveCourts(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
       setActiveCourts(response.data.data);
     }).catch((error) => {
       setIsError(true);
-      setErrorMessage(t("error.undefined"));
-      if (error.response.data.status === 401) {
-        navigate("/login");
-      }
-      else if (error.response.data.status === 403) {
-        navigate("/login");
-      }
+      setErrorMessage(error.response.data.error.message);
+    }).finally(() => {
+      setIsLoading(false);
     })
   }
 
   function updateCourtRequest() {
+    setIsLoading(true);
     updateCourt({ id: id, name: courtName, parentId: selectedParentCourtId }, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
       toast.success(t("court.update.success"), {
         position: "top-center",
@@ -97,22 +81,10 @@ const EditCourt = () => {
     });
     }).catch((error) => {
       setIsError(true);
-      setErrorMessage(t("error.undefined"));
+      setErrorMessage(error.response.data.error.message);
       if (error.response.data.status === 400) {
         setNameValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "name").message);
-        setErrorMessage(error.response.data.error.message);
-      }
-      else if (error.response.data.status === 401) {
-        setIsError(true);
-        setErrorMessage(error.response.data.error.message);
-      }
-      else if (error.response.data.status === 403) {
-        setIsError(true);
-        setErrorMessage(error.response.data.error.message);
-      }
-      else {
-        setIsError(true);
-        setErrorMessage(error.response.data.error.message);
+
       }
     }).finally(() => {
       setIsLoading(false);

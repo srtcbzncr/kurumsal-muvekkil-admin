@@ -45,6 +45,7 @@
     "no" : "Hayır",
     "warning" : "Uyarı",
     "none" : "Yok",
+    "login.failed" : "Kullanıcı adı veya parola yanlış",
 
     "error.undefined" : "Bir hata oluştu, lütfen daha sonra tekrar deneyin",
     "no.data" : "Hiç kayıt bulunamadı",
