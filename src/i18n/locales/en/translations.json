@@ -45,6 +45,7 @@
     "no" : "No",
     "warning" : "Warning",
     "none" : "None",
+    "login.failed" : "Username or password is invalid",
 
     "error.undefined" : "An error occured, please try again later",
     "no.data" : "No data",
