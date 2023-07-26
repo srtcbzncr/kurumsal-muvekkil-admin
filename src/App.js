@@ -14,6 +14,7 @@ import { CookiesProvider } from 'react-cookie';
 import CreateCourt from './components/createCourt/CreateCourt';
 import { ConfirmProvider } from "material-ui-confirm";
 import CourtDetails from './components/courtDetails/CourtDetails';
+import EditCourt from './components/editCourt/EditCourt';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                 <Route path="courts" element={<CourtList/>}></Route>
                 <Route path="courts/create" element={<CreateCourt/>}></Route>
                 <Route path="courts/:id" element={<CourtDetails/>}></Route>
+                <Route path="courts/:id/edit" element={<EditCourt/>}></Route>
               </Routes>
             </BrowserRouter>
           </CookiesProvider>

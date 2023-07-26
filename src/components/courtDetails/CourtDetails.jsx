@@ -19,7 +19,6 @@ import { deleteCourt, getActiveSubCourts, getAllSubCourts, getCourtById, getDele
 import getAuthHeader from '../../helpers/getAuthHeader';
 import Status from '../status/Status';
 
-
 import HighlightOffSharpIcon from '@mui/icons-material/HighlightOffSharp';
 import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import DataTable from '../dataTable/DataTable';
@@ -106,15 +105,16 @@ const CourtDetails = () => {
             getAllSubCourts(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
                 setSubCourts(response.data.data);
             }).catch((error) => {
-                if (error.response.data.status === 401) {
-                    navigate("/login");
-                  }
-                  else if (error.response.data.status === 403) {
-                    navigate("/login");
-                  }
-                  else {
-                    console.log("Bilinmeyen hata");
-                  }
+                toast.error(error.response.data.error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }).finally(() => {
                 setIsLoading(false);
             });
@@ -123,15 +123,16 @@ const CourtDetails = () => {
             getActiveSubCourts(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
                 setSubCourts(response.data.data);
             }).catch((error) => {
-                if (error.response.data.status === 401) {
-                    navigate("/login");
-                  }
-                  else if (error.response.data.status === 403) {
-                    navigate("/login");
-                  }
-                  else {
-                    console.log("Bilinmeyen hata");
-                  }
+                toast.error(error.response.data.error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }).finally(() => {
                 setIsLoading(false);
             });
@@ -140,15 +141,16 @@ const CourtDetails = () => {
             getPassiveSubCourts(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
                 setSubCourts(response.data.data);
             }).catch((error) => {
-                if (error.response.data.status === 401) {
-                    navigate("/login");
-                  }
-                  else if (error.response.data.status === 403) {
-                    navigate("/login");
-                  }
-                  else {
-                    console.log("Bilinmeyen hata");
-                  }
+                toast.error(error.response.data.error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }).finally(() => {
                 setIsLoading(false);
             });
@@ -157,15 +159,16 @@ const CourtDetails = () => {
             getDeletedSubCourts(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
                 setSubCourts(response.data.data);
             }).catch((error) => {
-                if (error.response.data.status === 401) {
-                    navigate("/login");
-                  }
-                  else if (error.response.data.status === 403) {
-                    navigate("/login");
-                  }
-                  else {
-                    console.log("Bilinmeyen hata");
-                  }
+                toast.error(error.response.data.error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
             }).finally(() => {
                 setIsLoading(false);
             });
@@ -368,11 +371,11 @@ const CourtDetails = () => {
                                     </Box>
                                     <Divider width="3px" color="#FAF7FF" orientation="vertical" flexItem />
                                     <Box display="flex" sx={{ width: {xs: 1, sm: 0.2}, alignItems: "center", justifyContent: "center"}}>
-                                        <Actions id={court.id} isDetails={true} size="large" active={court.active} deleted={court.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
+                                        <Actions id={court.id} url="/courts" isDetails={true} size="large" active={court.active} deleted={court.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
                                     </Box>
                                 </Stack>
-                                <Stack direction={{ xs: "column", md: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "20px", border: 1, borderColor: "border.secondary" }}>
-                                    <Typography variant="h5">{t("court.subs")}</Typography>
+                                <Stack direction={{ xs: "column", md: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "20px"}}>
+                                    <Typography variant="h6">{t("court.subs")}</Typography>
                                     <Stack id="main" direction={{ xs: "column", md: "row" }} spacing={2} sx={{ justifyContent: "flex-start" }}>
                                         <Button onClick={() => handleSelectTab("All")} sx={{ color: tab === "All" ? "text.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "All" && 2, borderColor: tab === "All" && "text.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("all")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "text.main" }}>{allSubsCount}</Avatar></Button>
                                         <Button onClick={() => handleSelectTab("Active")} sx={{ color: tab === "Active" ? "success.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Active" && 2, borderColor: tab === "Active" && "success.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("active")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "success.main" }}>{activeSubsCount}</Avatar></Button>

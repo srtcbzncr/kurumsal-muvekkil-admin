@@ -1,7 +1,7 @@
 import './style.css';
 
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
 import { useTranslation } from 'react-i18next';
 import { FormControl, Stack, Typography, MenuItem, TextField, Button, Select, InputLabel, Box, Breadcrumbs, Link, Tooltip, Alert } from '@mui/material';
@@ -183,6 +183,7 @@ const CreateCourt = () => {
                                             label={t("court.parent")}
                                             onChange={handleSelectedParentCourtChange}
                                         >
+                                            <MenuItem value={null}>{t("none")}</MenuItem>
                                             {
                                                 activeCourts.map((court) => <MenuItem key={court.id} value={court.id}>{court.name}</MenuItem>)
                                             }
@@ -218,7 +219,6 @@ const CreateCourt = () => {
                     }
                 </Stack>
             </Layout>
-            <Outlet />
         </AuthCheck>
     )
 }

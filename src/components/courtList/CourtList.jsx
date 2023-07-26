@@ -30,7 +30,6 @@ const CourtList = () => {
   const navigate = useNavigate();
   const confirm = useConfirm();
 
-  
   const [isLoading, setIsLoading] = useState(false);
   const [tab, setTab] = useState("All");
   const [allCount, setAllCount] = useState(0);
@@ -100,15 +99,16 @@ const CourtList = () => {
       setPassiveCount(response.data.data.passiveCount);
       setDeletedCount(response.data.data.deletedCount);
     }).catch((error) => {
-      if (error.response.data.status === 401) {
-        navigate("/login");
-      }
-      else if (error.response.data.status === 403) {
-        navigate("/login");
-      }
-      else {
-        console.log("Bilinmeyen hata");
-      }
+      toast.error(error.response.data.error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     });
   };
 
@@ -118,15 +118,16 @@ const CourtList = () => {
       getAllCourts(getAuthHeader(cookie.username, cookie.password, i18n.language)).then((response) => {
         setCourts(response.data.data);
       }).catch((error) => {
-        if (error.response.data.status === 401) {
-          navigate("/login");
-        }
-        else if (error.response.data.status === 403) {
-          navigate("/login");
-        }
-        else {
-          console.log("Bilinmeyen hata");
-        }
+        toast.error(error.response.data.error.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       }).finally(() => {
         setIsLoading(false);
       });
@@ -296,7 +297,7 @@ const CourtList = () => {
 
   useEffect(() => {
     fetchStats();
-    fetchCourts(tab);
+    fetchCourts();
   }, [tab]);
 
   return (
@@ -326,7 +327,7 @@ const CourtList = () => {
           {/* Main */}
           <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px"}}>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "20px", border: 1, borderColor: "border.secondary" }}>
-              <Typography variant="h5">{t("court.list")}</Typography>
+              <Typography variant="h6">{t("court.list")}</Typography>
               <Stack id="main" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "flex-start" }}>
                 <Button onClick={() => handleSelectTab("All")} sx={{ color: tab === "All" ? "text.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "All" && 2, borderColor: tab === "All" && "text.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("all")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "text.main" }}>{allCount}</Avatar></Button>
                 <Button onClick={() => handleSelectTab("Active")} sx={{ color: tab === "Active" ? "success.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Active" && 2, borderColor: tab === "Active" && "success.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("active")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "success.main" }}>{activeCount}</Avatar></Button>

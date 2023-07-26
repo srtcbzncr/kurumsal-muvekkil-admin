@@ -54,6 +54,13 @@ const Menu = () => {
         }
     }
 
+    function handleLogoutOnClick() {
+        removeCookie("username");
+        removeCookie("password");
+        removeCookie("role");
+        navigate("/");
+    }
+
     return (
         <Stack direction="column" justifyContent="space-between" alignItems="center" height="100%" sx={{ width: "100%", backgroundColor: "primary.main" }}>
             <Stack direction="column"alignItems="center">
@@ -71,7 +78,7 @@ const Menu = () => {
                                     <CircleNotificationsSharpIcon sx={{ fontSize: { xs: "26px", sm: "33px", md: "35px", lg: "38px", xl: "40px" }}}/>
                                 </Badge>
                             </IconButton>
-                            <IconButton sx={{ color: "primary.contrastText" }}>
+                            <IconButton sx={{ color: "primary.contrastText" }} onClick={handleLogoutOnClick}>
                                 <RemoveCircleSharpIcon sx={{ fontSize: { xs: "26px", sm: "33px", md: "35px", lg: "38px", xl: "40px" }}}/>
                             </IconButton>
                     </Stack>

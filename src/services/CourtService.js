@@ -187,6 +187,40 @@ export function createCourt(court, authorization, locale){
     });
 }
 
+export function updateCourt(court, authorization, locale){
+    
+    let courtData;
+
+    if(court.parentId !== null){
+        courtData = {
+            id: court.id,
+            name: court.name,
+            parent: {
+                id: court.parentId
+            }
+        }
+    }
+    else{
+        courtData = {
+            id: court.id,
+            name: court.name
+        }
+    }
+
+    return axios({
+        method: "PUT",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url: endpoints.CREATE_COURT_URL,
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        },
+        data : courtData
+    });
+}
+
 export function setActive(id, authorization, locale){
     return axios({
         method: "PUT",

@@ -13,7 +13,7 @@ const DataTable = ({ height, isLoading, columns, data }) => {
 
     return (
         <Box id="data-grid" display="flex" sx={{
-            width: 1, minHeight: {height}, border: 1, borderColor: "border.secondary", justifyContent: "center", padding: "10px",
+            width: 1, minHeight: {height}, justifyContent: "center", padding: "10px",
             "& .super-app-theme--header": {
                 backgroundColor: "background.default",
                 color: "text.main",
