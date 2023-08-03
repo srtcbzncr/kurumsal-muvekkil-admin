@@ -6,6 +6,7 @@
     "admin.login" : "Yönetici Girişi",
     "home" : "Anasayfa",
     "user.management" : "Kullanıcı Yönetimi",
+    "customer.management" : "Müşteri Yönetimi",
     "lawyer.management" : "Avukat Yönetimi",
     "client.management" : "Müvekkil Yönetimi",
     "court.management" : "Mahkeme Yönetimi",

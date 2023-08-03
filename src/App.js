@@ -15,6 +15,7 @@ import CreateCourt from './components/createCourt/CreateCourt';
 import { ConfirmProvider } from "material-ui-confirm";
 import CourtDetails from './components/courtDetails/CourtDetails';
 import EditCourt from './components/editCourt/EditCourt';
+import CompanyList from './components/companyList/CompanyList';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                 <Route path="courts/create" element={<CreateCourt/>}></Route>
                 <Route path="courts/:id" element={<CourtDetails/>}></Route>
                 <Route path="courts/:id/edit" element={<EditCourt/>}></Route>
+                <Route path="companies" element={<CompanyList/>}></Route>
               </Routes>
             </BrowserRouter>
           </CookiesProvider>

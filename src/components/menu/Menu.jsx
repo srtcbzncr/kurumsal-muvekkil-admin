@@ -1,7 +1,13 @@
-import { Stack, Box, Chip, Avatar, IconButton, Badge, List, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
 import React from 'react';
+
 import LanguageSwitcher from '../languageSwitcher/LanguageSwitcher';
 import { useCookies } from 'react-cookie';
+import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+
+import { Stack, Box, Chip, Avatar, IconButton, Badge, List, ListItemIcon, ListItemText, ListItemButton } from '@mui/material';
+
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import GavelSharpIcon from '@mui/icons-material/GavelSharp';
 import CasesSharpIcon from '@mui/icons-material/CasesSharp';
@@ -11,11 +17,8 @@ import HomeSharpIcon from '@mui/icons-material/HomeSharp';
 import RemoveCircleSharpIcon from '@mui/icons-material/RemoveCircleSharp';
 import SupervisedUserCircleSharpIcon from '@mui/icons-material/SupervisedUserCircleSharp';
 import CircleNotificationsSharpIcon from '@mui/icons-material/CircleNotificationsSharp';
+import ShoppingBasketSharpIcon from '@mui/icons-material/ShoppingBasketSharp';
 import BadgeSharpIcon from '@mui/icons-material/BadgeSharp';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-
 
 const Menu = () => {
 
@@ -34,16 +37,16 @@ const Menu = () => {
                 navigate("/");
                 return;
             case 3:
-                navigate("/");
+                navigate("/companies");
                 return;
             case 4:
                 navigate("/");
                 return;
             case 5:
-                navigate("/courts");
+                navigate("/");
                 return;
             case 6:
-                navigate("/");
+                navigate("/courts");
                 return;
             case 7:
                 navigate("/");
@@ -98,7 +101,7 @@ const Menu = () => {
                             }
                         }}>
                             <ListItemIcon>
-                            <HomeSharpIcon sx={{ color: "primary.contrastText" }} />
+                                <HomeSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
                             <ListItemText primary={ t('home') } />
                         </ListItemButton>
@@ -115,7 +118,7 @@ const Menu = () => {
                             }
                         }}>
                             <ListItemIcon>
-                            <SupervisedUserCircleSharpIcon sx={{ color: "primary.contrastText" }} />
+                                <SupervisedUserCircleSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
                             <ListItemText primary={ t('user.management') } />
                         </ListItemButton>
@@ -132,9 +135,9 @@ const Menu = () => {
                             }
                         }}>
                             <ListItemIcon>
-                            <BadgeSharpIcon sx={{ color: "primary.contrastText" }} />
+                                <ShoppingBasketSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('lawyer.management') } />
+                            <ListItemText primary={ t('customer.management') } />
                         </ListItemButton>
                         <ListItemButton selected={selected === 4} onClick={() => handleOnSelect(4)} sx={{
                             width: "100%",
@@ -149,9 +152,9 @@ const Menu = () => {
                             }
                         }}>
                             <ListItemIcon>
-                            <EmojiEmotionsSharpIcon sx={{ color: "primary.contrastText" }} />
+                                <BadgeSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('client.management') } />
+                            <ListItemText primary={ t('lawyer.management') } />
                         </ListItemButton>
                         <ListItemButton selected={selected === 5} onClick={() => handleOnSelect(5)} sx={{
                             width: "100%",
@@ -166,9 +169,9 @@ const Menu = () => {
                             }
                         }}>
                             <ListItemIcon>
-                            <GavelSharpIcon sx={{ color: "primary.contrastText" }} />
+                                <EmojiEmotionsSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('court.management') } />
+                            <ListItemText primary={ t('client.management') } />
                         </ListItemButton>
                         <ListItemButton selected={selected === 6} onClick={() => handleOnSelect(6)} sx={{
                             width: "100%",
@@ -183,9 +186,9 @@ const Menu = () => {
                             }
                         }}>
                             <ListItemIcon>
-                            <CasesSharpIcon sx={{ color: "primary.contrastText" }} />
+                                <GavelSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
-                            <ListItemText primary={ t('file.management') } />
+                            <ListItemText primary={ t('court.management') } />
                         </ListItemButton>
                         <ListItemButton selected={selected === 7} onClick={() => handleOnSelect(7)} sx={{
                             width: "100%",
@@ -200,7 +203,24 @@ const Menu = () => {
                             }
                         }}>
                             <ListItemIcon>
-                            <PaidSharpIcon sx={{ color: "primary.contrastText" }} />
+                                <CasesSharpIcon sx={{ color: "primary.contrastText" }} />
+                            </ListItemIcon>
+                            <ListItemText primary={ t('file.management') } />
+                        </ListItemButton>
+                        <ListItemButton selected={selected === 8} onClick={() => handleOnSelect(8)} sx={{
+                            width: "100%",
+                            "&.Mui-selected": {
+                            backgroundColor: "primary.light"
+                            },
+                            "&.Mui-focusVisible": {
+                            backgroundColor: "#279d62"
+                            },
+                            ":hover": {
+                            backgroundColor: "#279d62"
+                            }
+                        }}>
+                            <ListItemIcon>
+                                <PaidSharpIcon sx={{ color: "primary.contrastText" }} />
                             </ListItemIcon>
                             <ListItemText primary={ t('subscription.management') } />
                         </ListItemButton>
