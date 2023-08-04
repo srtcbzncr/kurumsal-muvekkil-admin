@@ -22,7 +22,7 @@
     "name" : "Ad",
     "save" : "Kaydet",
     "close" : "Kapat",
-    "court.list" : "Mahkeme Listesi",
+    "court.list" : "Mahkemeler",
     "court.subs" : "Alt Mahkemeler",
     "court.name" : "Mahkeme Adı",
     "court.parent" : "Üst Mahkeme",
@@ -47,12 +47,19 @@
     "warning" : "Uyarı",
     "none" : "Yok",
     "login.failed" : "Kullanıcı adı veya parola yanlış",
+    "lawyer.count" : "Avukat Sayısı",
+    "plan" : "Plan",
 
     "error.undefined" : "Bir hata oluştu, lütfen daha sonra tekrar deneyin",
     "no.data" : "Hiç kayıt bulunamadı",
 
-    "court.set.active.success" : "Mahkeme aktifleştirildi",
-    "court.set.passive.success" : "Mahkeme pasifleştirildi",
+    "court.set.active.success" : "Mahkeme durumu aktif olarak değiştirildi",
+    "court.set.passive.success" : "Mahkeme durumu pasif olarak değiştirildi",
+    "court.sub.count" : "Alt Mahkeme Sayısı",
+
+    "company.set.active.success" : "Müşteri durumu aktif olarak değiştirildi",
+    "company.set.passive.success" : "Müşteri durumu pasif olarak değiştirildi",
+    "customer.list" : "Müşteriler",
 
     "null.validation.error" : "Bu alan boş olamaz",
 

@@ -49,13 +49,13 @@ const CourtList = () => {
       field: 'name',
       headerName: t("name"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.18,
+      flex: 0.12,
     },
     {
       field: 'parent',
       headerName: t("court.parent"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.18,
+      flex: 0.12,
       renderCell: (params) => {
         return (
           <Box display="flex" justifyContent="center">
@@ -68,10 +68,25 @@ const CourtList = () => {
       }
     },
     {
+      field: 'sub-count',
+      headerName: t("court.sub.count"),
+      headerClassName: 'super-app-theme--header',
+      flex: 0.15,
+      renderCell: (params) => {
+          return (
+            <Box display="flex" justifyContent="center">
+              {
+                  params.row.subCount
+              }
+            </Box>
+          )
+      }
+    },
+    {
       field: "status",
       headerName: t("status"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.18,
+      flex: 0.15,
       renderCell: (params) => {
         return (
           <Status active={params.row.active} deleted={params.row.deleted}></Status>

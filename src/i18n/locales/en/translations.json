@@ -21,7 +21,7 @@
     "name" : "Name",
     "save" : "Save",
     "close" : "Close",
-    "court.list" : "Court List",
+    "court.list" : "Courts",
     "court.subs" : "Sub Courts",
     "court.name" : "Court Name",
     "court.parent" : "Parent Court",
@@ -30,6 +30,7 @@
     "court.delete.success" : "Court successfully deleted",
     "court.before.delete.warning" : "Sub courts will be deleted with court. Are you sure you want to delete the court?",
     "back.court.management" : "Courts List",
+
     "all" : "All",
     "active" : "Active",
     "passive" : "Passive",
@@ -47,12 +48,20 @@
     "warning" : "Warning",
     "none" : "None",
     "login.failed" : "Username or password is invalid",
+    "lawyer.count" : "Lawyer Count",
+    "plan" : "Plan",
 
     "error.undefined" : "An error occured, please try again later",
     "no.data" : "No data",
     
-    "court.set.active.success" : "The court has been set active",
-    "court.set.passive.success" : "The court has been set passive",
+    "court.set.active.success" : "Court status changed to active",
+    "court.set.passive.success" : "Court status changed to passive",
+    "court.sub.count" : "Sub Courts Count",
+
+    "company.set.active.success" : "Company status changed to active",
+    "company.set.passive.success" : "Company status changed to passive",
+    "company.before.delete.warning" : "Are you sure you want to delete the company?",
+    "customer.list" : "Customers",
 
     "null.validation.error" : "This field can not be null",
 

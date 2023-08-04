@@ -55,10 +55,25 @@ const CourtDetails = () => {
             flex: 0.24,
         },
         {
+            field: 'sub-count',
+            headerName: t("court.sub.count"),
+            headerClassName: 'super-app-theme--header',
+            flex: 0.15,
+            renderCell: (params) => {
+                return (
+                  <Box display="flex" justifyContent="center">
+                    {
+                        params.row.subCount
+                    }
+                  </Box>
+                )
+            }
+        },
+        {
             field: "status",
             headerName: t("status"),
             headerClassName: 'super-app-theme--header',
-            flex: 0.24,
+            flex: 0.15,
             renderCell: (params) => {
                 return (
                     <Status active={params.row.active} deleted={params.row.deleted}></Status>
@@ -70,7 +85,7 @@ const CourtDetails = () => {
             headerName: t("actions"),
             type: "actions",
             headerClassName: 'super-app-theme--header',
-            flex: 0.27,
+            flex: 0.21,
             renderCell: (params) => {
                 return (
                     <Actions id={params.row.id} url="/courts" isDetails={false} size="medium" active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
