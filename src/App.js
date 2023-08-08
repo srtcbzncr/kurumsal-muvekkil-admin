@@ -16,6 +16,9 @@ import { ConfirmProvider } from "material-ui-confirm";
 import CourtDetails from './components/courtDetails/CourtDetails';
 import EditCourt from './components/editCourt/EditCourt';
 import CompanyList from './components/companyList/CompanyList';
+import SubscriptionList from './components/subscriptionList/SubscriptionList';
+import PlanList from './components/planList/PlanList';
+import CreatePlan from './components/createPlan/CreatePlan';
 
 
 function App() {
@@ -33,6 +36,9 @@ function App() {
                 <Route path="courts/:id" element={<CourtDetails/>}></Route>
                 <Route path="courts/:id/edit" element={<EditCourt/>}></Route>
                 <Route path="companies" element={<CompanyList/>}></Route>
+                <Route path="subscriptions" element={<SubscriptionList />}></Route>
+                <Route path="plans" element={<PlanList />}></Route>
+                <Route path="plans/create" element={<CreatePlan />}></Route>
               </Routes>
             </BrowserRouter>
           </CookiesProvider>

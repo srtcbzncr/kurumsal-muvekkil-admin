@@ -320,7 +320,7 @@ const CourtList = () => {
       <Layout>
         <Stack direction="column" sx={{ width: 1, alignItems: "center" }}>
           {/* Title */}
-          <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "100px" }}>
+          <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "50px" }}>
             <Typography variant="h4">
               {t("court.management")}
             </Typography>
@@ -363,7 +363,7 @@ const CourtList = () => {
             </Stack>
             {/* Search */}
             {/* Data */}
-            <DataTable height="550px" isLoading={isLoading} columns={columns} data={courts}/>
+            <DataTable height="600px" isLoading={isLoading} columns={columns} data={courts}/>
             {/* Data */}
           </Stack>
           {/* Main */}

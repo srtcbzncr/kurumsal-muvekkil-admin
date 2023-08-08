@@ -332,7 +332,7 @@ const CourtDetails = () => {
             <Layout>
                 <Stack direction="column" sx={{ width: 1, alignItems: "center" }}>
                     {/* Title */}
-                    <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "100px" }}>
+                    <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "50px" }}>
                         <Typography variant="h4">
                             {t("court.management")}
                         </Typography>
@@ -398,7 +398,7 @@ const CourtDetails = () => {
                                         <Button onClick={() => handleSelectTab("Deleted")} sx={{ color: tab === "Deleted" ? "error.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Deleted" && 2, borderColor: tab === "Deleted" && "error.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("deleted")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "error.main" }}>{deletedSubsCount}</Avatar></Button>
                                     </Stack>
                                 </Stack>
-                                <DataTable height="450px" isLoading={isLoading} columns={columns} data={subCourts} />
+                                <DataTable height="500px" isLoading={isLoading} columns={columns} data={subCourts} />
                             </Stack>
                         /* Main */
                     }

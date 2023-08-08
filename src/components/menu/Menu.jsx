@@ -51,6 +51,9 @@ const Menu = () => {
             case 7:
                 navigate("/");
                 return;
+            case 8:
+                navigate("/subscriptions");
+                return;
             default:
                 navigate("/");
                 return;
@@ -65,7 +68,7 @@ const Menu = () => {
     }
 
     return (
-        <Stack direction="column" justifyContent="space-between" alignItems="center" height="100%" sx={{ width: "100%", backgroundColor: "primary.main" }}>
+        <Stack direction="column" justifyContent="space-between" alignItems="center" sx={{ width: { xs: "45vw", sm: "25vw", md: "20vw", lg: "15vw", xl: "15vw" }, height: 1, position: "fixed", backgroundColor: "primary.main" }}>
             <Stack direction="column"alignItems="center">
                 <Stack direction="column" justifyContent="flex-start" alignItems="center" sx={{ width: "100%", backgroundColor: "primary.dark", paddingBottom: "20px"}}>
                     <Box className="logo" sx={{ display: "flex", width: "100%", justifyContent: "center", marginTop: "20px" }}>

@@ -60,11 +60,11 @@ const CompanyList = () => {
             flex: 0.12,
             renderCell: (params) => {
                 return (
-                  <Box display="flex" justifyContent="center">
-                    {
-                      params.row.lawyerCount
-                    }
-                  </Box>
+                    <Box display="flex" justifyContent="center">
+                        {
+                            params.row.lawyerCount
+                        }
+                    </Box>
                 )
             }
         },
@@ -75,11 +75,11 @@ const CompanyList = () => {
             flex: 0.15,
             renderCell: (params) => {
                 return (
-                  <Box display="flex" justifyContent="center">
-                    {
-                        params.row.plan
-                    }
-                  </Box>
+                    <Box display="flex" justifyContent="center">
+                        {
+                            params.row.plan
+                        }
+                    </Box>
                 )
             }
         },
@@ -106,10 +106,10 @@ const CompanyList = () => {
                 );
             },
         },
-      ];
+    ];
 
-    function fetchCompanies(){
-        if(tab === "Active"){
+    function fetchCompanies() {
+        if (tab === "Active") {
             getActiveCompanies(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
                 setCompanies(response.data.data);
             }).catch((error) => {
@@ -122,12 +122,12 @@ const CompanyList = () => {
                     draggable: false,
                     progress: undefined,
                     theme: "colored",
-                  });
+                });
             }).finally(() => {
                 setIsLoading(false);
             });
         }
-        else if(tab === "Passive"){
+        else if (tab === "Passive") {
             getPassiveCompanies(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
                 setCompanies(response.data.data);
             }).catch((error) => {
@@ -140,12 +140,12 @@ const CompanyList = () => {
                     draggable: false,
                     progress: undefined,
                     theme: "colored",
-                  });
+                });
             }).finally(() => {
                 setIsLoading(false);
             });
         }
-        else if(tab === "Deleted"){
+        else if (tab === "Deleted") {
             getDeletedCompanies(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
                 setCompanies(response.data.data);
             }).catch((error) => {
@@ -158,12 +158,12 @@ const CompanyList = () => {
                     draggable: false,
                     progress: undefined,
                     theme: "colored",
-                  });
+                });
             }).finally(() => {
                 setIsLoading(false);
             });
         }
-        else{
+        else {
             getAllCompanies(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
                 setCompanies(response.data.data);
             }).catch((error) => {
@@ -176,14 +176,14 @@ const CompanyList = () => {
                     draggable: false,
                     progress: undefined,
                     theme: "colored",
-                  });
+                });
             }).finally(() => {
                 setIsLoading(false);
             });
         }
     }
 
-    function fetchStats(){
+    function fetchStats() {
         getStats(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             setAllCount(response.data.data.allCount);
             setActiveCount(response.data.data.activeCount);
@@ -199,12 +199,12 @@ const CompanyList = () => {
                 draggable: false,
                 progress: undefined,
                 theme: "colored",
-              });
+            });
         }).finally(() => {
             setIsLoading(false);
         });
     }
-    
+
     function handleNewClick() {
         navigate("/companies/create");
     }
@@ -310,9 +310,9 @@ const CompanyList = () => {
         confirm({ title: t("warning"), description: t("company.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") }).then(() => {
             deleteRequest(id);
         })
-        .catch(() => {
-            console.log("Cancel");
-        });
+            .catch(() => {
+                console.log("Cancel");
+            });
     }
 
     useEffect(() => {
@@ -326,7 +326,7 @@ const CompanyList = () => {
             <Layout>
                 <Stack direction="column" sx={{ width: 1, alignItems: "center" }}>
                     {/* Title */}
-                    <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "100px" }}>
+                    <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "50px" }}>
                         <Typography variant="h4">
                             {t("customer.management")}
                         </Typography>
@@ -345,37 +345,37 @@ const CompanyList = () => {
                         </Breadcrumbs>
                     </Box>
                     {/* Navigation */}
-                              {/* Main */}
-          <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px"}}>
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "20px", border: 1, borderColor: "border.secondary" }}>
-              <Typography variant="h6">{t("customer.list")}</Typography>
-              <Stack id="main" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "flex-start" }}>
-                <Button onClick={() => handleSelectTab("All")} sx={{ color: tab === "All" ? "text.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "All" && 2, borderColor: tab === "All" && "text.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("all")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "text.main" }}>{allCount}</Avatar></Button>
-                <Button onClick={() => handleSelectTab("Active")} sx={{ color: tab === "Active" ? "success.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Active" && 2, borderColor: tab === "Active" && "success.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("active")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "success.main" }}>{activeCount}</Avatar></Button>
-                <Button onClick={() => handleSelectTab("Passive")} sx={{ color: tab === "Passive" ? "warning.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Passive" && 2, borderColor: tab === "Passive" && "warning.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("passive")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "warning.main" }}>{passiveCount}</Avatar></Button>
-                <Button onClick={() => handleSelectTab("Deleted")} sx={{ color: tab === "Deleted" ? "error.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Deleted" && 2, borderColor: tab === "Deleted" && "error.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("deleted")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "error.main" }}>{deletedCount}</Avatar></Button>
-              </Stack>
-            </Stack>
-            {/* Search */}
-            <Stack id="search" direction="row" sx={{ width: 1, border: 1, borderColor: "border.secondary" }}>
-              <InputBase
-                sx={{ ml: 1, paddingLeft: "10px", flex: 1 }}
-                placeholder="Search"
-                type="search"
-              />
-              <IconButton color="primary" size="large" sx={{ marginRight: "5px" }}>
-                <SearchSharpIcon />
-              </IconButton>
-            </Stack>
-            {/* Search */}
-            {/* Data */}
-            <DataTable height="550px" isLoading={isLoading} columns={columns} data={companies}/>
-            {/* Data */}
-          </Stack>
-          {/* Main */}
+                    {/* Main */}
+                    <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px" }}>
+                        <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "20px", border: 1, borderColor: "border.secondary" }}>
+                            <Typography variant="h6">{t("customer.list")}</Typography>
+                            <Stack id="main" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "flex-start" }}>
+                                <Button onClick={() => handleSelectTab("All")} sx={{ color: tab === "All" ? "text.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "All" && 2, borderColor: tab === "All" && "text.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("all")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "text.main" }}>{allCount}</Avatar></Button>
+                                <Button onClick={() => handleSelectTab("Active")} sx={{ color: tab === "Active" ? "success.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Active" && 2, borderColor: tab === "Active" && "success.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("active")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "success.main" }}>{activeCount}</Avatar></Button>
+                                <Button onClick={() => handleSelectTab("Passive")} sx={{ color: tab === "Passive" ? "warning.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Passive" && 2, borderColor: tab === "Passive" && "warning.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("passive")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "warning.main" }}>{passiveCount}</Avatar></Button>
+                                <Button onClick={() => handleSelectTab("Deleted")} sx={{ color: tab === "Deleted" ? "error.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Deleted" && 2, borderColor: tab === "Deleted" && "error.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("deleted")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "error.main" }}>{deletedCount}</Avatar></Button>
+                            </Stack>
+                        </Stack>
+                        {/* Search */}
+                        <Stack id="search" direction="row" sx={{ width: 1, border: 1, borderColor: "border.secondary" }}>
+                            <InputBase
+                                sx={{ ml: 1, paddingLeft: "10px", flex: 1 }}
+                                placeholder="Search"
+                                type="search"
+                            />
+                            <IconButton color="primary" size="large" sx={{ marginRight: "5px" }}>
+                                <SearchSharpIcon />
+                            </IconButton>
+                        </Stack>
+                        {/* Search */}
+                        {/* Data */}
+                        <DataTable height="600px" isLoading={isLoading} columns={columns} data={companies} />
+                        {/* Data */}
+                    </Stack>
+                    {/* Main */}
                 </Stack>
             </Layout>
-            <ToastContainer/>
+            <ToastContainer />
         </AuthCheck>
     )
 }

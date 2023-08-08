@@ -39,6 +39,11 @@ const theme = createTheme({
       secondary : "#FAF7FF",
     },
   },
+  typography: {
+    button: {
+      textTransform: 'none'
+    }
+  },
   overrides: {
     MuiAppBar: {
       colorInherit: {
