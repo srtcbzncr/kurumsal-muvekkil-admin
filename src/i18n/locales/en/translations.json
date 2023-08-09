@@ -83,6 +83,7 @@
     "customer.list" : "Customers",
 
     "null.validation.error" : "This field can not be null",
+    "min.zero.validation.error" : "This field can not be less than 0",
 
     "columnMenuLabel": "Men",
     "columnMenuShowColumns": "Show Columns",

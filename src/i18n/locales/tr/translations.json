@@ -82,6 +82,7 @@
     "customer.list" : "Müşteriler",
 
     "null.validation.error" : "Bu alan boş olamaz",
+    "min.zero.validation.error" : "0'dan küçük olamaz", 
 
     "columnMenuLabel": "Menü",
     "columnMenuShowColumns": "Kolonu Göster",
