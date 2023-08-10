@@ -61,7 +61,11 @@
     "plan.management" : "Plan Management",
     "plan.list" : "Plan List",
     "plan.create" : "New Plan",
+    "plan.edit" : "Edit Plan",
     "back.plan.management" : "Plan List",
+    "plan.before.delete.warning" : "Are you sure you want to delete the plan?",
+
+    "user.list" : "User List",
     
     "infos.general" : "General",
     "infos.general.caption" : "General informations for the plan",
@@ -70,6 +74,7 @@
     "infos.quota" : "Quotas",
     "infos.quota.caption" : "Quotas for the plan",
 
+    "error" : "Error",
     "error.undefined" : "An error occured, please try again later",
     "no.data" : "No data",
     

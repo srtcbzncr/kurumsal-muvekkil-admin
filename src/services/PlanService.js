@@ -100,37 +100,18 @@ export function createPlan(plan, authorization, locale){
     });
 }
 
-export function updateCourt(court, authorization, locale){
-    
-    let courtData;
-
-    if(court.parentId !== null){
-        courtData = {
-            id: court.id,
-            name: court.name,
-            parent: {
-                id: court.parentId
-            }
-        }
-    }
-    else{
-        courtData = {
-            id: court.id,
-            name: court.name
-        }
-    }
-
+export function updatePlan(plan, authorization, locale){
     return axios({
         method: "PUT",
         mode: "cors",
         baseURL: process.env.REACT_APP_API_URL,
-        url: endpoints.CREATE_COURT_URL,
+        url: endpoints.UPDATE_PLAN_URL,
         headers: {
             "Authorization": authorization,
             "Accept-Language": locale,
             "Accept": "application/json"
         },
-        data : courtData
+        data : plan
     });
 }
 

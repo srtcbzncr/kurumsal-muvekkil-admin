@@ -19,7 +19,8 @@ import CompanyList from './components/companyList/CompanyList';
 import SubscriptionList from './components/subscriptionList/SubscriptionList';
 import PlanList from './components/planList/PlanList';
 import CreatePlan from './components/createPlan/CreatePlan';
-
+import EditPlan from './components/editPlan/EditPlan';
+import UserList from './components/userList/UserList';
 
 function App() {
   return (
@@ -39,6 +40,8 @@ function App() {
                 <Route path="subscriptions" element={<SubscriptionList />}></Route>
                 <Route path="plans" element={<PlanList />}></Route>
                 <Route path="plans/create" element={<CreatePlan />}></Route>
+                <Route path="plans/:id/edit" element={<EditPlan />}></Route>
+                <Route path="users" element={<UserList />}></Route>
               </Routes>
             </BrowserRouter>
           </CookiesProvider>

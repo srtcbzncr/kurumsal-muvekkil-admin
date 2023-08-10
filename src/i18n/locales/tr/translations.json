@@ -60,8 +60,12 @@
     "plan.management" : "Plan Yönetimi",
     "plan.list" : "Plan Listesi",
     "plan.create" : "Yeni Plan",
+    "plan.edit" : "Planı Düzenle",
     "back.plan.management" : "Plan Listesi",
     "plan.infos" : "Plan Bilgileri",
+    "plan.before.delete.warning" : "Planı silmek istediğinize emin misiniz?",
+
+    "user.list" : "Kullanıcı Listesi", 
 
     "infos.general" : "Genel",
     "infos.general.caption" : "Plan hakkında genel bilgiler",
@@ -70,6 +74,7 @@
     "infos.quota" : "Limitler",
     "infos.quota.caption" : "Plan limit bilgileri",
 
+    "error" : "Hata",
     "error.undefined" : "Bir hata oluştu, lütfen daha sonra tekrar deneyin",
     "no.data" : "Hiç kayıt bulunamadı",
 

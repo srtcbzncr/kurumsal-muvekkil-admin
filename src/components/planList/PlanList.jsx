@@ -14,7 +14,7 @@ import DataTable from '../dataTable/DataTable';
 import Status from '../status/Status';
 import Actions from '../actions/Actions';
 
-import { deletePlan, getAllPlans, getStats, setActive, setPassive } from '../../services/PlanService';
+import { deletePlan, getActivePlans, getAllPlans, getDeletedPlans, getPassivePlans, getStats, setActive, setPassive } from '../../services/PlanService';
 import getAuthHeader from '../../helpers/getAuthHeader';
 
 import AddSharpIcon from '@mui/icons-material/AddSharp';
@@ -31,7 +31,7 @@ const PlanList = () => {
   const [cookie, setCookie, removeCookie] = useCookies();
   const confirm = useConfirm();
 
-  const [tab, setTab] = useState();
+  const [tab, setTab] = useState("All");
   const [isLoading, setIsLoading] = useState();
   const [isError, setIsError] = useState();
   const [plans, setPlans] = useState([]);
@@ -45,7 +45,7 @@ const PlanList = () => {
         field: 'id',
         headerName: 'ID',
         headerClassName: 'super-app-theme--header',
-        flex: 0.1,
+        flex: 0.25,
     },
     {
         field: 'name',
@@ -54,40 +54,34 @@ const PlanList = () => {
         flex: 0.1,
     },
     {
-        field: 'description',
-        headerName: t("description"),
-        headerClassName: 'super-app-theme--header',
-        flex: 0.1,
-    },
-    {
       field: 'monthlyPrice',
       headerName: t("price.monthly"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.1,
+      flex: 0.09,
     },
     {
       field: 'annualPrice',
       headerName: t("price.annual"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.1,
+      flex: 0.09,
     },
     {
       field: 'clientQuota',
       headerName: t("quota.client"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.1,
+      flex: 0.09,
     },
     {
       field: 'lawyerQuota',
       headerName: t("quota.lawyer"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.1,
+      flex: 0.09,
     },
     {
       field: 'fileQuotaPerClient',
       headerName: t("quota.file.per.client"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.1,
+      flex: 0.09,
     },
     {
         field: "status",
@@ -108,7 +102,7 @@ const PlanList = () => {
         flex: 0.15,
         renderCell: (params) => {
             return (
-                <Actions id={params.row.id} url="/courts" isDetails={false} size="medium" active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
+                <Actions id={params.row.id} url="/plans" isDetails={false} size="medium" active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
             );
         },
     },
@@ -116,28 +110,83 @@ const PlanList = () => {
 
   function fetchPlans() {
     setIsLoading(true);
-    getAllPlans(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
-      setPlans(response.data.data);
-    }).catch((error) => {
-      toast.error(error.response.data.error.message, {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: false,
-        progress: undefined,
-        theme: "colored",
+    if(tab === "Active") {
+      getActivePlans(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+        setPlans(response.data.data);
+      }).catch((error) => {
+        toast.error(error.response.data.error.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      }).finally(() => {
+        setIsLoading(false);
       });
-    }).finally(() => {
-      setIsLoading(false);
-    });
+    }
+    else if(tab === "Passive") {
+      getPassivePlans(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+        setPlans(response.data.data);
+      }).catch((error) => {
+        toast.error(error.response.data.error.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      }).finally(() => {
+        setIsLoading(false);
+      });
+    }
+    else if(tab === "Deleted") {
+      getDeletedPlans(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+        setPlans(response.data.data);
+      }).catch((error) => {
+        toast.error(error.response.data.error.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      }).finally(() => {
+        setIsLoading(false);
+      });
+    }
+    else {
+      getAllPlans(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+        setPlans(response.data.data);
+      }).catch((error) => {
+        toast.error(error.response.data.error.message, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      }).finally(() => {
+        setIsLoading(false);
+      });
+    }
   }
 
   function fetchStats() {
     setIsLoading(true);
     getStats(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
-      console.log(response);
       setAllCount(response.data.data.allCount);
       setActiveCount(response.data.data.activeCount);
       setPassiveCount(response.data.data.passiveCount);
@@ -222,7 +271,7 @@ const PlanList = () => {
   }
 
   function handleDeleteOnClick(id) {
-    confirm({ title: t("warning"), description: t("company.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") }).then(() => {
+    confirm({ title: t("warning"), description: t("plan.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") }).then(() => {
       deleteRequest(id);
     }).catch(() => {
           console.log("Cancel");
@@ -244,7 +293,7 @@ const PlanList = () => {
 useEffect(() => {
   fetchStats();
   fetchPlans();
-}, [tab])
+}, [tab]);
 
   return (
     <AuthCheck>
@@ -278,6 +327,7 @@ useEffect(() => {
             </Breadcrumbs>
           </Box>
           {/* Navigation */}
+          {/* Main */}
           <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px" }}>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "20px", border: 1, borderColor: "border.secondary" }}>
               <Typography variant="h6">{t("plan.list")}</Typography>

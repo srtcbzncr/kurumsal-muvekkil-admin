@@ -41,7 +41,20 @@ const endpoints = {
     UPDATE_PLAN_URL : "/plan",
     SET_ACTIVE_PLAN_URL : "/plan/{id}/setActive",
     SET_PASSIVE_PLAN_URL : "/plan/{id}/setPassive",
-    DELETE_PLAN_URL : "/plan/{id}"
+    DELETE_PLAN_URL : "/plan/{id}",
+
+    // User
+    GET_ADMIN_STATS_URL : "/user/admins/stats",
+    GET_ALL_ADMINS_URL : "/user/admins/all",
+    GET_ACTIVE_ADMINS_URL : "/user/admins/active",
+    GET_PASSIVE_ADMINS_URL : "/user/admins/passive",
+    GET_DELETED_ADMINS_URL : "/user/admins/deleted",
+    GET_USER_URL : "/user/{id}",
+    CREATE_USER_URL : "/user",
+    UPDATE_USER_URL : "/user",
+    SET_ACTIVE_USER_URL : "/user/{id}/setActive",
+    SET_PASSIVE_USER_URL : "/user/{id}/setPassive",
+    DELETE_USER_URL : "/user/{id}"
 }
 
 export default endpoints;

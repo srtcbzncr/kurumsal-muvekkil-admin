@@ -1,31 +1,27 @@
-import { Alert, Box, Breadcrumbs, Button, FormControl, InputLabel, Select, Stack, TextField, Tooltip, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Button, FormControl, Stack, TextField, Tooltip, Typography } from '@mui/material';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
 import './style.css';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
-
-import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
-import { useNavigate } from 'react-router';
-import { Link } from 'react-router-dom';
-
-import { createPlan } from '../../services/PlanService';
-
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
-import getAuthHeader from '../../helpers/getAuthHeader';
 import { useCookies } from 'react-cookie';
 
-const CreatePlan = () => {
+import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
+import { getPlanById, updatePlan } from '../../services/PlanService';
+import getAuthHeader from '../../helpers/getAuthHeader';
+import { ToastContainer, toast } from 'react-toastify';
 
-    const { t, i18n } = useTranslation();
-    const navigate = useNavigate();
+const UpdatePlan = () => {
+
+    const { id } = useParams();
+    const {t, i18n} = useTranslation();
     const [cookie, setCookie, removeCookie] = useCookies();
+    const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isDone, setIsDone] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState();
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -43,62 +39,47 @@ const CreatePlan = () => {
     const [lawyerQuotaValidationError, setLawyerQuotaValidationError] = useState(null);
     const [fileQuotaValidationError, setFileQuotaValidationError] = useState(null);
 
-    function createPlanRequest() {
-        console.log("createPlanRequest");
-        createPlan({ name, description, monthlyPrice, annualPrice, clientQuota, lawyerQuota, fileQuotaPerClient: fileQuota }, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
-            navigate("/plans");
-        }).catch((error) => {
-            setIsError(true);
-            if (error.response.data.status === 400) {
-                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "name") &&
-                    setNameValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "name").message);
-
-                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "description") &&
-                    setDescriptionValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "description").message);
-
-                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "monthlyPrice") &&
-                    setMonthlyPriceValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "monthlyPrice").message);
-
-                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "annualPrice") &&
-                    setAnnualPriceValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "annualPrice").message);
-
-                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "clientQuota") &&
-                    setClientQuotaValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "clientQuota").message);
-
-                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "lawyerQuota") &&
-                    setLawyerQuotaValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "lawyerQuota").message);
-
-                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "fileQuotaPerClient") &&
-                    setFileQuotaValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "fileQuotaPerClient").message);
-            }
-        }).finally(() => {
-            setIsLoading(false);
-        });
-    }
-
     function handleBackOnClick() {
         navigate("/plans");
     }
 
-    async function handleSaveOnClick() {
-        setIsLoading(true);
-        setIsError(false);
-        setErrorMessage(null);
-
-        const validationResult = await validateCreatePlanForm();
-
-        if (validationResult === true) {
-            createPlanRequest();
-        }
-        else {
-            setIsLoading(false);
-            setIsError(true);
-        }
+    function handleNameOnChange(event) {
+        setNameValidationError(null);
+        setName(event.target.value);
     }
 
-    async function validateCreatePlanForm() {
+    function handleDescriptionOnChange(event) {
+        setDescriptionValidationError(null);
+        setDescription(event.target.value);
+    }
+
+    function handleMonthlyPriceOnChange(event) {
+        setMonthlyPriceValidationError(null);
+        setMonthlyPrice(event.target.value);
+    }
+
+    function handleAnnualPriceOnChange(event) {
+        setAnnualPriceValidationError(null);
+        setAnnualPrice(event.target.value);
+    }
+
+    function handleClientQuotaOnChange(event) {
+        setClientQuotaValidationError(null);
+        setClientQuota(event.target.value);
+    }
+
+    function handleLawyerQuotaOnChange(event) {
+        setLawyerQuotaValidationError(null);
+        setLawyerQuota(event.target.value);
+    }
+
+    function handleFileQuotaOnChange(event) {
+        setFileQuotaValidationError(null);
+        setFileQuota(event.target.value);
+    }
+
+    async function validateUpdatePlanForm() {
         let result = true;
-        console.log("validateCreatePlanForm");
         if (name === null || name === "") {
             setNameValidationError(t("null.validation.error"));
             result = false;
@@ -147,44 +128,88 @@ const CreatePlan = () => {
             setFileQuotaValidationError(t("min.zero.validation.error"));
             result = false;
         }
-        console.log("Validation Result:" + result);
         return result;
     }
 
-    function handleNameOnChange(event) {
-        setNameValidationError(null);
-        setName(event.target.value);
+    async function handleSaveOnClick() {
+        const validationResult = await validateUpdatePlanForm();
+        if(validationResult === true) {
+            updatePlanRequest();
+        }
     }
 
-    function handleDescriptionOnChange(event) {
-        setDescriptionValidationError(null);
-        setDescription(event.target.value);
+    function updatePlanRequest() {
+        updatePlan({ id, name, description, monthlyPrice, annualPrice, clientQuota, lawyerQuota, fileQuotaPerClient: fileQuota }, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+            navigate("/plans");
+        }).catch((error) => {
+            if (error.response.data.status === 400) {
+                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "name") &&
+                    setNameValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "name").message);
+
+                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "description") &&
+                    setDescriptionValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "description").message);
+
+                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "monthlyPrice") &&
+                    setMonthlyPriceValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "monthlyPrice").message);
+
+                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "annualPrice") &&
+                    setAnnualPriceValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "annualPrice").message);
+
+                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "clientQuota") &&
+                    setClientQuotaValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "clientQuota").message);
+
+                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "lawyerQuota") &&
+                    setLawyerQuotaValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "lawyerQuota").message);
+
+                error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "fileQuotaPerClient") &&
+                    setFileQuotaValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "fileQuotaPerClient").message);
+            }
+            else {
+                toast.error(error.response.data.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }
+        }).finally(() => {
+            setIsLoading(false);
+        });
     }
 
-    function handleMonthlyPriceOnChange(event) {
-        setMonthlyPriceValidationError(null);
-        setMonthlyPrice(event.target.value);
+    function fetchPlan() {
+        setIsLoading(true);
+        getPlanById(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+            setName(response.data.data.name);
+            setDescription(response.data.data.description);
+            setMonthlyPrice(response.data.data.monthlyPrice);
+            setAnnualPrice(response.data.data.annualPrice);
+            setClientQuota(response.data.data.clientQuota);
+            setLawyerQuota(response.data.data.lawyerQuota);
+            setFileQuota(response.data.data.fileQuotaPerClient);
+        }).catch((error) => {
+            toast.error(error.response.data.message, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }).finally(() => {
+            setIsLoading(false);
+        });
     }
 
-    function handleAnnualPriceOnChange(event) {
-        setAnnualPriceValidationError(null);
-        setAnnualPrice(event.target.value);
-    }
-
-    function handleClientQuotaOnChange(event) {
-        setClientQuotaValidationError(null);
-        setClientQuota(event.target.value);
-    }
-
-    function handleLawyerQuotaOnChange(event) {
-        setLawyerQuotaValidationError(null);
-        setLawyerQuota(event.target.value);
-    }
-
-    function handleFileQuotaOnChange(event) {
-        setFileQuotaValidationError(null);
-        setFileQuota(event.target.value);
-    }
+    useEffect(() => {
+        fetchPlan();
+    }, []);
 
     return (
         <AuthCheck>
@@ -192,7 +217,7 @@ const CreatePlan = () => {
                 <Stack direction="column" sx={{ width: 1, height: 1, justifyContent: { xs: "center", sm: "flex-start" }, alignItems: { xs: "center", sm: "center" } }}>
                     <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "50px" }}>
                         <Typography variant="h4">
-                            {t("plan.create")}
+                            {t("plan.edit")}
                         </Typography>
                         <Tooltip title={t("back")}>
                             <Button variant="outlined" color="text" onClick={handleBackOnClick}>
@@ -208,7 +233,7 @@ const CreatePlan = () => {
                             <Link underline="hover" color="inherit" href="/courts">
                                 {t("plan.management")}
                             </Link>
-                            <Typography color="text.primary">{t("plan.create")}</Typography>
+                            <Typography color="text.primary">{t("plan.edit")}</Typography>
                         </Breadcrumbs>
                     </Box>
                     <FormControl display="flex" sx={{ width: 1 }}>
@@ -223,8 +248,8 @@ const CreatePlan = () => {
                                     </Typography>
                                 </Stack>
                                 <Stack direction="column" sx={{ width: 0.6 }}>
-                                    <TextField id="name" label={t("name")} variant="outlined" value={name} onChange={handleNameOnChange} required error={nameValidationError !== null} helperText={nameValidationError} />
-                                    <TextField id="description" label={t("description")} variant="outlined" value={description} onChange={handleDescriptionOnChange} multiline rows={6} sx={{ marginTop: "20px" }} required error={descriptionValidationError !== null} helperText={descriptionValidationError} />
+                                    <TextField id="name" label={t("name")} InputLabelProps={{ shrink: true }} variant="outlined" value={name} onChange={handleNameOnChange} required error={nameValidationError !== null} helperText={nameValidationError} />
+                                    <TextField id="description" label={t("description")} InputLabelProps={{ shrink: true }} variant="outlined" value={description} onChange={handleDescriptionOnChange} multiline rows={6} sx={{ marginTop: "20px" }} required error={descriptionValidationError !== null} helperText={descriptionValidationError} />
                                 </Stack>
                             </Stack>
                             <Stack direction={{ xs: "column", sm: "row" }} sx={{ marginTop: "30px", border: 1, borderColor: "secondary.main", borderRadius: "10px", width: 0.8, backgroundColor: "secondary.main", justifyContent: "space-between", paddingLeft: { xs: "0px", sm: "20px" }, paddingRight: { xs: "0px", sm: "20px" }, paddingTop: "20px", paddingBottom: "20px" }}>
@@ -237,8 +262,8 @@ const CreatePlan = () => {
                                     </Typography>
                                 </Stack>
                                 <Stack direction="column" sx={{ width: 0.6 }}>
-                                    <TextField id="monthlyPrice" label={t("price.monthly")} variant="outlined" type="number" value={monthlyPrice} onChange={handleMonthlyPriceOnChange} required error={monthlyPriceValidationError !== null} helperText={monthlyPriceValidationError} />
-                                    <TextField id="annualPrice" label={t("price.annual")} variant="outlined" type="number" sx={{ marginTop: "20px" }} value={annualPrice} onChange={handleAnnualPriceOnChange} required error={annualPriceValidationError !== null} helperText={annualPriceValidationError} />
+                                    <TextField id="monthlyPrice" label={t("price.monthly")} InputLabelProps={{ shrink: true }} variant="outlined" type="number" value={monthlyPrice} onChange={handleMonthlyPriceOnChange} required error={monthlyPriceValidationError !== null} helperText={monthlyPriceValidationError} />
+                                    <TextField id="annualPrice" label={t("price.annual")} InputLabelProps={{ shrink: true }} variant="outlined" type="number" sx={{ marginTop: "20px" }} value={annualPrice} onChange={handleAnnualPriceOnChange} required error={annualPriceValidationError !== null} helperText={annualPriceValidationError} />
                                 </Stack>
                             </Stack>
                             <Stack direction={{ xs: "column", sm: "row" }} sx={{ marginTop: "30px", border: 1, borderColor: "secondary.main", borderRadius: "10px", width: 0.8, backgroundColor: "secondary.main", justifyContent: "space-between", paddingLeft: { xs: "0px", sm: "30px" }, paddingRight: { xs: "0px", sm: "30px" }, paddingTop: "30px", paddingBottom: "30px" }}>
@@ -251,9 +276,9 @@ const CreatePlan = () => {
                                     </Typography>
                                 </Stack>
                                 <Stack direction="column" sx={{ width: 0.6 }}>
-                                    <TextField id="clientQuota" label={t("quota.client")} variant="outlined" type="number" value={clientQuota} onChange={handleClientQuotaOnChange} required error={clientQuotaValidationError !== null} helperText={clientQuotaValidationError} />
-                                    <TextField id="lawyerQuota" label={t("quota.lawyer")} variant="outlined" type="number" sx={{ marginTop: "20px" }} value={lawyerQuota} onChange={handleLawyerQuotaOnChange} required error={lawyerQuotaValidationError !== null} helperText={lawyerQuotaValidationError} />
-                                    <TextField id="fileQuota" label={t("quota.file.per.client")} variant="outlined" type="number" sx={{ marginTop: "20px" }} value={fileQuota} onChange={handleFileQuotaOnChange} required error={fileQuotaValidationError !== null} helperText={fileQuotaValidationError} />
+                                    <TextField id="clientQuota" label={t("quota.client")} InputLabelProps={{ shrink: true }} variant="outlined" type="number" value={clientQuota} onChange={handleClientQuotaOnChange} required error={clientQuotaValidationError !== null} helperText={clientQuotaValidationError} />
+                                    <TextField id="lawyerQuota" label={t("quota.lawyer")} InputLabelProps={{ shrink: true }} variant="outlined" type="number" sx={{ marginTop: "20px" }} value={lawyerQuota} onChange={handleLawyerQuotaOnChange} required error={lawyerQuotaValidationError !== null} helperText={lawyerQuotaValidationError} />
+                                    <TextField id="fileQuota" label={t("quota.file.per.client")} InputLabelProps={{ shrink: true }} variant="outlined" type="number" sx={{ marginTop: "20px" }} value={fileQuota} onChange={handleFileQuotaOnChange} required error={fileQuotaValidationError !== null} helperText={fileQuotaValidationError} />
                                 </Stack>
                             </Stack>
                             <Stack direction="row" spacing={2} sx={{ width: 0.8, justifyContent: "flex-end", marginTop: "30px", marginBottom: "30px" }}>
@@ -268,8 +293,9 @@ const CreatePlan = () => {
                     </FormControl>
                 </Stack>
             </Layout>
+            <ToastContainer />
         </AuthCheck>
     )
 }
 
-export default CreatePlan;
+export default UpdatePlan;
