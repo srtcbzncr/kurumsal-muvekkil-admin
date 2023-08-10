@@ -34,7 +34,7 @@ const Menu = () => {
                 navigate("/");
                 return;
             case 2:
-                navigate("/");
+                navigate("/users");
                 return;
             case 3:
                 navigate("/companies");
