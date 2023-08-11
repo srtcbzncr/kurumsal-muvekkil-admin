@@ -87,7 +87,7 @@ const UserList = () => {
                 );
             },
         },
-      ];
+    ];
 
     function fetchStats() {
         setIsLoading(true);
