@@ -1,6 +1,8 @@
 {
     "username" : "Kullanıcı Adı",
     "password" : "Parola",
+    "email" : "E-posta",
+    "role" : "Rol",
     "login" : "GİRİŞ",
     "password.forget" : "ŞİFREMİ UNUTTUM",
     "admin.login" : "Yönetici Girişi",
@@ -65,7 +67,12 @@
     "plan.infos" : "Plan Bilgileri",
     "plan.before.delete.warning" : "Planı silmek istediğinize emin misiniz?",
 
-    "user.list" : "Kullanıcı Listesi", 
+    "user.list" : "Kullanıcı Listesi",
+    "user.before.delete.warning" : "Kullanıcıyı silmek istediğinize emin misiniz?",
+
+    "role.admin" : "Yönetici",
+    "role.client" : "Müvekkil",
+    "role.lawyer" : "Avukat",
 
     "infos.general" : "Genel",
     "infos.general.caption" : "Plan hakkında genel bilgiler",

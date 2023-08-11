@@ -1,4 +1,4 @@
-import { Avatar, Box, Breadcrumbs, Button, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Breadcrumbs, Button, IconButton, InputBase, Stack, Typography } from '@mui/material';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
 import './style.css';
@@ -12,25 +12,82 @@ import AddSharpIcon from '@mui/icons-material/AddSharp';
 import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import { Link } from 'react-router-dom';
-import { getAdminStats } from '../../services/UserService';
+import { deleteUser, getActiveAdmins, getAdminStats, getAllAdmins, getDeletedAdmins, getPassiveAdmins, setActive, setPassive } from '../../services/UserService';
 import getAuthHeader from '../../helpers/getAuthHeader';
-import { setPassive } from '../../services/PlanService';
 import { ToastContainer, toast } from 'react-toastify';
+import DataTable from '../dataTable/DataTable';
+import Status from '../status/Status';
+import Actions from '../actions/Actions';
+import { useConfirm } from 'material-ui-confirm';
 
 const UserList = () => {
 
     const [cookie, setCookie, removeCookie] = useCookies();
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const confirm = useConfirm();
 
     const [isLoading, setIsLoading] = useState(false);
 
     const [tab, setTab] = useState("All");
+    const [admins, setAdmins] = useState([]);
     const [allCount, setAllCount] = useState(null);
     const [activeCount, setActiveCount] = useState(null);
     const [passiveCount, setPassiveCount] = useState(null);
     const [deletedCount, setDeletedCount] = useState(null);
 
+    const columns = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            headerClassName: 'super-app-theme--header',
+            flex: 0.25,
+        },
+        {
+            field: 'username',
+            headerName: t("username"),
+            headerClassName: 'super-app-theme--header',
+            flex: 0.1,
+        },
+        {
+          field: 'email',
+          headerName: t("email"),
+          headerClassName: 'super-app-theme--header',
+          flex: 0.1,
+        },
+        {
+          field: 'role',
+          headerName: t("role"),
+          headerClassName: 'super-app-theme--header',
+          flex: 0.1,
+          renderCell: (params) => {
+            return params.row.role.name === "ROLE_ADMIN" ? t("role.admin") : params.row.role.name === "ROLE_CLIENT" ? t("role.client") : t("role.lawyer");
+        }
+        },
+        {
+            field: "status",
+            headerName: t("status"),
+            headerClassName: 'super-app-theme--header',
+            flex: 0.1,
+            renderCell: (params) => {
+                return (
+                    <Status active={params.row.active} deleted={params.row.deleted}></Status>
+                )
+            }
+        },
+        {
+            field: 'actions',
+            headerName: t("actions"),
+            type: "actions",
+            headerClassName: 'super-app-theme--header',
+            flex: 0.15,
+            renderCell: (params) => {
+                return (
+                    <Actions id={params.row.id} url="/users" isDetails={false} size="medium" active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
+                );
+            },
+        },
+      ];
 
     function fetchStats() {
         setIsLoading(true);
@@ -55,6 +112,82 @@ const UserList = () => {
         });
     }
 
+    function fetchAdmins() {
+        setIsLoading(true);
+        if (tab === "Active") {
+            getActiveAdmins(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+                setAdmins(response.data.data);
+            }).catch((error) => {
+                toast.error(error.response.data.error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }).finally(() => {
+                setIsLoading(false);
+            });
+        }
+        else if (tab === "Passive") {
+            getPassiveAdmins(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+                setAdmins(response.data.data);
+            }).catch((error) => {
+                toast.error(error.response.data.error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }).finally(() => {
+                setIsLoading(false);
+            });
+        }
+        else if (tab === "Deleted") {
+            getDeletedAdmins(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+                setAdmins(response.data.data);
+            }).catch((error) => {
+                toast.error(error.response.data.error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }).finally(() => {
+                setIsLoading(false);
+            });
+        }
+        else {
+            getAllAdmins(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+                setAdmins(response.data.data);
+            }).catch((error) => {
+                toast.error(error.response.data.error.message, {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: false,
+                    progress: undefined,
+                    theme: "colored",
+                });
+            }).finally(() => {
+                setIsLoading(false);
+            });
+        }
+    }
+
     function handleNewOnClick() {
         navigate("/users/create");
     }
@@ -63,8 +196,80 @@ const UserList = () => {
         setTab(tab);
     }
 
+    function handleDeleteOnClick(id) {
+        confirm({ title: t("warning"), description: t("user.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") }).then(() => {
+          deleteRequest(id);
+        }).catch(() => {
+              console.log("Cancel");
+          });
+      }
+
+    function setActiveRequest(id) {
+        setIsLoading(true);
+        setActive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+            fetchStats();
+            fetchAdmins();
+        }).catch((error) => {
+            toast.error(error.response.data.error.message, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }).finally(() => {
+            setIsLoading(false);
+        });
+    }
+
+    function setPassiveRequest(id) {
+        setIsLoading(true);
+        setPassive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+            fetchStats();
+            fetchAdmins();
+        }).catch((error) => {
+            toast.error(error.response.data.error.message, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }).finally(() => {
+            setIsLoading(false);
+        });
+    }
+
+    function deleteRequest(id) {
+        setIsLoading(true);
+        deleteUser(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+            fetchStats();
+            fetchAdmins();
+        }).catch((error) => {
+            toast.error(error.response.data.error.message, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }).finally(() => {
+            setIsLoading(false);
+        });
+    }
+
     useEffect(() => {
         fetchStats();
+        fetchAdmins();
     }, [tab]);
 
     return (
@@ -91,6 +296,7 @@ const UserList = () => {
                         </Breadcrumbs>
                     </Box>
                     {/* Navigation */}
+                    {/* Main */}
                     <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px" }}>
                         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "20px", border: 1, borderColor: "border.secondary" }}>
                             <Typography variant="h6">{t("user.list")}</Typography>
@@ -101,7 +307,23 @@ const UserList = () => {
                                 <Button onClick={() => handleSelectTab("Deleted")} sx={{ color: tab === "Deleted" ? "error.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Deleted" && 2, borderColor: tab === "Deleted" && "error.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("deleted")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "error.main" }}>{deletedCount}</Avatar></Button>
                             </Stack>
                         </Stack>
+                        {/* Search */}
+                        <Stack id="search" direction="row" sx={{ width: 1, border: 1, borderColor: "border.secondary" }}>
+                            <InputBase
+                                sx={{ ml: 1, paddingLeft: "10px", flex: 1 }}
+                                placeholder="Search"
+                                type="search"
+                            />
+                            <IconButton color="primary" size="large" sx={{ marginRight: "5px" }}>
+                                <SearchSharpIcon />
+                            </IconButton>
+                        </Stack>
+                        {/* Search */}
+                        {/* Data */}
+                        <DataTable height="600px" isLoading={isLoading} columns={columns} data={admins} />
+                        {/* Data */}
                     </Stack>
+                    {/* Main */}
                 </Stack>
             </Layout>
             <ToastContainer />
