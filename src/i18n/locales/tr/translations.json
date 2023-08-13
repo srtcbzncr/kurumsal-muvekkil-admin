@@ -1,5 +1,8 @@
 {
+    "firstname" : "Ad",
+    "lastname" : "Soyad",
     "username" : "Kullanıcı Adı",
+    "phone" : "Telefon",
     "password" : "Parola",
     "email" : "E-posta",
     "role" : "Rol",
@@ -21,6 +24,8 @@
     "court.create" : "Yeni Mahkeme",
     "court.edit" : "Mahkeme Bilgilerini Düzenle",
     "back.court.management" : "Mahkeme Listesi",
+    "company" : "Şirket",
+
     "name" : "Ad",
     "save" : "Kaydet",
     "close" : "Kapat",
@@ -55,8 +60,9 @@
     "quota.client" : "Müşteri Limiti",
     "quota.lawyer" : "Avukat Limiti",
     "quota.file.per.client" : "Dosya Limiti",
-    "login.failed" : "Kullanıcı adı veya parola yanlış",
+    "login.failed" : "Kullanıcı adı veya parola hatalı",
     "lawyer.count" : "Avukat Sayısı",
+    "lawyer.list" : "Avukat Listesi",
 
     "plan" : "Plan",
     "plan.management" : "Plan Yönetimi",

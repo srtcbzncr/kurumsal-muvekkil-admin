@@ -40,16 +40,16 @@ const Menu = () => {
                 navigate("/companies");
                 return;
             case 4:
-                navigate("/");
+                navigate("/lawyers");
                 return;
             case 5:
-                navigate("/");
+                navigate("/clients");
                 return;
             case 6:
                 navigate("/courts");
                 return;
             case 7:
-                navigate("/");
+                navigate("/files");
                 return;
             case 8:
                 navigate("/subscriptions");
