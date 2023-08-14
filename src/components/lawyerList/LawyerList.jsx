@@ -18,13 +18,14 @@ import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
-import { getActiveLawyers, getAllLawyers, getDeletedLawyers, getPassiveLawyers, getStats } from '../../services/LawyerService';
+import { deleteLawyer, getActiveLawyers, getAllLawyers, getDeletedLawyers, getPassiveLawyers, getStats, setActive, setPassive } from '../../services/LawyerService';
 
 const LawyerList = () => {
 
     const { t, i18n } = useTranslation();
     const [cookie, setCookie, removeCookie] = useCookies();
     const navigate = useNavigate();
+    const confirm = useConfirm();
 
     const [isLoading, setIsLoading] = useState(false);
 
@@ -49,10 +50,10 @@ const LawyerList = () => {
             flex: 0.1,
         },
         {
-          field: 'lastName',
-          headerName: t("lastname"),
-          headerClassName: 'super-app-theme--header',
-          flex: 0.1,
+            field: 'lastName',
+            headerName: t("lastname"),
+            headerClassName: 'super-app-theme--header',
+            flex: 0.1,
         },
         {
             field: 'companyName',
@@ -205,19 +206,74 @@ const LawyerList = () => {
     }
 
     function setActiveRequest(id) {
-
+        setIsLoading(true);
+        setActive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+            fetchStats();
+            fetchLawyers();
+        }).catch((error) => {
+            toast.error(error.response.data.error.message, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }).finally(() => {
+            setIsLoading(false);
+        });
     }
 
     function setPassiveRequest(id) {
-
+        setIsLoading(true);
+        setPassive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+            fetchStats();
+            fetchLawyers();
+        }).catch((error) => {
+            toast.error(error.response.data.error.message, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }).finally(() => {
+            setIsLoading(false);
+        });
     }
 
     function deleteRequest(id) {
-
+        setIsLoading(true);
+        deleteLawyer(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+            fetchStats();
+            fetchLawyers();
+        }).catch((error) => {
+            toast.error(error.response.data.error.message, {
+                position: "top-center",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                progress: undefined,
+                theme: "colored",
+            });
+        }).finally(() => {
+            setIsLoading(false);
+        });
     }
 
-    function handleDeleteOnClick() {
-
+    function handleDeleteOnClick(id) {
+        confirm({ title: t("warning"), description: t("user.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") }).then(() => {
+            deleteRequest(id);
+        }).catch(() => {
+            console.log("Cancel");
+        });
     }
 
     useEffect(() => {
