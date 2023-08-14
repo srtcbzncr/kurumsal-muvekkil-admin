@@ -68,6 +68,19 @@ const endpoints = {
     SET_ACTIVE_LAWYER_URL : "/lawyer/{id}/setActive",
     SET_PASSIVE_LAWYER_URL : "/lawyer/{id}/setPassive",
     DELETE_LAWYER_URL : "/lawyer/{id}",
+
+    // Client
+    GET_CLIENT_STATS_URL : "/client/stats",
+    GET_ALL_CLIENTS_URL : "/client/all",
+    GET_ACTIVE_CLIENTS_URL : "/client/active",
+    GET_PASSIVE_CLIENTS_URL : "/client/passive",
+    GET_DELETED_CLIENTS_URL : "/client/deleted",
+    GET_CLIENT_URL : "/client/{id}",
+    CREATE_CLIENT_URL : "/client",
+    UPDATE_CLIENT_URL : "/client",
+    SET_ACTIVE_CLIENT_URL : "/client/{id}/setActive",
+    SET_PASSIVE_CLIENT_URL : "/client/{id}/setPassive",
+    DELETE_CLIENT_URL : "/client/{id}",
 }
 
 export default endpoints;

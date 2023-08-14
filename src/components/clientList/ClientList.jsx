@@ -1,40 +1,38 @@
+import { Avatar, Box, Breadcrumbs, Button, IconButton, InputBase, Stack, Typography } from '@mui/material';
+import AuthCheck from '../authCheck/AuthCheck';
+import Layout from '../layout/Layout';
 import './style.css';
 
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useCookies } from 'react-cookie';
-import { Avatar, Box, Breadcrumbs, Button, IconButton, InputBase, Stack, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
+import AddSharpIcon from '@mui/icons-material/AddSharp';
+import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
+import SearchSharpIcon from '@mui/icons-material/SearchSharp';
+import { deleteClient, getActiveClients, getAllClients, getDeletedClients, getPassiveClients, getStats, setActive, setPassive } from '../../services/ClientService';
 import getAuthHeader from '../../helpers/getAuthHeader';
+import { useCookies } from 'react-cookie';
 import { ToastContainer, toast } from 'react-toastify';
 import DataTable from '../dataTable/DataTable';
 import Status from '../status/Status';
 import Actions from '../actions/Actions';
 import { useConfirm } from 'material-ui-confirm';
 
-import AddSharpIcon from '@mui/icons-material/AddSharp';
-import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
-import SearchSharpIcon from '@mui/icons-material/SearchSharp';
-import AuthCheck from '../authCheck/AuthCheck';
-import Layout from '../layout/Layout';
-import { deleteLawyer, getActiveLawyers, getAllLawyers, getDeletedLawyers, getPassiveLawyers, getStats, setActive, setPassive } from '../../services/LawyerService';
-
-const LawyerList = () => {
+const ClientList = () => {
 
     const { t, i18n } = useTranslation();
-    const [cookie, setCookie, removeCookie] = useCookies();
     const navigate = useNavigate();
+    const [cookie, setCookie, removeCookie] = useCookies();
     const confirm = useConfirm();
 
     const [isLoading, setIsLoading] = useState(false);
-
     const [tab, setTab] = useState("All");
-    const [lawyers, setLawyers] = useState([]);
     const [allCount, setAllCount] = useState(null);
     const [activeCount, setActiveCount] = useState(null);
     const [passiveCount, setPassiveCount] = useState(null);
     const [deletedCount, setDeletedCount] = useState(null);
+    const [clients, setClients] = useState([]);
 
     const columns = [
         {
@@ -53,31 +51,25 @@ const LawyerList = () => {
             field: 'firstName',
             headerName: t("firstname"),
             headerClassName: 'super-app-theme--header',
-            flex: 0.08,
+            flex: 0.1,
         },
         {
             field: 'lastName',
             headerName: t("lastname"),
             headerClassName: 'super-app-theme--header',
-            flex: 0.08,
-        },
-        {
-            field: 'companyName',
-            headerName: t("company"),
-            headerClassName: 'super-app-theme--header',
-            flex: 0.08,
+            flex: 0.1,
         },
         {
             field: 'email',
             headerName: t("email"),
             headerClassName: 'super-app-theme--header',
-            flex: 0.08,
+            flex: 0.1,
         },
         {
             field: 'phone',
             headerName: t("phone"),
             headerClassName: 'super-app-theme--header',
-            flex: 0.08,
+            flex: 0.1,
         },
         {
             field: "status",
@@ -106,7 +98,7 @@ const LawyerList = () => {
 
     function fetchStats() {
         setIsLoading(true);
-        getStats(getAuthHeader(cookie.username, cookie.password)).then((response) => {
+        getStats(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             setAllCount(response.data.data.allCount);
             setActiveCount(response.data.data.activeCount);
             setPassiveCount(response.data.data.passiveCount);
@@ -127,11 +119,11 @@ const LawyerList = () => {
         });
     }
 
-    function fetchLawyers() {
+    function fetchClients() {
         setIsLoading(true);
-        if (tab === "Active") {
-            getActiveLawyers(getAuthHeader(cookie.username, cookie.password)).then((response) => {
-                setLawyers(response.data.data);
+        if(tab === "Active") {
+            getActiveClients(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+                setClients(response.data.data);
             }).catch((error) => {
                 toast.error(error.response.data.error.message, {
                     position: "top-center",
@@ -147,9 +139,9 @@ const LawyerList = () => {
                 setIsLoading(false);
             });
         }
-        else if (tab === "Passive") {
-            getPassiveLawyers(getAuthHeader(cookie.username, cookie.password)).then((response) => {
-                setLawyers(response.data.data);
+        else if(tab === "Passive") {
+            getPassiveClients(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+                setClients(response.data.data);
             }).catch((error) => {
                 toast.error(error.response.data.error.message, {
                     position: "top-center",
@@ -165,9 +157,9 @@ const LawyerList = () => {
                 setIsLoading(false);
             });
         }
-        else if (tab === "Deleted") {
-            getDeletedLawyers(getAuthHeader(cookie.username, cookie.password)).then((response) => {
-                setLawyers(response.data.data);
+        else if(tab === "Deleted") {
+            getDeletedClients(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+                setClients(response.data.data);
             }).catch((error) => {
                 toast.error(error.response.data.error.message, {
                     position: "top-center",
@@ -184,8 +176,8 @@ const LawyerList = () => {
             });
         }
         else {
-            getAllLawyers(getAuthHeader(cookie.username, cookie.password)).then((response) => {
-                setLawyers(response.data.data);
+            getAllClients(getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+                setClients(response.data.data);
             }).catch((error) => {
                 toast.error(error.response.data.error.message, {
                     position: "top-center",
@@ -203,19 +195,11 @@ const LawyerList = () => {
         }
     }
 
-    function handleNewOnClick() {
-        navigate("/lawyers/create");
-    }
-
-    function handleSelectTab(tab) {
-        setTab(tab);
-    }
-
     function setActiveRequest(id) {
         setIsLoading(true);
         setActive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             fetchStats();
-            fetchLawyers();
+            fetchClients();
         }).catch((error) => {
             toast.error(error.response.data.error.message, {
                 position: "top-center",
@@ -236,7 +220,7 @@ const LawyerList = () => {
         setIsLoading(true);
         setPassive(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             fetchStats();
-            fetchLawyers();
+            fetchClients();
         }).catch((error) => {
             toast.error(error.response.data.error.message, {
                 position: "top-center",
@@ -255,9 +239,9 @@ const LawyerList = () => {
 
     function deleteRequest(id) {
         setIsLoading(true);
-        deleteLawyer(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
+        deleteClient(id, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             fetchStats();
-            fetchLawyers();
+            fetchClients();
         }).catch((error) => {
             toast.error(error.response.data.error.message, {
                 position: "top-center",
@@ -275,16 +259,24 @@ const LawyerList = () => {
     }
 
     function handleDeleteOnClick(id) {
-        confirm({ title: t("warning"), description: t("lawyer.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") }).then(() => {
+        confirm({ title: t("warning"), description: t("client.before.delete.warning"), confirmationText: t("yes"), cancellationText: t("no") }).then(() => {
             deleteRequest(id);
         }).catch(() => {
             console.log("Cancel");
         });
     }
 
+    function handleNewOnClick() {
+        navigate("/clients/create");
+    }
+
+    function handleSelectTab(tab) {
+        setTab(tab);
+    }
+
     useEffect(() => {
         fetchStats();
-        fetchLawyers();
+        fetchClients();
     }, [tab]);
 
     return (
@@ -294,7 +286,7 @@ const LawyerList = () => {
                     {/* Title */}
                     <Stack id="title" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 0.8, justifyContent: "space-between", marginTop: "50px" }}>
                         <Typography variant="h4">
-                            {t("lawyer.management")}
+                            {t("client.management")}
                         </Typography>
                         <Button variant="contained" onClick={handleNewOnClick}>
                             <AddSharpIcon />
@@ -307,14 +299,14 @@ const LawyerList = () => {
                             <Link underline="hover" color="inherit" href="/">
                                 {t("home")}
                             </Link>
-                            <Typography color="text.primary">{t("lawyer.management")}</Typography>
+                            <Typography color="text.primary">{t("client.management")}</Typography>
                         </Breadcrumbs>
                     </Box>
                     {/* Navigation */}
                     {/* Main */}
                     <Stack id="main" direction="column" sx={{ width: 0.8, backgroundColor: "secondary.main", marginTop: "25px" }}>
                         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ width: 1, justifyContent: "space-between", padding: "20px", border: 1, borderColor: "border.secondary" }}>
-                            <Typography variant="h6">{t("lawyer.list")}</Typography>
+                            <Typography variant="h6">{t("client.list")}</Typography>
                             <Stack id="main" direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ justifyContent: "flex-start" }}>
                                 <Button onClick={() => handleSelectTab("All")} sx={{ color: tab === "All" ? "text.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "All" && 2, borderColor: tab === "All" && "text.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("all")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "text.main" }}>{allCount}</Avatar></Button>
                                 <Button onClick={() => handleSelectTab("Active")} sx={{ color: tab === "Active" ? "success.main" : "secondary.dark", borderRadius: 0, borderBottom: tab === "Active" && 2, borderColor: tab === "Active" && "success.main" }}><Typography variant='subtitle' textTransform="capitalize">{t("active")}</Typography><Avatar sx={{ width: "22px", height: "22px", fontSize: "10px", marginLeft: "5px", backgroundColor: "success.main" }}>{activeCount}</Avatar></Button>
@@ -335,14 +327,15 @@ const LawyerList = () => {
                         </Stack>
                         {/* Search */}
                         {/* Data */}
-                        <DataTable height="600px" isLoading={isLoading} columns={columns} data={lawyers} />
+                        <DataTable height="600px" isLoading={isLoading} columns={columns} data={clients} />
                         {/* Data */}
                     </Stack>
                     {/* Main */}
                 </Stack>
             </Layout>
+            <ToastContainer />
         </AuthCheck>
     )
 }
 
-export default LawyerList;
+export default ClientList;
