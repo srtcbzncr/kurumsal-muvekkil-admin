@@ -44,6 +44,9 @@
     "file.management" : "Dosya Yönetimi",
     
     "subscription.management" : "Abonelik Yönetimi",
+    "subscription.before.delete.warning" : "Aboneliği silmek istediğinize emin misiniz?",
+    "subscription.list" : "Abonelikler",
+    "subscription.type" : "Tip",
 
     "plan" : "Plan",
     "plan.management" : "Plan Yönetimi",
@@ -90,6 +93,10 @@
     "quota.file.per.client" : "Dosya Kotası",
     "login.failed" : "Kullanıcı adı veya parola hatalı",
     "identification.number" : "Kimlik Numarası",
+    "fee" : "Ücret",
+    "start.date" : "Başlangıç Tarihi",
+    "end.date" : "Bitiş Tarihi",
+    "auto.renew" : "Otomatik Yenileme",
 
     "role.admin" : "Yönetici",
     "role.client" : "Müvekkil",

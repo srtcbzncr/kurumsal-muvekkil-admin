@@ -44,6 +44,9 @@
     "file.management" : "Case Management",
     
     "subscription.management" : "Subscription Management",
+    "subscription.before.delete.warning" : "Are you sure you want to delete the subscription?",
+    "subscription.list" : "Subscriptions",
+    "subscription.type" : "Type",
 
     "plan" : "Plan",
     "plan.management" : "Plan Management",
@@ -90,6 +93,10 @@
     "quota.file.per.client" : "File Quota",
     "login.failed" : "Username or password is invalid",
     "identification.number" : "ID Number",
+    "fee" : "Fee",
+    "start.date" : "Start Date",
+    "end.date" : "End Date",
+    "auto.renew" : "Auto Renew",
 
     "role.admin" : "Admin",
     "role.client" : "Client",

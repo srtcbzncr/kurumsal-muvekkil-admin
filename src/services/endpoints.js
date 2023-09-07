@@ -81,6 +81,19 @@ const endpoints = {
     SET_ACTIVE_CLIENT_URL : "/client/{id}/setActive",
     SET_PASSIVE_CLIENT_URL : "/client/{id}/setPassive",
     DELETE_CLIENT_URL : "/client/{id}",
+
+    // Subscription
+    GET_SUBSCRIPTIONSTATS_URL : "/subscription/stats",
+    GET_ALL_SUBSCRIPTION_URL : "/subscription/all",
+    GET_ACTIVE_SUBSCRIPTION_URL : "/subscription/active",
+    GET_PASSIVE_SUBSCRIPTION_URL : "/subscription/passive",
+    GET_DELETED_SUBSCRIPTION_URL : "/subscription/deleted",
+    GET_SUBSCRIPTION_URL : "/subscription/{id}",
+    CREATE_SUBSCRIPTION_URL : "/subscription",
+    UPDATE_SUBSCRIPTION_URL : "/subscription",
+    SET_ACTIVE_SUBSCRIPTION_URL : "/subscription/{id}/setActive",
+    SET_PASSIVE_SUBSCRIPTION_URL : "/subscription/{id}/setPassive",
+    DELETE_SUBSCRIPTION_URL : "/subscription/{id}",
 }
 
 export default endpoints;
