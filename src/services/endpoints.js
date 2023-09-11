@@ -83,11 +83,11 @@ const endpoints = {
     DELETE_CLIENT_URL : "/client/{id}",
 
     // Subscription
-    GET_SUBSCRIPTIONSTATS_URL : "/subscription/stats",
-    GET_ALL_SUBSCRIPTION_URL : "/subscription/all",
-    GET_ACTIVE_SUBSCRIPTION_URL : "/subscription/active",
-    GET_PASSIVE_SUBSCRIPTION_URL : "/subscription/passive",
-    GET_DELETED_SUBSCRIPTION_URL : "/subscription/deleted",
+    GET_SUBSCRIPTION_STATS_URL : "/subscription/stats",
+    GET_ALL_SUBSCRIPTIONS_URL : "/subscription/all",
+    GET_ACTIVE_SUBSCRIPTIONS_URL : "/subscription/active",
+    GET_PASSIVE_SUBSCRIPTIONS_URL : "/subscription/passive",
+    GET_DELETED_SUBSCRIPTIONS_URL : "/subscription/deleted",
     GET_SUBSCRIPTION_URL : "/subscription/{id}",
     CREATE_SUBSCRIPTION_URL : "/subscription",
     UPDATE_SUBSCRIPTION_URL : "/subscription",
