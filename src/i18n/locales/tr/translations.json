@@ -94,8 +94,8 @@
     "login.failed" : "Kullanıcı adı veya parola hatalı",
     "identification.number" : "Kimlik Numarası",
     "fee" : "Ücret",
-    "start.date" : "Başlangıç Tarihi",
-    "end.date" : "Bitiş Tarihi",
+    "start.date" : "Başlangıç",
+    "end.date" : "Bitiş",
     "auto.renew" : "Otomatik Yenileme",
 
     "role.admin" : "Yönetici",

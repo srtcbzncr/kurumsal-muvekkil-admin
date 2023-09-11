@@ -46,7 +46,7 @@ const SubscriptionList = () => {
       field: 'company',
       headerName: t("company"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.08,
+      flex: 0.07,
       renderCell: (params) => {
         return (
           params.row.company.name
@@ -57,13 +57,13 @@ const SubscriptionList = () => {
       field: 'plan',
       headerName: t("plan"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.08,
+      flex: 0.07,
     },
     {
       field: 'subscriptionType',
       headerName: t("subscription.type"),
       headerClassName: 'super-app-theme--header',
-      flex: 0.08,
+      flex: 0.07,
     },
     {
       field: 'fee',

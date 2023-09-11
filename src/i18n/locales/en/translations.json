@@ -94,8 +94,8 @@
     "login.failed" : "Username or password is invalid",
     "identification.number" : "ID Number",
     "fee" : "Fee",
-    "start.date" : "Start Date",
-    "end.date" : "End Date",
+    "start.date" : "Start",
+    "end.date" : "Finish",
     "auto.renew" : "Auto Renew",
 
     "role.admin" : "Admin",
