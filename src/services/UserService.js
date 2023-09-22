@@ -112,3 +112,18 @@ export function deleteUser(id, authorization, locale) {
         }
     });
 }
+
+export function createAdmin(admin, authorization, locale) {
+    return axios({
+        method: "POST",
+        mode: "cors",
+        baseURL: process.env.REACT_APP_API_URL,
+        url: endpoints.CREATE_USER_URL,
+        headers: {
+            "Authorization": authorization,
+            "Accept-Language": locale,
+            "Accept": "application/json"
+        },
+        data: admin
+    });
+}

@@ -23,6 +23,7 @@ import EditPlan from './components/editPlan/EditPlan';
 import UserList from './components/userList/UserList';
 import LawyerList from './components/lawyerList/LawyerList';
 import ClientList from './components/clientList/ClientList';
+import CreateAdmin from './components/createAdmin/CreateAdmin';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
                 <Route path="plans/create" element={<CreatePlan />}></Route>
                 <Route path="plans/:id/edit" element={<EditPlan />}></Route>
                 <Route path="users" element={<UserList />}></Route>
+                <Route path='users/create' element={<CreateAdmin />}></Route>
                 <Route path="lawyers" element={<LawyerList />}></Route>
                 <Route path="clients" element={<ClientList />}></Route> 
               </Routes>

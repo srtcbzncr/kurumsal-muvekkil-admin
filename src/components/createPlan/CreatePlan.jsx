@@ -49,7 +49,10 @@ const CreatePlan = () => {
             navigate("/plans");
         }).catch((error) => {
             setIsError(true);
-            if (error.response.data.status === 400) {
+            if(error.response.data === null) {
+                setErrorMessage(t("error.undefined"));
+            }
+            else if (error.response.data.status === 400) {
                 error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "name") &&
                     setNameValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "name").message);
 
@@ -70,6 +73,9 @@ const CreatePlan = () => {
 
                 error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "fileQuotaPerClient") &&
                     setFileQuotaValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "fileQuotaPerClient").message);
+            }
+            else {
+                setErrorMessage(error.response.data.error);
             }
         }).finally(() => {
             setIsLoading(false);
@@ -98,7 +104,6 @@ const CreatePlan = () => {
 
     async function validateCreatePlanForm() {
         let result = true;
-        console.log("validateCreatePlanForm");
         if (name === null || name === "") {
             setNameValidationError(t("null.validation.error"));
             result = false;
