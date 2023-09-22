@@ -306,7 +306,7 @@ const SubscriptionList = () => {
             </Typography>
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
               <Button variant="outlined" onClick={handlePlanManagementOnClick}>
-                {t("subscription.management")}
+                {t("plan.management")}
               </Button>
               <Button variant="contained" onClick={handleNewOnClick}>
                 <AddSharpIcon />

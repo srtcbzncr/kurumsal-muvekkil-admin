@@ -84,6 +84,7 @@
     "actions" : "Actions",
     "setPassive" : "Set Passive",
     "setActive" : "Set Active",
+    "detail" : "Detail",
     "details" : "Details",
     "edit" : "Edit",
     "delete" : "Delete",
