@@ -22,6 +22,7 @@
     "customer.management" : "Customer Management",
     "customer.list" : "Customers",
     "customer.count" : "Customer Count",
+    "customer.create" : "New Customer",
     
     "client.management" : "Client Management",
     "client.list" : "Client List",
@@ -74,6 +75,7 @@
     "add" : "Add",
     "new" : "New",
     "name" : "Name",
+    "taxNo" : "Tax No",
     "save" : "Save",
     "close" : "Close",
     "all" : "All",
@@ -120,6 +122,8 @@
     "infos.quota.caption" : "Quotas for the plan",
     "infos.user" : "User Infos",
     "infos.user.caption" : "Informations for the user",
+    "infos.company" : "Company Infos",
+    "infos.company.caption" : "Informations for the company",
 
     "error" : "Error",
     "error.undefined" : "An error occured, please try again later",

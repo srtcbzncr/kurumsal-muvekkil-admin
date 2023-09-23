@@ -44,7 +44,6 @@ const CreatePlan = () => {
     const [fileQuotaValidationError, setFileQuotaValidationError] = useState(null);
 
     function createPlanRequest() {
-        console.log("createPlanRequest");
         createPlan({ name, description, monthlyPrice, annualPrice, clientQuota, lawyerQuota, fileQuotaPerClient: fileQuota }, getAuthHeader(cookie.username, cookie.password), i18n.language).then((response) => {
             navigate("/plans");
         }).catch((error) => {
@@ -75,7 +74,7 @@ const CreatePlan = () => {
                     setFileQuotaValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "fileQuotaPerClient").message);
             }
             else {
-                setErrorMessage(error.response.data.error);
+                setErrorMessage(error.response.data.error.message);
             }
         }).finally(() => {
             setIsLoading(false);
@@ -228,7 +227,13 @@ const CreatePlan = () => {
                                     </Typography>
                                 </Stack>
                                 <Stack direction="column" sx={{ width: 0.6 }}>
-                                    <TextField id="name" label={t("name")} variant="outlined" value={name} onChange={handleNameOnChange} required error={nameValidationError !== null} helperText={nameValidationError} />
+                                    {
+                                        isError === true &&
+                                        <Alert variant="filled" severity="error">
+                                            { errorMessage }
+                                        </Alert>
+                                    }
+                                    <TextField id="name" label={t("name")} variant="outlined" value={name} onChange={handleNameOnChange} sx={{ marginTop: isError === true ? "20px" : "0px"}} required error={nameValidationError !== null} helperText={nameValidationError} />
                                     <TextField id="description" label={t("description")} variant="outlined" value={description} onChange={handleDescriptionOnChange} multiline rows={6} sx={{ marginTop: "20px" }} required error={descriptionValidationError !== null} helperText={descriptionValidationError} />
                                 </Stack>
                             </Stack>

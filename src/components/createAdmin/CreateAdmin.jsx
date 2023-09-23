@@ -1,6 +1,6 @@
 import './style.css';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
 import { useTranslation } from 'react-i18next';
@@ -10,12 +10,9 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import AuthCheck from '../authCheck/AuthCheck';
 import Layout from '../layout/Layout';
 
-import { getActiveCourts, createCourt } from '../../services/CourtService';
 import getAuthHeader from '../../helpers/getAuthHeader';
 
 import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
-import createCourtPNG from '../../illustrations/createCourt.png';
-import donePNG from '../../illustrations/done.png';
 import { createAdmin } from '../../services/UserService';
 
 const CreateAdmin = () => {
@@ -75,11 +72,11 @@ const CreateAdmin = () => {
                     setPasswordValidationError(error.response.data.error.fieldErrors.find(fieldError => fieldError.field === "password").message);
             }
             else {
-                setErrorMessage(error.response.data.error);
+                setErrorMessage(error.response.data.error.message);
             }
         }).finally(() => {
-
-        })
+            setIsLoading(false)
+        });
     }
 
     async function validateCreateAdminForm() {
@@ -154,7 +151,13 @@ const CreateAdmin = () => {
                                     </Typography>
                                 </Stack>
                                 <Stack direction="column" sx={{ width: 0.6 }}>
-                                    <TextField id="username" type="text" label={t("username")} variant="outlined" value={username} onChange={handleUsernameOnChange} required error={usernameValidationError !== null} helperText={usernameValidationError} />
+                                    {
+                                        isError === true &&
+                                        <Alert variant="filled" severity="error">
+                                            { errorMessage }
+                                        </Alert>
+                                    }
+                                    <TextField id="username" type="text" label={t("username")} variant="outlined" value={username} onChange={handleUsernameOnChange} sx={{ marginTop: isError === true ? "20px" : "0px"}} required error={usernameValidationError !== null} helperText={usernameValidationError} />
                                     <TextField id="email" type="email" label={t("email")} variant="outlined" value={email} onChange={handleEmailOnChange} sx={{marginTop: "20px"}} required error={emailValidationError !== null} helperText={emailValidationError} />
                                     <TextField id="password" type="password" label={t("password")} variant="outlined" value={password} onChange={handlePasswordOnChange} sx={{marginTop: "20px"}} required error={passwordValidationError !== null} helperText={passwordValidationError} />
                                 </Stack>

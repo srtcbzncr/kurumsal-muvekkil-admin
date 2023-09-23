@@ -22,6 +22,7 @@
     "customer.management" : "Müşteri Yönetimi",
     "customer.list" : "Müşteriler",
     "customer.count" : "Müşteri Sayısı",
+    "customer.create" : "Yeni Müşteri",
     
     "client.management" : "Müvekkil Yönetimi",
     "client.list" : "Müvekkiller",
@@ -74,6 +75,7 @@
     "add" : "Ekle",
     "new" : "Yeni",
     "name" : "Ad",
+    "taxNo" : "Vergi No",
     "save" : "Kaydet",
     "close" : "Kapat",
     "all" : "Tümü",
@@ -120,6 +122,8 @@
     "infos.quota.caption" : "Plana dair limit bilgileri",
     "infos.user" : "Kullanıcı Bilgileri",
     "infos.user.caption" : "Kullanıcı hakkında bilgiler",
+    "infos.company" : "Şirket Bilgileri",
+    "infos.company.caption" : "Şirket hakkında bilgiler",
 
     "error" : "Hata",
     "error.undefined" : "Bir hata oluştu, lütfen daha sonra tekrar deneyiniz",

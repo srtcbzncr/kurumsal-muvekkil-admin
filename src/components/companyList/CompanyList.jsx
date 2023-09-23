@@ -51,13 +51,19 @@ const CompanyList = () => {
             field: 'name',
             headerName: t("name"),
             headerClassName: 'super-app-theme--header',
-            flex: 0.12,
+            flex: 0.1,
+        },
+        {
+            field: 'taxNo',
+            headerName: t("taxNo"),
+            headerClassName: 'super-app-theme--header',
+            flex: 0.1,
         },
         {
             field: 'lawyer-count',
             headerName: t("lawyer.count"),
             headerClassName: 'super-app-theme--header',
-            flex: 0.12,
+            flex: 0.1,
             renderCell: (params) => {
                 return (
                     <Box display="flex" justifyContent="center">
@@ -99,7 +105,7 @@ const CompanyList = () => {
             headerName: t("actions"),
             type: "actions",
             headerClassName: 'super-app-theme--header',
-            flex: 0.21,
+            flex: 0.15,
             renderCell: (params) => {
                 return (
                     <Actions id={params.row.id} url="/courts" isDetails={false} size="medium" active={params.row.active} deleted={params.row.deleted} setActiveFunc={setActiveRequest} setPassiveFunc={setPassiveRequest} deleteFunc={handleDeleteOnClick}></Actions>
